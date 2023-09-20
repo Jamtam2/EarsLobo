@@ -39,13 +39,13 @@ class DichoticsFetcher
 end
 
 # Initialize with credentials and use the data
-fetcher = DichoticsFetcher.new('skazmi1@memphis.edu', 'P@ssw0rd')
+fetcher = DichoticsFetcher.new('', '')
 data = fetcher.fetch_licensing_code
 
 puts data
 
 # require 'httparty'
-# response = HTTParty.get('https://www.dichoticsinc.com/api', basic_auth: { username: 'skazmi1@memphis.edu
-#     ', password: 'P@ssw0rd' })
+# response = HTTParty.get('https://www.dichoticsinc.com/api', basic_auth: { username: '
+#     ', password: '' })
 
 # puts response.body, response.code, response.message, response.headers.inspect

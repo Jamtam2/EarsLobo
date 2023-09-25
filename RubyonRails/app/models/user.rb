@@ -63,12 +63,6 @@ class User < ApplicationRecord
   def owner?
     role == 'owner'
   end
-
-  # public def regular_user?
-  # if current_user.role == 0
-  # end
-  #   role = 'regular_user'
-  # end
   
   # functions finds the code for the registration key and checks to see if the key has been used or not. 
   # This determines if the key for registration has been used or not.

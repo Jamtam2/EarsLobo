@@ -123,21 +123,25 @@ class ClientsController < ApplicationController
 private def sort_and_filter_clients(client_scope)
   
   # Initialize Ransack search object with the given scope
-  @q = client_scope.ransack(params[:q])
+  @q = client_scope.ransack(params[:q], sort: params[:s])
   
   # Controls search functionality for regular user
   if current_user.regular_user?
-    
-    # Set the selected sorting option based on params
-    selected_sorting_name = params[:q]&.dig(:sort_by_name)
-    selected_sort_by_client = params[:q]&.dig(:sort_by_client)
-    selected_sort_by_date_birth = params[:q]&.dig(:sort_by_date_birth)
-    
+
+    # Dictionary of sorting options for a regular user
+    sorting_options_regular = {
+      age: params[:q]&.dig(:sort_by_age),
+      gender: params[:q]&.dig(:gender_eq),
+      name: params[:q]&.dig(:sort_by_name),
+      client: params[:q]&.dig(:sort_by_client),
+      date_birth: params[:q]&.dig(:sort_by_date_birth),
+      country: params[:q]&.dig(:country_eq),
+      state: params[:q]&.dig(:state_eq),
+    }
+
     # Choose which filter to use
-    if selected_sorting_name || selected_sort_by_client || selected_sort_by_date_birth
-      @q.sorts = selected_sorting_name
-      @q.sorts = selected_sort_by_client
-      @q.sorts = selected_sort_by_date_birth
+    sorting_options_regular.each do |key, value|
+      @q.sorts = value if value
     end
   end
 
@@ -145,13 +149,22 @@ private def sort_and_filter_clients(client_scope)
   if current_user.global_moderator?
     
     # Set the selected sorting option based on params
-    selected_sort_by_client = params[:q]&.dig(:sort_by_client)
-    selected_sort_by_date_birth = params[:q]&.dig(:sort_by_date_birth)
+    sorting_options_global = {
+      client: params[:q]&.dig(:sort_by_client),
+      date_birth: params[:q]&.dig(:sort_by_date_birth),
+      age: params[:q]&.dig(:sort_by_age),
+      gender: params[:q]&.dig(:gender_eq),
+      race: params[:q]&.dig(:race_eq),
+      country: params[:q]&.dig(:country_eq),
+      state: params[:q]&.dig(:state_eq),
+      ear_advantage: params[:q]&.dig(:dwt_tests_ear_advantage_eq),
+      ear_advantage_score: params[:q]&.dig(:dwt_tests_ear_advantage_score),
+      test_type: params[:q]&.dig(:dwt_tests_test_type_eq)
+    }
     
     # Choose which filter to use
-    if selected_sorting_name || selected_sort_by_client || selected_sort_by_date_birth
-      @q.sorts = selected_sort_by_client
-      @q.sorts = selected_sort_by_date_birth
+    sorting_options_global.each do |key, value|
+      @q.sorts = value if value
     end
   end
   

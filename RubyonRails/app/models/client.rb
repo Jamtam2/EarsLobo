@@ -72,18 +72,30 @@ class Client < ApplicationRecord
 
   # Allow these attributes to be searched through Ransack
   def self.ransackable_attributes(auth_object = nil)
-    %w(id address1 city country date_of_birth email first_name gender last_name mgmt_ref phone1 phone2 race state zip created_at updated_at tenant_id age_in_years age ) + _ransackers.keys
+    %w(address1 city country date_of_birth email first_name gender last_name mgmt_ref phone1 phone2 race state zip created_at updated_at age_in_years age ) + _ransackers.keys
   end
 
-  # Allow these associations to be searched through Ransack
+  # Allow these associations to be searched through Ransack. Can use attributes from different models.
   def self.ransackable_associations(auth_object = nil)
-    ["emergency_contacts", "tenant", "tests"]
+    ["dwt_tests"] # Allows the use of this model in the Client model now.
   end
 
   # Controls the functionality behind thw advanced searching for this attribute of id
   ransacker :id do
     Arel.sql('id')
   end
+
+  # Method Allows for the Age_in_years method to be used in sorting for age
+  def self.sort_by_age_in_years(direction = 'asc')
+    direction = %w[asc desc].include?(direction) ? direction : 'asc'
+    order(Arel.sql("EXTRACT(YEAR FROM age(date_of_birth)) #{direction}"))
+  end
+
+  # Allows attribute to be used as a search parameter
+  ransacker :age_in_years do
+    Arel.sql("EXTRACT(YEAR FROM age(date_of_birth))")
+  end
+  
 
 end
   

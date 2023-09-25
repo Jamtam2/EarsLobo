@@ -35,4 +35,16 @@ class DwtTest < ApplicationRecord
   
     belongs_to :client
     belongs_to :user
+
+
+# Allow these attributes to be searched through Ransack
+def self.ransackable_attributes(auth_object = nil)
+    %w(client_name ear_advantage ear_advantage_score interpretation label left_score notes right_score test_type) + _ransackers.keys
+  end
+
+  # Allow these associations to be searched through Ransack
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
+
 end

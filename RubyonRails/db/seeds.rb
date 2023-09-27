@@ -8,6 +8,7 @@ require 'faker'
 #First just create a global mod and local mod for testing
 keybruh = Key.create!(code: "localmodkey", used: false)
 keybruh = Key.create!(code: "globalmodkey", used: false)
+keybruh = Key.create!(code: "regularuserkey1", used: false)
 
 tenants = []
 3.times { |i| tenants << Tenant.find_or_create_by!(subdomain: "tenant#{i + 1}") }
@@ -29,6 +30,15 @@ ActsAsTenant.with_tenant(tenants.first) do
   lname:"Mod",
     role: :local_moderator,
     registration_key: 'localmodkey',
+  ) 
+
+  user = User.create!(
+    email: "regular@gmail.com",
+    password: "password",
+    fname: "Locality",
+  lname:"Regular",
+    role: :regular_user,
+    registration_key: 'regularuserkey1',
   ) 
 end 
 

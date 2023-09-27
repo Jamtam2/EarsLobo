@@ -68,6 +68,8 @@ GEM
     annotate (3.2.0)
       activerecord (>= 3.2, < 8.0)
       rake (>= 10.4, < 14.0)
+    attr_encrypted (4.0.0)
+      encryptor (~> 3.0.0)
     bcrypt (3.1.19)
     bindex (0.8.1)
     bootsnap (1.16.0)
@@ -101,6 +103,7 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    encryptor (3.0.0)
     erubi (1.12.0)
     faker (3.2.1)
       i18n (>= 1.8.11, < 2)
@@ -282,6 +285,7 @@ PLATFORMS
 DEPENDENCIES
   acts_as_tenant
   annotate
+  attr_encrypted
   bootsnap (>= 1.4.4)
   bootstrap_form (~> 4.0)
   byebug

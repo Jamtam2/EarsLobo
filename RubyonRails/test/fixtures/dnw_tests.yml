@@ -2,21 +2,23 @@
 #
 # Table name: dnw_tests
 #
-#  id                  :bigint           not null, primary key
-#  client_name         :string
-#  ear_advantage       :string
-#  ear_advantage_score :float
-#  interpretation      :string
-#  label               :string
-#  left_score          :float
-#  notes               :text
-#  right_score         :float
-#  test_type           :string
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  client_id           :bigint           not null
-#  tenant_id           :bigint
-#  user_id             :bigint           not null
+#  id                       :bigint           not null, primary key
+#  client_name              :string
+#  ear_advantage            :string
+#  ear_advantage_score      :float
+#  encrypted_client_name    :string
+#  encrypted_client_name_iv :string
+#  interpretation           :string
+#  label                    :string
+#  left_score               :float
+#  notes                    :text
+#  right_score              :float
+#  test_type                :string
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  client_id                :bigint           not null
+#  tenant_id                :bigint
+#  user_id                  :bigint           not null
 #
 # Indexes
 #

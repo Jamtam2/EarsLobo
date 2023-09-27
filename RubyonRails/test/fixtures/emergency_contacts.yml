@@ -2,18 +2,25 @@
 #
 # Table name: emergency_contacts
 #
-#  id           :bigint           not null, primary key
-#  address      :string
-#  city         :string
-#  email        :string
-#  first_name   :string
-#  last_name    :string
-#  phone_number :string
-#  state        :string
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  client_id    :bigint           not null
-#  tenant_id    :bigint
+#  id                        :bigint           not null, primary key
+#  encrypted_address         :string
+#  encrypted_address_iv      :string
+#  encrypted_city            :string
+#  encrypted_city_iv         :string
+#  encrypted_email           :string
+#  encrypted_email_iv        :string
+#  encrypted_first_name      :string
+#  encrypted_first_name_iv   :string
+#  encrypted_last_name       :string
+#  encrypted_last_name_iv    :string
+#  encrypted_phone_number    :string
+#  encrypted_phone_number_iv :string
+#  encrypted_state           :string
+#  encrypted_state_iv        :string
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  client_id                 :bigint           not null
+#  tenant_id                 :bigint
 #
 # Indexes
 #

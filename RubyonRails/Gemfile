@@ -83,4 +83,6 @@ gem 'ransack'
 
 gem 'httparty'
 
+gem 'attr_encrypted'
+
 

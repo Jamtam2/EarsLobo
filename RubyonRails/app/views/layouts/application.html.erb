@@ -49,7 +49,7 @@
         <ul class="navbar-nav flex-wrap">
           
             <h5><small><li class='nav-item'>
-            <%= link_to 'Clients', clients_path, class: 'nav-link ' %></small></h5>
+    <%= link_to 'Clients', (current_user&.global_moderator? ? global_moderator_index_path : clients_path), class: 'nav-link ' %> </small></h5>
           </li>
           <h5><small><li class='nav-item'>
             <%# <%= image_tag 'headphones.png', style: "width: 50px", class:"d-inline-block"%>

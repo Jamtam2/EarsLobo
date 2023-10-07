@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vAM36w0+akZYRbz8g5FJ1RPr57Vyyu86xXo5I9H1iDoE2BYVjPTF3QiDWQrSdt1DLV953MTLumq3PsGrZhSjRA==",
+  "dgSpecHash": "mqyUg+aEpoKFugicElZ6s4Ir4j3fWFXzoNQFQkia7ZELS91ZnALirRjz8wxtp0SKtjZNdaSasNr7Y/XeBQlxoA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\kazmi\\OneDrive\\Documents\\Desktop\\DichoticsIncAPI\\DichoticsIncAPI.csproj",
+  "projectFilePath": "C:\\Users\\kazmi\\OneDrive\\Documents\\Desktop\\WebDev\\EarsLobo\\DichoticsIncAPI\\DichoticsIncAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kazmi\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\kazmi\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

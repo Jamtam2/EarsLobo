@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kazmi\\OneDrive\\Documents\\Desktop\\DichoticsIncAPI\\DichoticsIncAPI.csproj": {}
+    "C:\\Users\\kazmi\\OneDrive\\Documents\\Desktop\\WebDev\\EarsLobo\\DichoticsIncAPI\\DichoticsIncAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kazmi\\OneDrive\\Documents\\Desktop\\DichoticsIncAPI\\DichoticsIncAPI.csproj": {
+    "C:\\Users\\kazmi\\OneDrive\\Documents\\Desktop\\WebDev\\EarsLobo\\DichoticsIncAPI\\DichoticsIncAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kazmi\\OneDrive\\Documents\\Desktop\\DichoticsIncAPI\\DichoticsIncAPI.csproj",
+        "projectUniqueName": "C:\\Users\\kazmi\\OneDrive\\Documents\\Desktop\\WebDev\\EarsLobo\\DichoticsIncAPI\\DichoticsIncAPI.csproj",
         "projectName": "DichoticsIncAPI",
-        "projectPath": "C:\\Users\\kazmi\\OneDrive\\Documents\\Desktop\\DichoticsIncAPI\\DichoticsIncAPI.csproj",
+        "projectPath": "C:\\Users\\kazmi\\OneDrive\\Documents\\Desktop\\WebDev\\EarsLobo\\DichoticsIncAPI\\DichoticsIncAPI.csproj",
         "packagesPath": "C:\\Users\\kazmi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kazmi\\OneDrive\\Documents\\Desktop\\DichoticsIncAPI\\obj\\",
+        "outputPath": "C:\\Users\\kazmi\\OneDrive\\Documents\\Desktop\\WebDev\\EarsLobo\\DichoticsIncAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\kazmi\\AppData\\Roaming\\NuGet\\NuGet.Config",

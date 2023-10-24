@@ -14,6 +14,9 @@ class CreateRddtTests < ActiveRecord::Migration[6.1]
       t.float :right_score3
       t.float :ear_advantage_score
       t.string :interpretation
+      t.string :left_percentile
+      t.string :right_percentile
+      t.string :advantage_percentile
 
       t.references :client, null: false, foreign_key: true
 

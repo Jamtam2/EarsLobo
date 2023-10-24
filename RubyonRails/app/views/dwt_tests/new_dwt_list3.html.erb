@@ -2,12 +2,20 @@
 <div class="container p-5 my-3 w-100 border rounded bg-white ">
 
 
+<!--
+<%= javascript_include_tag 'application', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js' %>
+-->
+
 
 
 <h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Testing " + @client.first_name + " " + @client.last_name%></strong></h1>
 
-<!--Test page for DWT LIST 3 Contains everything for completing and submitting a test  -->
+<!--Test page for DWT LIST 1 Contains everything for completing and submitting a test  -->
+
 <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+
 
 <%= form_with model: [@client, @dwt_test], local: true do |f| %>
 <div class="container">
@@ -36,61 +44,66 @@
       </div>
 
       <hr/>
-      <label for="Notes">Notes</label>
-      <%= f.text_area :notes, class: 'form-control', rows: '3' %>
-      <hr/>
-      <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
-      <audio controls>
-        <source src="<%= asset_path('Track 04 Dichotic Words Test Track 3.mp3') %>" type="audio/mpeg">
-      </audio>
-      <hr/>
-      <!--Table for ear advantage percentage that is calculated in the script-->
-      <style>
-          .left-column {
-            background-color: lightblue;
-          }
-          
-          .right-column {
-            background-color: lightpink;
-          }
-          
-          .ear-advantage {
-            background-color: white;
-          }
-          
-          .ear-advantage.positive {
-            background-color: lightblue;
-          }
-          
-          .ear-advantage.negative {
-            background-color: lightpink;
-          }
-      </style>
-      <p>Scores:</p>
-      <table class="table table-sm table-bordered m1-4" style="max-width: 25rem;">
-        <thead>
-          <tr>
-            <th scope="col">Pairs</th>
-            <th scope="col">Left</th>
-            <th scope="col">Right</th>
-            <th scope="col">Ear Adv</th>
-          </tr>
-          <tbody>
+      <div class="sticky">
+        <label for="Notes">Notes</label>
+        <%= f.text_area :notes, class: 'form-control', rows: '3' %>
+        <hr/>
+        <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
+        <audio controls>
+          <source src="<%= asset_path('Track 04 Dichotic Words Test Track 3.mp3') %>" type="audio/mpeg">
+        </audio>
+        <hr/>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!--Table for ear advantage percentage that is calculated in the script-->
+        <style>
+            .left-column {
+              background-color: lightblue;
+            }
+            
+            .right-column {
+              background-color: lightpink;
+            }
+            
+            .ear-advantage {
+              background-color: white;
+            }
+            
+            .ear-advantage.positive {
+              background-color: lightblue;
+            }
+            
+            .ear-advantage.negative {
+              background-color: lightpink;
+            }
+
+        </style>
+        <p>Scores:</p>
+        <table class="table table-sm table-bordered m1-4" style="max-width: 25rem;">
+          <thead>
             <tr>
-              <th scope="row">1</th>
-              <td class="left-column"><span id="column1-percent">0</span>%</p></td>
-              <td class="right-column"><span id="column2-percent">0</span>%</td>
-              <td class="ear-advantage"><span id="advantage-Diff">0</span>%</td>
+              <th scope="col">Pairs</th>
+              <th scope="col">Left</th>
+              <th scope="col">Right</th>
+              <th scope="col">Ear Adv</th>
             </tr>
-            <tr>
-              <th scope="row">2</th>
-            </tr>
-            <tr>
-              <th scope="row">3</th>           
-            </tr>
-          </tbody>
-        </thead>
-      </table>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td class="left-column"><span id="column1-percent">0</span>%</p></td>
+                <td class="right-column"><span id="column2-percent">0</span>%</td>
+                <td class="ear-advantage"><span id="advantage-Diff">0</span>%</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+              </tr>
+              <tr>
+                <th scope="row">3</th>           
+              </tr>
+            </tbody>
+          </thead>
+        </table>
+      </div>
+      
       <!--Table for ear advantage that is calculated in the script and ear diagnosis/interpretation-->
       <label for="read-Only">Ear Advantage</label>
       <input class="form-control" type="text" id="read-Only" value="" readonly>
@@ -98,8 +111,25 @@
       <label for="read-Only">Interpretation</label>
       <input class="form-control" type="text" id="read-Only-diag" value="" readonly>
       <span hidden id="Diagnosis"></span>
+      <hr/>
+      <p>Percentile of Scores:</p>
+      <table class="table table-sm table-bordered m1-4" style="max-width: 25rem;">
+          <thead>
+            <tr>
+              <th scope="col">Left Ear</th>
+              <th scope="col">Right Ear</th>
+              <th scope="col">Ear Advantage</th>
+            </tr>
+            <tbody>
+              <tr>
+                <td class="percentile"><span id="left-percentile"></span></td>
+                <td class="percentile"><span id="right-percentile"></span></td>
+                <td class="percentile"><span id="advantage-percentile"></span></td>
+              </tr>
+            </tbody>
+          </thead>
+        </table>
     </div>
-
 
     <style>
       /* Center buttons in the table cells */
@@ -117,8 +147,9 @@
         /* Remove margin and min-width properties */
       }
     </style>
-
+    
     <div class="col-sm">
+      
         <table class="table table-sm table-striped ml-4" style="max-width: 25rem;">
           <thead class="thead-dark">
             <tr>
@@ -186,6 +217,10 @@
         <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
         <%= f.hidden_field :ear_advantage_score, id: "ear_advantage_score" %>
         <%= f.hidden_field :interpretation, id: "interpretation" %>
+        <%= f.hidden_field :left_percentile, id: "left_percentile" %>
+        <%= f.hidden_field :right_percentile, id: "right_percentile" %>
+        <%= f.hidden_field :advantage_percentile, id: "advantage_percentile" %>
+
     
         <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %>
       
@@ -197,12 +232,18 @@
       <p><span hidden id="column2-count"></span></p>
       <p><span id="column2-percent"></span></p>
       <p><span id="advantage-Diff"></span></p>
+      <p><span id="left-percentile"></span></p>
+      <p><span id="right-percentile"></span></p>
+      <p><span id="advantage-percentile"></span></p>
     </div>
+    
 
+
+
+    
 
 
     <script>
-
 
 
 
@@ -230,6 +271,9 @@
       const column1Percent = document.getElementById("column1-percent");
       const column2Percent = document.getElementById("column2-percent");
       const advantageDiff = document.getElementById("advantage-Diff");
+      const leftEarPercentile = document.getElementById("left-percentile");
+      const rightEarPercentile = document.getElementById("right-percentile");
+      const advantagePercentile = document.getElementById("advantage-percentile");
       const advantageName = document.getElementById("advantage-Name");
       const testDiagnosis = document.getElementById("Diagnosis");
       const readOnly = document.getElementById("read-Only");
@@ -255,6 +299,9 @@
         let age = <%= @client.age_in_years %>;
         let dom = null;
         let nondom = null;
+        let nondomPercent = null;
+        let domPercent = null;
+        let adv_percent = null;
         if (advantage < 0) {
           direction = "Left";
           dom = percent1;
@@ -265,8 +312,8 @@
           nondom = percent1;
         } else {
           direction = "Neutral";
-        }
-        // IF else logic for diagnosis based on the childs age. Still unsure if this works as intended accoring to Employer, but we believe it is
+          }
+// IF else logic for diagnosis based on the childs age. Still unsure if this works as intended accoring to Employer, but we believe it is
         if (age == 5 || age == 6){
           if (direction == "Neutral"){
             if (percent1 <= 44){
@@ -277,22 +324,70 @@
             }
           }
           else{
-            if (((dom <= 64) || (nondom <= 44)) && ((advantage <= -32) || (advantage >= 32))){
+            if (((dom <= 64) && (nondom <= 44)) && ((advantage <= -32) || (advantage >= 32))){
               interpretation = "Amblyaudia + Dichotic Dysaudia";
             }
-            else if ((dom <= 64) || (nondom <= 44)){
+            else if (((dom <= 64) && (nondom <= 44)) || (((dom <= 64) && (nondom > 44)) && (((advantage > -32) && (advantage < 0)) || ((advantage < 32) && (advantage > 0))))) {
               interpretation = "Dichotic Dysaudia";
             }
+            else if (((dom > 64) && (nondom <= 44)) && ((advantage > -32) && (advantage < 0))){
+              interpretation = "Possible Ambylaudia Left Ear Dominant";
+            }
+            else if (((dom > 64) && (nondom <= 44)) && ((advantage < 32) && (advantage > 0))){
+              interpretation = "Possible Ambylaudia Right Ear Dominant";
+            }
             else if (((dom > 64) && (nondom > 44)) && (advantage <= -32)){
-              interpretation = "Ambylaudia Left Ear Dominant";
+              interpretation = "Possible Ambylaudia Left Ear Dominant";
             }
             else if (((dom > 64) && (nondom > 44)) && (advantage >= 32)){
+              interpretation = "Possible Ambylaudia Right Ear Dominant";
+            }
+            else if (((dom > 64) && (nondom <= 44)) && (advantage <= -32)){
+              interpretation = "Ambylaudia Left Ear Dominant";
+            }
+            else if (((dom > 64) && (nondom <= 44)) && (advantage >= 32)){
               interpretation = "Ambylaudia Right Ear Dominant";
             }
             else{
               interpretation = "Within Normal Limits";
             }
-          }            
+          } 
+          if (dom <= 48){
+            domPercent = "5th Percentile";
+          }
+          else if (dom <= 52){
+            domPercent = "10th Percentile";
+          }
+          else if (dom <= 64){
+            domPercent = "25th Percentile";
+          }
+          else{
+            domPercent = "Within Normal Limits";
+          }
+          if (nondom <= 14){
+            nondomPercent = "5th Percentile";
+          }
+          else if (nondom <= 28){
+            nondomPercent = "10th Percentile";
+          }
+          else if (nondom <= 44){
+            nondomPercent = "25th Percentile";
+          }
+          else{
+            nondomPercent = "Within Normal Limits";
+          }
+          if ((advantage >= 52) || (advantage <= -52)){
+            adv_percent = "5th Percentile";
+          }
+          else if ((advantage >= 36) || (advantage <= -36)){
+            adv_percent = "10th Percentile";
+          }
+          else if ((advantage >= 32) || (advantage <= -32)){
+            adv_percent = "25th Percentile";
+          }
+          else{
+            adv_percent = "Within Normal Limits";
+          }       
         }
         if (age >= 7 && age <= 9){
           if (direction == "Neutral"){
@@ -304,21 +399,69 @@
             }
           }
           else{
-            if (((dom <= 76) || (nondom <= 60)) && ((advantage <= -24) || (advantage >= 24))){
+            if (((dom <= 76) && (nondom <= 60)) && ((advantage <= -24) || (advantage >= 24))){
               interpretation = "Amblyaudia + Dichotic Dysaudia";
             }
-            else if ((dom <= 76) || (nondom <= 60)){
+            else if (((dom <= 76) && (nondom <= 60)) || (((dom <= 76) && (nondom > 60)) && (((advantage > -24) && (advantage < 0)) || ((advantage < 24) && (advantage > 0))))) {
               interpretation = "Dichotic Dysaudia";
             }
+            else if (((dom > 76) && (nondom <= 60)) && ((advantage > -24) && (advantage < 0))){
+              interpretation = "Possible Ambylaudia Left Ear Dominant";
+            }
+            else if (((dom > 76) && (nondom <= 60)) && ((advantage < 24) && (advantage > 0))){
+              interpretation = "Possible Ambylaudia Right Ear Dominant";
+            }
             else if (((dom > 76) && (nondom > 60)) && (advantage <= -24)){
-              interpretation = "Ambylaudia Left Ear Dominant";
+              interpretation = "Possible Ambylaudia Left Ear Dominant";
             }
             else if (((dom > 76) && (nondom > 60)) && (advantage >= 24)){
+              interpretation = "Possible Ambylaudia Right Ear Dominant";
+            }
+            else if (((dom > 76) && (nondom <= 60)) && (advantage <= -24)){
+              interpretation = "Ambylaudia Left Ear Dominant";
+            }
+            else if (((dom > 76) && (nondom <= 60)) && (advantage >= 24)){
               interpretation = "Ambylaudia Right Ear Dominant";
             }
             else{
               interpretation = "Within Normal Limits";
             }
+          } 
+          if (dom <= 63){
+            domPercent = "5th Percentile";
+          }
+          else if (dom <= 69){
+            domPercent = "10th Percentile";
+          }
+          else if (dom <= 76){
+            domPercent = "25th Percentile";
+          }
+          else{
+            domPercent = "Within Normal Limits";
+          }
+          if (nondom <= 31){
+            nondomPercent = "5th Percentile";
+          }
+          else if (nondom <= 40){
+            nondomPercent = "10th Percentile";
+          }
+          else if (nondom <= 60){
+            nondomPercent = "25th Percentile";
+          }
+          else{
+            nondomPercent = "Within Normal Limits";
+          }
+          if ((advantage >= 40) || (advantage <= -40)){
+            adv_percent = "5th Percentile";
+          }
+          else if ((advantage >= 28) || (advantage <= -28)){
+            adv_percent = "10th Percentile";
+          }
+          else if ((advantage >= 24) || (advantage <= -24)){
+            adv_percent = "25th Percentile";
+          }
+          else{
+            adv_percent = "Within Normal Limits";
           }          
         }
         if (age >= 10 && age <= 12){
@@ -331,22 +474,70 @@
             }
           }
           else{
-            if (((dom <= 84) || (nondom <= 72)) && ((advantage <= -20) || (advantage >= 20))){
+            if (((dom <= 84) && (nondom <= 72)) && ((advantage <= -20) || (advantage >= 20))){
               interpretation = "Amblyaudia + Dichotic Dysaudia";
             }
-            else if ((dom <= 84) || (nondom <= 72)){
+            else if (((dom <= 84) && (nondom <= 72)) || (((dom <= 84) && (nondom > 72)) && (((advantage > -20) && (advantage < 0)) || ((advantage < 20) && (advantage > 0))))) {
               interpretation = "Dichotic Dysaudia";
             }
+            else if (((dom > 84) && (nondom <= 72)) && ((advantage > -20) && (advantage < 0))){
+              interpretation = "Possible Ambylaudia Left Ear Dominant";
+            }
+            else if (((dom > 84) && (nondom <= 72)) && ((advantage < 20) && (advantage > 0))){
+              interpretation = "Possible Ambylaudia Right Ear Dominant";
+            }
             else if (((dom > 84) && (nondom > 72)) && (advantage <= -20)){
-              interpretation = "Ambylaudia Left Ear Dominant";
+              interpretation = "Possible Ambylaudia Left Ear Dominant";
             }
             else if (((dom > 84) && (nondom > 72)) && (advantage >= 20)){
+              interpretation = "Possible Ambylaudia Right Ear Dominant";
+            }
+            else if (((dom > 84) && (nondom <= 72)) && (advantage <= -20)){
+              interpretation = "Ambylaudia Left Ear Dominant";
+            }
+            else if (((dom > 84) && (nondom <= 72)) && (advantage >= 20)){
               interpretation = "Ambylaudia Right Ear Dominant";
             }
             else{
               interpretation = "Within Normal Limits";
             }
+          } 
+          if (dom <= 70){
+            domPercent = "5th Percentile";
           }
+          else if (dom <= 72){
+            domPercent = "10th Percentile";
+          }
+          else if (dom <= 84){
+            domPercent = "25th Percentile";
+          }
+          else{
+            domPercent = "Within Normal Limits";
+          }
+          if (nondom <= 44){
+            nondomPercent = "5th Percentile";
+          }
+          else if (nondom <= 60){
+            nondomPercent = "10th Percentile";
+          }
+          else if (nondom <= 72){
+            nondomPercent = "25th Percentile";
+          }
+          else{
+            nondomPercent = "Within Normal Limits";
+          }
+          if ((advantage >= 32) || (advantage <= -32)){
+            adv_percent = "5th Percentile";
+          }
+          else if ((advantage >= 24) || (advantage <= -24)){
+            adv_percent = "10th Percentile";
+          }
+          else if ((advantage >= 20) || (advantage <= -20)){
+            adv_percent = "25th Percentile";
+          }
+          else{
+            adv_percent = "Within Normal Limits";
+          } 
         }
         if (age >= 13 && age <= 15){
           if (direction == "Neutral"){
@@ -358,22 +549,70 @@
             }
           }
           else{
-            if (((dom <= 92) || (nondom <= 76)) && ((advantage <= -16) || (advantage >= 16))){
+            if (((dom <= 92) && (nondom <= 76)) && ((advantage <= -16) || (advantage >= 16))){
               interpretation = "Amblyaudia + Dichotic Dysaudia";
             }
-            else if ((dom <= 92) || (nondom <= 76)){
+            else if (((dom <= 92) && (nondom <= 76)) || (((dom <= 92) && (nondom > 76)) && (((advantage > -16) && (advantage < 0)) || ((advantage < 16) && (advantage > 0))))) {
               interpretation = "Dichotic Dysaudia";
             }
+            else if (((dom > 92) && (nondom <= 76)) && ((advantage > -16) && (advantage < 0))){
+              interpretation = "Possible Ambylaudia Left Ear Dominant";
+            }
+            else if (((dom > 92) && (nondom <= 76)) && ((advantage < 16) && (advantage > 0))){
+              interpretation = "Possible Ambylaudia Right Ear Dominant";
+            }
             else if (((dom > 92) && (nondom > 76)) && (advantage <= -16)){
-              interpretation = "Ambylaudia Left Ear Dominant";
+              interpretation = "Possible Ambylaudia Left Ear Dominant";
             }
             else if (((dom > 92) && (nondom > 76)) && (advantage >= 16)){
+              interpretation = "Possible Ambylaudia Right Ear Dominant";
+            }
+            else if (((dom > 92) && (nondom <= 76)) && (advantage <= -16)){
+              interpretation = "Ambylaudia Left Ear Dominant";
+            }
+            else if (((dom > 92) && (nondom <= 76)) && (advantage >= 16)){
               interpretation = "Ambylaudia Right Ear Dominant";
             }
             else{
               interpretation = "Within Normal Limits";
             }
-          }          
+          } 
+          if (dom <= 68){
+            domPercent = "5th Percentile";
+          }
+          else if (dom <= 80){
+            domPercent = "10th Percentile";
+          }
+          else if (dom <= 92){
+            domPercent = "25th Percentile";
+          }
+          else{
+            domPercent = "Within Normal Limits";
+          }
+          if (nondom <= 56){
+            nondomPercent = "5th Percentile";
+          }
+          else if (nondom <= 64){
+            nondomPercent = "10th Percentile";
+          }
+          else if (nondom <= 76){
+            nondomPercent = "25th Percentile";
+          }
+          else{
+            nondomPercent = "Within Normal Limits";
+          }
+          if ((advantage >= 28) || (advantage <= -28)){
+            adv_percent = "5th Percentile";
+          }
+          else if ((advantage >= 20) || (advantage <= -20)){
+            adv_percent = "10th Percentile";
+          }
+          else if ((advantage >= 16) || (advantage <= -16)){
+            adv_percent = "25th Percentile";
+          }
+          else{
+            adv_percent = "Within Normal Limits";
+          }         
         }
         if (age >= 16 && age <= 18){
           if (direction == "Neutral"){
@@ -385,21 +624,69 @@
             }
           }
           else{
-            if (((dom <= 88) || (nondom <= 80)) && ((advantage <= -14) || (advantage >= 14))){
+            if (((dom <= 88) && (nondom <= 80)) && ((advantage <= -14) || (advantage >= 14))){
               interpretation = "Amblyaudia + Dichotic Dysaudia";
             }
-            else if ((dom <= 88) || (nondom <= 80)){
+            else if (((dom <= 88) && (nondom <= 80)) || (((dom <= 88) && (nondom > 80)) && (((advantage > -14) && (advantage < 0)) || ((advantage < 14) && (advantage > 0))))) {
               interpretation = "Dichotic Dysaudia";
             }
+            else if (((dom > 88) && (nondom <= 80)) && ((advantage > -14) && (advantage < 0))){
+              interpretation = "Possible Ambylaudia Left Ear Dominant";
+            }
+            else if (((dom > 88) && (nondom <= 80)) && ((advantage < 14) && (advantage > 0))){
+              interpretation = "Possible Ambylaudia Right Ear Dominant";
+            }
             else if (((dom > 88) && (nondom > 80)) && (advantage <= -14)){
-              interpretation = "Ambylaudia Left Ear Dominant";
+              interpretation = "Possible Ambylaudia Left Ear Dominant";
             }
             else if (((dom > 88) && (nondom > 80)) && (advantage >= 14)){
+              interpretation = "Possible Ambylaudia Right Ear Dominant";
+            }
+            else if (((dom > 88) && (nondom <= 80)) && (advantage <= -14)){
+              interpretation = "Ambylaudia Left Ear Dominant";
+            }
+            else if (((dom > 88) && (nondom <= 80)) && (advantage >= 14)){
               interpretation = "Ambylaudia Right Ear Dominant";
             }
             else{
               interpretation = "Within Normal Limits";
             }
+          } 
+          if (dom <= 77){
+            domPercent = "5th Percentile";
+          }
+          else if (dom <= 80){
+            domPercent = "10th Percentile";
+          }
+          else if (dom <= 88){
+            domPercent = "25th Percentile";
+          }
+          else{
+            domPercent = "Within Normal Limits";
+          }
+          if (nondom <= 60){
+            nondomPercent = "5th Percentile";
+          }
+          else if (nondom <= 72){
+            nondomPercent = "10th Percentile";
+          }
+          else if (nondom <= 80){
+            nondomPercent = "25th Percentile";
+          }
+          else{
+            nondomPercent = "Within Normal Limits";
+          }
+          if ((advantage >= 24) || (advantage <= -24)){
+            adv_percent = "5th Percentile";
+          }
+          else if ((advantage >= 16) || (advantage <= -16)){
+            adv_percent = "10th Percentile";
+          }
+          else if ((advantage >= 14) || (advantage <= -14)){
+            adv_percent = "25th Percentile";
+          }
+          else{
+            adv_percent = "Within Normal Limits";
           }          
         }
         // Passes values to strings so they can be pushed to the html above
@@ -408,13 +695,31 @@
         column2Count.innerText = checkedCount2.toString();
         column2Percent.innerText = percent2.toString();
         advantageDiff.innerText = advantage.toString();
+
+        if (direction == "Right"){
+          leftEarPercentile.innerText = nondomPercent.toString();
+          rightEarPercentile.innerText = domPercent.toString();
+        }
+        else if (direction == "Left"){
+          leftEarPercentile.innerText = domPercent.toString();
+          rightEarPercentile.innerText = nondomPercent.toString();
+        }
+        else{
+          leftEarPercentile.innerText = "No Dominant Ear";
+          rightEarPercentile.innerText = "No Dominant Ear";
+        }
+
+
+        advantagePercentile.innerText = adv_percent.toString();
+
         advantageName.innerText = direction;
         testDiagnosis.innerText = interpretation;
         readOnly.value = advantageName.innerText;
         readOnlyDiag.value = testDiagnosis.innerText;
 
-          // Get the ear advantage cells
+
           const earAdvantageCells = document.querySelectorAll('.ear-advantage');
+          const percentileCells = document.querySelectorAll('.percentile');
           // Loop through each ear advantage cell
           earAdvantageCells.forEach(cell => {
             // Get the value of the cell
@@ -429,6 +734,24 @@
               cell.style.backgroundColor = 'white';
             }
           });
+          percentileCells.forEach(cell => {
+            // Get the value of the cell
+            const percValue = cell.textContent.trim();
+
+            // Check the value and set the background color accordingly
+            if ((percValue == "5th Percentile") || (percValue == "No Dominant Ear")) {
+              cell.style.backgroundColor = 'lightpink';
+            } 
+            else if (percValue == "10th Percentile") {
+              cell.style.backgroundColor = 'hsl(40, 100%, 60%)';
+            } 
+            else if (percValue == "25th Percentile") {
+              cell.style.backgroundColor = 'hsl(60, 100%, 70%)';
+            }
+            else{
+              cell.style.backgroundColor = 'lightgreen';
+            }
+          });
 
         })
       })
@@ -439,10 +762,16 @@
       document.getElementById("ear_advantage").value = advantageName.innerText;
       document.getElementById("ear_advantage_score").value = advantageDiff.innerText;
       document.getElementById("interpretation").value = testDiagnosis.innerText;
+      document.getElementById("left_percentile").value = leftEarPercentile.innerText;
+      document.getElementById("right_percentile").value = rightEarPercentile.innerText;
+      document.getElementById("advantage_percentile").value = advantagePercentile.innerText;
 
     }
 
     </script>
+    
+
+
 
   </div>
 </div>

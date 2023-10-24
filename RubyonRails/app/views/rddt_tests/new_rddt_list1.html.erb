@@ -117,6 +117,24 @@
             <label for="read-Only">Interpretation</label>
             <input class="form-control" type="text" id="read-Only-diag" value="" readonly>
             <span hidden id="Diagnosis"></span>
+            <hr/>
+            <p>Percentile of Scores:</p>
+            <table class="table table-sm table-bordered m1-4" style="max-width: 25rem;">
+              <thead>
+                <tr>
+                  <th scope="col">Left Ear</th>
+                  <th scope="col">Right Ear</th>
+                  <th scope="col">Ear Advantage</th>
+                </tr>
+                <tbody>
+                  <tr>
+                    <td class="percentile"><span id="left-percentile"></span></td>
+                    <td class="percentile"><span id="right-percentile"></span></td>
+                    <td class="percentile"><span id="advantage-percentile"></span></td>
+                  </tr>
+                </tbody>
+              </thead>
+            </table>
           </div>
         </div>
       </div>
@@ -263,6 +281,9 @@
           <%= f.hidden_field :G3adv, id: "G3adv" %>
 
           <%= f.hidden_field :interpretation, id: "interpretation" %>
+          <%= f.hidden_field :left_percentile, id: "left_percentile" %>
+          <%= f.hidden_field :right_percentile, id: "right_percentile" %>
+          <%= f.hidden_field :advantage_percentile, id: "advantage_percentile" %>
 
           
 
@@ -295,6 +316,9 @@
           <p><span id="Group1advantage-Diff"></span></p>
           <p><span id="Group2advantage-Diff"></span></p>
           <p><span id="Group3advantage-Diff"></span></p>
+          <p><span id="left-percentile"></span></p>
+          <p><span id="right-percentile"></span></p>
+          <p><span id="advantage-percentile"></span></p>  
         </div>
 
 
@@ -346,7 +370,9 @@
         const advantageDiffGroup2 = document.getElementById("Group2advantage-Diff");
         const advantageDiffGroup3 = document.getElementById("Group3advantage-Diff");
 
-
+        const leftEarPercentile = document.getElementById("left-percentile");
+        const rightEarPercentile = document.getElementById("right-percentile");
+        const advantagePercentile = document.getElementById("advantage-percentile");
 
         const advantageName = document.getElementById("advantage-Name");
         const testDiagnosis = document.getElementById("Diagnosis");
@@ -410,6 +436,9 @@
           let age = <%= @client.age_in_years %>;
           let dom = null;
           let nondom = null;
+          let nondomPercent = null;
+          let domPercent = null;
+          let adv_percent = null;
 
           if (group2Advantage < 0) {
             direction = "Left";
@@ -427,7 +456,7 @@
   // IF else logic for diagnosis based on the childs age. Still unsure if this works as intended accoring to Employer, but we believe it does
           if (age == 5 || age == 6){
             if (direction == "Neutral"){
-              if (percentColumn1Group2 <= 33){
+              if (percent1 <= 33){
                 interpretation = "Dichotic Dysaudia";
               }
               else{
@@ -435,80 +464,224 @@
               }
             }
             else{
-              if (((dom <= 67) || (nondom <= 33)) && ((group2Advantage <= -39) || (group2Advantage >= 39))){
+              if (((dom <= 67) && (nondom <= 33)) && ((group2Advantage <= -39) || (group2Advantage >= 39))){
                 interpretation = "Amblyaudia + Dichotic Dysaudia";
               }
-              else if ((dom <= 67) || (nondom <= 33)){
+              else if (((dom <= 67) && (nondom <= 33)) || (((dom <= 67) && (nondom > 33)) && (((group2Advantage > -39) && (group2Advantage < 0)) || ((group2Advantage < 39) && (group2Advantage > 0))))) {
                 interpretation = "Dichotic Dysaudia";
+              }
+              else if (((dom > 67) && (nondom <= 33)) && ((group2Advantage > -39) && (group2Advantage < 0))){
+                interpretation = "Possible Ambylaudia Left Ear Dominant";
+              }
+              else if (((dom > 67) && (nondom <= 33)) && ((group2Advantage < 39) && (group2Advantage > 0))){
+                interpretation = "Possible Ambylaudia Right Ear Dominant";
               }
               else if (((dom > 67) && (nondom > 33)) && (group2Advantage <= -39)){
-                interpretation = "Ambylaudia Left Ear Dominant";
+                interpretation = "Possible Ambylaudia Left Ear Dominant";
               }
               else if (((dom > 67) && (nondom > 33)) && (group2Advantage >= 39)){
-                interpretation = "Ambylaudia Right Ear Dominant";
+                interpretation = "Possible Ambylaudia Right Ear Dominant";
               }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            }            
-          }
-          if (age >= 7 && age <= 9){
-            if (direction == "Neutral"){
-              if (percentColumn1Group2 <= 56){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            }
-            else{
-              if (((dom <= 83) || (nondom <= 56)) && ((group2Advantage <= -28) || (group2Advantage >= 28))){
-                interpretation = "Amblyaudia + Dichotic Dysaudia";
-              }
-              else if ((dom <= 83) || (nondom <= 56)){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else if (((dom > 83) && (nondom > 56)) && (group2Advantage <= -28)){
+              else if (((dom > 67) && (nondom <= 33)) && (group2Advantage <= -39)){
                 interpretation = "Ambylaudia Left Ear Dominant";
               }
-              else if (((dom > 83) && (nondom > 56)) && (group2Advantage >= 28)){
-                interpretation = "Ambylaudia Right Ear Dominant";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            }         
-          }
-          if (age >= 10 && age <= 12){
-            if (direction == "Neutral"){
-              if (percentColumn1Group2 <= 72){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            }
-            else{
-              if (((dom <= 89) || (nondom <= 72)) && ((group2Advantage <= -14) || (group2Advantage >= 14))){
-                interpretation = "Amblyaudia + Dichotic Dysaudia";
-              }
-              else if ((dom <= 89) || (nondom <= 72)){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else if (((dom > 89) && (nondom > 72)) && (group2Advantage <= -14)){
-                interpretation = "Ambylaudia Left Ear Dominant";
-              }
-              else if (((dom > 89) && (nondom > 72)) && (group2Advantage >= 14)){
+              else if (((dom > 67) && (nondom <= 33)) && (group2Advantage >= 39)){
                 interpretation = "Ambylaudia Right Ear Dominant";
               }
               else{
                 interpretation = "Within Normal Limits";
               }
             } 
+            if (dom <= 44){
+              domPercent = "5th Percentile";
+            }
+            else if (dom <= 46){
+              domPercent = "10th Percentile";
+            }
+            else if (dom <= 67){
+              domPercent = "25th Percentile";
+            }
+            else{
+              domPercent = "Within Normal Limits";
+            }
+            if (nondom <= 18){
+              nondomPercent = "5th Percentile";
+            }
+            else if (nondom <= 28){
+              nondomPercent = "10th Percentile";
+            }
+            else if (nondom <= 33){
+              nondomPercent = "25th Percentile";
+            }
+            else{
+              nondomPercent = "Within Normal Limits";
+            }
+            if ((group2Advantage >= 71) || (group2Advantage <= -71)){
+              adv_percent = "5th Percentile";
+            }
+            else if ((group2Advantage >= 54) || (group2Advantage <= -54)){
+              adv_percent = "10th Percentile";
+            }
+            else if ((group2Advantage >= 39) || (group2Advantage <= -39)){
+              adv_percent = "25th Percentile";
+            }
+            else{
+              adv_percent = "Within Normal Limits";
+            }       
+          }
+          if (age >= 7 && age <= 9){
+            if (direction == "Neutral"){
+              if (percent1 <= 56){
+                interpretation = "Dichotic Dysaudia";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            }
+            else{
+              if (((dom <= 83) && (nondom <= 56)) && ((group2Advantage <= -28) || (group2Advantage >= 28))){
+                interpretation = "Amblyaudia + Dichotic Dysaudia";
+              }
+              else if (((dom <= 83) && (nondom <= 56)) || (((dom <= 83) && (nondom > 56)) && (((group2Advantage > -28) && (group2Advantage < 0)) || ((group2Advantage < 28) && (group2Advantage > 0))))) {
+                interpretation = "Dichotic Dysaudia";
+              }
+              else if (((dom > 83) && (nondom <= 56)) && ((group2Advantage > -28) && (group2Advantage < 0))){
+                interpretation = "Possible Ambylaudia Left Ear Dominant";
+              }
+              else if (((dom > 83) && (nondom <= 56)) && ((group2Advantage < 28) && (group2Advantage > 0))){
+                interpretation = "Possible Ambylaudia Right Ear Dominant";
+              }
+              else if (((dom > 83) && (nondom > 56)) && (group2Advantage <= -28)){
+                interpretation = "Possible Ambylaudia Left Ear Dominant";
+              }
+              else if (((dom > 83) && (nondom > 56)) && (group2Advantage >= 28)){
+                interpretation = "Possible Ambylaudia Right Ear Dominant";
+              }
+              else if (((dom > 83) && (nondom <= 56)) && (group2Advantage <= -28)){
+                interpretation = "Ambylaudia Left Ear Dominant";
+              }
+              else if (((dom > 83) && (nondom <= 56)) && (group2Advantage >= 28)){
+                interpretation = "Ambylaudia Right Ear Dominant";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            } 
+            if (dom <= 67){
+              domPercent = "5th Percentile";
+            }
+            else if (dom <= 72){
+              domPercent = "10th Percentile";
+            }
+            else if (dom <= 83){
+              domPercent = "25th Percentile";
+            }
+            else{
+              domPercent = "Within Normal Limits";
+            }
+            if (nondom <= 31){
+              nondomPercent = "5th Percentile";
+            }
+            else if (nondom <= 44){
+              nondomPercent = "10th Percentile";
+            }
+            else if (nondom <= 56){
+              nondomPercent = "25th Percentile";
+            }
+            else{
+              nondomPercent = "Within Normal Limits";
+            }
+            if ((group2Advantage >= 50) || (group2Advantage <= -50)){
+              adv_percent = "5th Percentile";
+            }
+            else if ((group2Advantage >= 43) || (group2Advantage <= -43)){
+              adv_percent = "10th Percentile";
+            }
+            else if ((group2Advantage >= 28) || (group2Advantage <= -28)){
+              adv_percent = "25th Percentile";
+            }
+            else{
+              adv_percent = "Within Normal Limits";
+            }          
+          }
+          if (age >= 10 && age <= 12){
+            if (direction == "Neutral"){
+              if (percent1 <= 72){
+                interpretation = "Dichotic Dysaudia";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            }
+            else{
+              if (((dom <= 89) && (nondom <= 72)) && ((group2Advantage <= -14) || (group2Advantage >= 14))){
+                interpretation = "Amblyaudia + Dichotic Dysaudia";
+              }
+              else if (((dom <= 89) && (nondom <= 72)) || (((dom <= 89) && (nondom > 72)) && (((group2Advantage > -14) && (group2Advantage < 0)) || ((group2Advantage < 14) && (group2Advantage > 0))))) {
+                interpretation = "Dichotic Dysaudia";
+              }
+              else if (((dom > 89) && (nondom <= 72)) && ((group2Advantage > -14) && (group2Advantage < 0))){
+                interpretation = "Possible Ambylaudia Left Ear Dominant";
+              }
+              else if (((dom > 89) && (nondom <= 72)) && ((group2Advantage < 14) && (group2Advantage > 0))){
+                interpretation = "Possible Ambylaudia Right Ear Dominant";
+              }
+              else if (((dom > 89) && (nondom > 72)) && (group2Advantage <= -14)){
+                interpretation = "Possible Ambylaudia Left Ear Dominant";
+              }
+              else if (((dom > 89) && (nondom > 72)) && (group2Advantage >= 14)){
+                interpretation = "Possible Ambylaudia Right Ear Dominant";
+              }
+              else if (((dom > 89) && (nondom <= 72)) && (group2Advantage <= -14)){
+                interpretation = "Ambylaudia Left Ear Dominant";
+              }
+              else if (((dom > 89) && (nondom <= 72)) && (group2Advantage >= 14)){
+                interpretation = "Ambylaudia Right Ear Dominant";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            } 
+            if (dom <= 72){
+              domPercent = "5th Percentile";
+            }
+            else if (dom <= 78){
+              domPercent = "10th Percentile";
+            }
+            else if (dom <= 89){
+              domPercent = "25th Percentile";
+            }
+            else{
+              domPercent = "Within Normal Limits";
+            }
+            if (nondom <= 50){
+              nondomPercent = "5th Percentile";
+            }
+            else if (nondom <= 56){
+              nondomPercent = "10th Percentile";
+            }
+            else if (nondom <= 72){
+              nondomPercent = "25th Percentile";
+            }
+            else{
+              nondomPercent = "Within Normal Limits";
+            }
+            if ((group2Advantage >= 34) || (group2Advantage <= -34)){
+              adv_percent = "5th Percentile";
+            }
+            else if ((group2Advantage >= 27) || (group2Advantage <= -27)){
+              adv_percent = "10th Percentile";
+            }
+            else if ((group2Advantage >= 14) || (group2Advantage <= -14)){
+              adv_percent = "25th Percentile";
+            }
+            else{
+              adv_percent = "Within Normal Limits";
+            } 
           }
           if (age >= 13 && age <= 15){
             if (direction == "Neutral"){
-              if (percentColumn1Group2 <= 72){
+              if (percent1 <= 72){
                 interpretation = "Dichotic Dysaudia";
               }
               else{
@@ -516,26 +689,74 @@
               }
             }
             else{
-              if (((dom <= 89) || (nondom <= 72)) && ((group2Advantage <= -17) || (group2Advantage >= 17))){
+              if (((dom <= 89) && (nondom <= 72)) && ((group2Advantage <= -17) || (group2Advantage >= 17))){
                 interpretation = "Amblyaudia + Dichotic Dysaudia";
               }
-              else if ((dom <= 89) || (nondom <= 72)){
+              else if (((dom <= 89) && (nondom <= 72)) || (((dom <= 89) && (nondom > 72)) && (((group2Advantage > -17) && (group2Advantage < 0)) || ((group2Advantage < 17) && (group2Advantage > 0))))) {
                 interpretation = "Dichotic Dysaudia";
               }
+              else if (((dom > 89) && (nondom <= 72)) && ((group2Advantage > -17) && (group2Advantage < 0))){
+                interpretation = "Possible Ambylaudia Left Ear Dominant";
+              }
+              else if (((dom > 89) && (nondom <= 72)) && ((group2Advantage < 17) && (group2Advantage > 0))){
+                interpretation = "Possible Ambylaudia Right Ear Dominant";
+              }
               else if (((dom > 89) && (nondom > 72)) && (group2Advantage <= -17)){
-                interpretation = "Ambylaudia Left Ear Dominant";
+                interpretation = "Possible Ambylaudia Left Ear Dominant";
               }
               else if (((dom > 89) && (nondom > 72)) && (group2Advantage >= 17)){
+                interpretation = "Possible Ambylaudia Right Ear Dominant";
+              }
+              else if (((dom > 89) && (nondom <= 72)) && (group2Advantage <= -17)){
+                interpretation = "Ambylaudia Left Ear Dominant";
+              }
+              else if (((dom > 89) && (nondom <= 72)) && (group2Advantage >= 17)){
                 interpretation = "Ambylaudia Right Ear Dominant";
               }
               else{
                 interpretation = "Within Normal Limits";
               }
-            }          
+            } 
+            if (dom <= 78){
+              domPercent = "5th Percentile";
+            }
+            else if (dom <= 78){
+              domPercent = "10th Percentile";
+            }
+            else if (dom <= 89){
+              domPercent = "25th Percentile";
+            }
+            else{
+              domPercent = "Within Normal Limits";
+            }
+            if (nondom <= 50){
+              nondomPercent = "5th Percentile";
+            }
+            else if (nondom <= 61){
+              nondomPercent = "10th Percentile";
+            }
+            else if (nondom <= 72){
+              nondomPercent = "25th Percentile";
+            }
+            else{
+              nondomPercent = "Within Normal Limits";
+            }
+            if ((group2Advantage >= 33) || (group2Advantage <= -33)){
+              adv_percent = "5th Percentile";
+            }
+            else if ((group2Advantage >= 28) || (group2Advantage <= -28)){
+              adv_percent = "10th Percentile";
+            }
+            else if ((group2Advantage >= 17) || (group2Advantage <= -17)){
+              adv_percent = "25th Percentile";
+            }
+            else{
+              adv_percent = "Within Normal Limits";
+            }         
           }
           if (age >= 16 && age <= 18){
             if (direction == "Neutral"){
-              if (percentColumn1Group2 <= 83){
+              if (percent1 <= 83){
                 interpretation = "Dichotic Dysaudia";
               }
               else{
@@ -543,21 +764,69 @@
               }
             }
             else{
-              if (((dom <= 94) || (nondom <= 83)) && ((group2Advantage <= -11) || (group2Advantage >= 11))){
+              if (((dom <= 94) && (nondom <= 83)) && ((group2Advantage <= -11) || (group2Advantage >= 11))){
                 interpretation = "Amblyaudia + Dichotic Dysaudia";
               }
-              else if ((dom <= 94) || (nondom <= 83)){
+              else if (((dom <= 94) && (nondom <= 83)) || (((dom <= 94) && (nondom > 83)) && (((group2Advantage > -11) && (group2Advantage < 0)) || ((group2Advantage < 11) && (group2Advantage > 0))))) {
                 interpretation = "Dichotic Dysaudia";
               }
+              else if (((dom > 94) && (nondom <= 83)) && ((group2Advantage > -11) && (group2Advantage < 0))){
+                interpretation = "Possible Ambylaudia Left Ear Dominant";
+              }
+              else if (((dom > 94) && (nondom <= 83)) && ((group2Advantage < 11) && (group2Advantage > 0))){
+                interpretation = "Possible Ambylaudia Right Ear Dominant";
+              }
               else if (((dom > 94) && (nondom > 83)) && (group2Advantage <= -11)){
-                interpretation = "Ambylaudia Left Ear Dominant";
+                interpretation = "Possible Ambylaudia Left Ear Dominant";
               }
               else if (((dom > 94) && (nondom > 83)) && (group2Advantage >= 11)){
+                interpretation = "Possible Ambylaudia Right Ear Dominant";
+              }
+              else if (((dom > 94) && (nondom <= 83)) && (group2Advantage <= -11)){
+                interpretation = "Ambylaudia Left Ear Dominant";
+              }
+              else if (((dom > 94) && (nondom <= 83)) && (group2Advantage >= 11)){
                 interpretation = "Ambylaudia Right Ear Dominant";
               }
               else{
                 interpretation = "Within Normal Limits";
               }
+            } 
+            if (dom <= 78){
+              domPercent = "5th Percentile";
+            }
+            else if (dom <= 83){
+              domPercent = "10th Percentile";
+            }
+            else if (dom <= 94){
+              domPercent = "25th Percentile";
+            }
+            else{
+              domPercent = "Within Normal Limits";
+            }
+            if (nondom <= 61){
+              nondomPercent = "5th Percentile";
+            }
+            else if (nondom <= 67){
+              nondomPercent = "10th Percentile";
+            }
+            else if (nondom <= 83){
+              nondomPercent = "25th Percentile";
+            }
+            else{
+              nondomPercent = "Within Normal Limits";
+            }
+            if ((group2Advantage >= 28) || (group2Advantage <= -28)){
+              adv_percent = "5th Percentile";
+            }
+            else if ((group2Advantage >= 22) || (group2Advantage <= -22)){
+              adv_percent = "10th Percentile";
+            }
+            else if ((group2Advantage >= 11) || (group2Advantage <= -11)){
+              adv_percent = "25th Percentile";
+            }
+            else{
+              adv_percent = "Within Normal Limits";
             }          
           }
           
@@ -579,7 +848,21 @@
           advantageDiffGroup2.innerText = group2Advantage.toString();
           advantageDiffGroup3.innerText = group3Advantage.toString();
 
+          if (direction == "Right"){
+            leftEarPercentile.innerText = nondomPercent.toString();
+            rightEarPercentile.innerText = domPercent.toString();
+          }
+          else if (direction == "Left"){
+            leftEarPercentile.innerText = domPercent.toString();
+            rightEarPercentile.innerText = nondomPercent.toString();
+          }
+          else{
+            leftEarPercentile.innerText = "No Dominant Ear";
+            rightEarPercentile.innerText = "No Dominant Ear";
+          }
 
+
+        advantagePercentile.innerText = adv_percent.toString();
           advantageName.innerText = direction;
           readOnly.value = advantageName.innerText;
 
@@ -588,6 +871,7 @@
           readOnlyDiag.value = testDiagnosis.innerText;
 
           const earAdvantageCells = document.querySelectorAll('.ear-advantage');
+          const percentileCells = document.querySelectorAll('.percentile');
           // Loop through each ear advantage cell
           earAdvantageCells.forEach(cell => {
             // Get the value of the cell
@@ -600,6 +884,24 @@
               cell.style.backgroundColor = 'lightpink';
             } else {
               cell.style.backgroundColor = 'white';
+            }
+          });
+          percentileCells.forEach(cell => {
+            // Get the value of the cell
+            const percValue = cell.textContent.trim();
+
+            // Check the value and set the background color accordingly
+            if ((percValue == "5th Percentile") || (percValue == "No Dominant Ear")) {
+              cell.style.backgroundColor = 'lightpink';
+            } 
+            else if (percValue == "10th Percentile") {
+              cell.style.backgroundColor = 'hsl(40, 100%, 60%)';
+            } 
+            else if (percValue == "25th Percentile") {
+              cell.style.backgroundColor = 'hsl(60, 100%, 70%)';
+            }
+            else{
+              cell.style.backgroundColor = 'lightgreen';
             }
           });
           })
@@ -621,7 +923,10 @@
         document.getElementById("G3adv").value = advantageDiffGroup3.innerText;
 
         document.getElementById("interpretation").value = testDiagnosis.innerText;
-   
+        document.getElementById("left_percentile").value = leftEarPercentile.innerText;
+        document.getElementById("right_percentile").value = rightEarPercentile.innerText;
+        document.getElementById("advantage_percentile").value = advantagePercentile.innerText;
+
       }
 
         

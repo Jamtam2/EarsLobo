@@ -66,7 +66,7 @@ class RddtTestsController < ApplicationController
       private
     
       def rddt_test_params
-        params.require(:rddt_test).permit(:label, :notes, :client_name, :test_type, :left_score1, :left_score2, :left_score3, :right_score1, :right_score2, :right_score3, :interpretation, :ear_advantage, :ear_advantage_score, :scan, :authenticity_token)
+        params.require(:rddt_test).permit(:label, :notes, :client_name, :test_type, :left_score1, :left_score2, :left_score3, :right_score1, :right_score2, :right_score3, :interpretation, :ear_advantage, :ear_advantage_score, :right_percentile, :left_percentile, :advantage_percentile, :scan, :authenticity_token)
       end
     
 

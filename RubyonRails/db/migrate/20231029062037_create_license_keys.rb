@@ -8,7 +8,7 @@ class CreateLicenseKeys < ActiveRecord::Migration[6.1]
       t.string :activation_code
       t.datetime :issued_date
       t.datetime :expiry_date
-      t.boolean :is_activated
+      t.boolean :is_activated, default: false
 
       t.timestamps
     end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_20_164326) do
+ActiveRecord::Schema.define(version: 2023_10_29_062037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -160,6 +160,19 @@ ActiveRecord::Schema.define(version: 2023_09_20_164326) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["code"], name: "index_keys_on_code", unique: true
+  end
+
+  create_table "license_keys", force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "customer_id"
+    t.integer "subscription_id"
+    t.integer "license_type"
+    t.string "activation_code"
+    t.datetime "issued_date"
+    t.datetime "expiry_date"
+    t.boolean "is_activated"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "rddt_tests", force: :cascade do |t|

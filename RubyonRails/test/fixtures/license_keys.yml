@@ -1,0 +1,36 @@
+# == Schema Information
+#
+# Table name: license_keys
+#
+#  id              :bigint           not null, primary key
+#  activation_code :string
+#  expiry_date     :datetime
+#  is_activated    :boolean
+#  issued_date     :datetime
+#  license_type    :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  customer_id     :integer
+#  product_id      :integer
+#  subscription_id :integer
+#
+
+one:
+  product_id: 1
+  customer_id: 1
+  subscription_id: 1
+  license_type: 1
+  activation_code: MyString
+  issued_date: 2023-10-29 01:20:37
+  expiry_date: 2023-10-29 01:20:37
+  is_activated: false
+
+two:
+  product_id: 1
+  customer_id: 1
+  subscription_id: 1
+  license_type: 1
+  activation_code: MyString
+  issued_date: 2023-10-29 01:20:37
+  expiry_date: 2023-10-29 01:20:37
+  is_activated: false

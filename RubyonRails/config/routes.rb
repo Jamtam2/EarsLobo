@@ -11,7 +11,9 @@ Rails.application.routes.draw do
   root to: redirect('/home')
   get 'home', to: 'pages#home', as: 'home'
   get 'about', to: 'pages#about', as: 'about'
-  
+
+  post 'dot_net_integration', to: 'dot_net_integration#create'
+
   get "/clients/new", to: "clients#new"
   get 'clients', to: 'clients#index'
   get 'clients/:id/edit', to: 'clients#edit', as: 'edit_client'

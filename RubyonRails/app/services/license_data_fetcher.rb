@@ -38,7 +38,7 @@ class LicenseDataFetcher
 
       # Save to database or process data as required
       licenses.each do |license_data|
-        License(
+        License.create(
           product_id: license_data['productID'],
           customer_id: license_data['customerID'],
           subscription_id: license_data['subscriptiontID'].presence || nil, # Default to original NULL if necessary.

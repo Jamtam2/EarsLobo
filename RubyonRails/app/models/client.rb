@@ -52,6 +52,9 @@ class Client < ApplicationRecord
     has_many :dwt_tests,dependent: :destroy
     has_many :dnw_tests,dependent: :destroy
     has_many :rddt_tests,dependent: :destroy
+    has_many :hashed_data, as: :hashable, dependent: :destroy
+
+    after_save :store_hashed_data
   # Associations with emergency contacts and tests, with dependent destroy option
 
 
@@ -59,8 +62,60 @@ class Client < ApplicationRecord
   accepts_nested_attributes_for :emergency_contacts
 
 
-  
-    def date_of_birth=(date)
+  #Method hashes the data from the Client model into the hashed_data model so it can be filter with Ransack
+  private def store_hashed_data
+    # Create a new HashedDatum object
+    hashed_datum = HashedDatum.new(
+      source_model: "Client",
+      created_at: created_at,
+      updated_at: updated_at
+    # You might need to set hashable_id and hashable_type here, depending on your setup
+      )
+
+    # Map each client attribute to its respective hashed_data attribute
+    attribute_map = {
+      'email' => 'hashed_email',
+      'address1' => 'hashed_address',
+      'dob_string' => 'hashed_date_of_birth',
+      'first_name' => 'hashed_first_name',
+      'last_name' => 'hashed_last_name',
+      'phone1' => 'hashed_phone1',
+      'phone2' => 'hashed_phone2',
+      'gender' => 'hashed_gender',
+      'race' => 'hashed_race',
+      'zip' => 'hashed_zip',
+      'age_in_years' => 'hashed_age',
+      'city' => 'hashed_city',
+      'state' => 'hashed_state',
+      'country' => 'hashed_country',
+      'tenant_id' => 'hashed_tenant_id'
+    }
+
+    # Loop over every client attribute, hash the value, and store it in the correct hashed_data attribute
+    attribute_map.each do |client_attr, hashed_attr|
+      value = self.send(client_attr)
+
+      # Convert value to string if it's not already
+      stringified_value = value.is_a?(String) ? value : value.to_s
+
+      # Hash the string
+      hashed_value = Digest::SHA256.hexdigest(stringified_value)
+      #   hashed_value = stringified_value
+
+      # Store the hashed value in the hashed_datum
+      hashed_datum.send("#{hashed_attr}=", hashed_value)
+    end
+
+    # Save the new hashed_datum record
+    self.hashed_data << hashed_datum
+    hashed_datum.save!
+  end
+
+
+
+
+
+  def date_of_birth=(date)
       self.dob_string = date.to_s
     end
     # The setter for the raw_date_of_birth, used internally
@@ -106,10 +161,10 @@ class Client < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     %w(address1 city country date_of_birth email first_name gender last_name mgmt_ref phone1 phone2 race state zip created_at updated_at age_in_years age ) + _ransackers.keys
   end
-
+  
   # Allow these associations to be searched through Ransack. Can use attributes from different models.
   def self.ransackable_associations(auth_object = nil)
-    ["dwt_tests"] # Allows the use of this model in the Client model now.
+    %w(dwt_tests hashed_data) # Allows the use of this model in the Client model now.
   end
 
   # Controls the functionality behind thw advanced searching for this attribute of id

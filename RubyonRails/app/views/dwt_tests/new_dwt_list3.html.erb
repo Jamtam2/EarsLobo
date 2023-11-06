@@ -29,12 +29,11 @@
       <div class="form-group row">
         <label for="conditionSelect">Condition</label>
         <select class="form-control" id="conditionSelect">
+          <option>FreeRecall</option>
           <option>DirectedLeft</option>
           <option>DirectedRight</option>
-          <option>FreeRecall</option>
         </select>
       </div>
-      <%= button_tag "Switch left/right", :onclick => "event.preventDefault();" %>
 
       <hr/>
       <label for="Notes">Notes</label>
@@ -285,10 +284,10 @@
               interpretation = "Dichotic Dysaudia";
             }
             else if (((dom > 64) && (nondom > 44)) && (advantage <= -32)){
-              interpretation = "Ambylaudia Right Ear Dominant";
+              interpretation = "Ambylaudia Left Ear Dominant";
             }
             else if (((dom > 64) && (nondom > 44)) && (advantage >= 32)){
-              interpretation = "Ambylaudia Left Ear Dominant";
+              interpretation = "Ambylaudia Right Ear Dominant";
             }
             else{
               interpretation = "Within Normal Limits";
@@ -312,10 +311,10 @@
               interpretation = "Dichotic Dysaudia";
             }
             else if (((dom > 76) && (nondom > 60)) && (advantage <= -24)){
-              interpretation = "Ambylaudia Right Ear Dominant";
+              interpretation = "Ambylaudia Left Ear Dominant";
             }
             else if (((dom > 76) && (nondom > 60)) && (advantage >= 24)){
-              interpretation = "Ambylaudia Left Ear Dominant";
+              interpretation = "Ambylaudia Right Ear Dominant";
             }
             else{
               interpretation = "Within Normal Limits";
@@ -339,10 +338,10 @@
               interpretation = "Dichotic Dysaudia";
             }
             else if (((dom > 84) && (nondom > 72)) && (advantage <= -20)){
-              interpretation = "Ambylaudia Right Ear Dominant";
+              interpretation = "Ambylaudia Left Ear Dominant";
             }
             else if (((dom > 84) && (nondom > 72)) && (advantage >= 20)){
-              interpretation = "Ambylaudia Left Ear Dominant";
+              interpretation = "Ambylaudia Right Ear Dominant";
             }
             else{
               interpretation = "Within Normal Limits";
@@ -366,10 +365,10 @@
               interpretation = "Dichotic Dysaudia";
             }
             else if (((dom > 92) && (nondom > 76)) && (advantage <= -16)){
-              interpretation = "Ambylaudia Right Ear Dominant";
+              interpretation = "Ambylaudia Left Ear Dominant";
             }
             else if (((dom > 92) && (nondom > 76)) && (advantage >= 16)){
-              interpretation = "Ambylaudia Left Ear Dominant";
+              interpretation = "Ambylaudia Right Ear Dominant";
             }
             else{
               interpretation = "Within Normal Limits";
@@ -393,10 +392,10 @@
               interpretation = "Dichotic Dysaudia";
             }
             else if (((dom > 88) && (nondom > 80)) && (advantage <= -14)){
-              interpretation = "Ambylaudia Right Ear Dominant";
+              interpretation = "Ambylaudia Left Ear Dominant";
             }
             else if (((dom > 88) && (nondom > 80)) && (advantage >= 14)){
-              interpretation = "Ambylaudia Left Ear Dominant";
+              interpretation = "Ambylaudia Right Ear Dominant";
             }
             else{
               interpretation = "Within Normal Limits";

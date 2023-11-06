@@ -1,5 +1,5 @@
 class ClientsController < ApplicationController
- before_action:authenticate_user!, except: [:index]  
+ before_action :authenticate_user!, except: [:index]
  require 'csv'
   
   def new

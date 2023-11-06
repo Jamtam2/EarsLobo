@@ -6,8 +6,8 @@ require 'faker'
 
 
 #First just create a global mod and local mod for testing
-keybruh = Key.create!(code: "localmodkey", used: false)
-keybruh = Key.create!(code: "globalmodkey", used: false)
+keybruh = LicenseKey.create!(activation_code: "localmodkey", is_activated: false)
+keybruh = LicenseKey.create!(activation_code: "globalmodkey", is_activated: false)
 
 tenants = []
 3.times { |i| tenants << Tenant.find_or_create_by!(subdomain: "tenant#{i + 1}") }
@@ -17,7 +17,7 @@ ActsAsTenant.with_tenant(tenants.first) do
     email: "global@gmail.com",
     password: "password",
     fname: "Locality",
-  lname:"Mod",
+    lname: "Mod",
     role: :global_moderator,
     registration_key: 'globalmodkey',
   ) 
@@ -26,7 +26,7 @@ ActsAsTenant.with_tenant(tenants.first) do
     email: "local@gmail.com",
     password: "password",
     fname: "Locality",
-  lname:"Mod",
+    lname: "Mod",
     role: :local_moderator,
     registration_key: 'localmodkey',
   ) 
@@ -36,7 +36,7 @@ end
 #Create multiple users and seeds
 
 keys = []
-15.times { |i| keys << Key.create!(code: "key#{i + 1}", used: false) }
+15.times { |i| keys << LicenseKey.create!(activation_code: "key#{i + 1}", is_activated: false) }
 # puts "keys: #{keys.inspect}"
 
 tenants = [] 
@@ -53,7 +53,7 @@ tenants.each do |tenant|
         fname: Faker::Name.first_name,
         lname: Faker::Name.last_name,
         role: :local_moderator,
-        registration_key: keys.pop.code,
+        registration_key: keys.pop&.activation_code,
       )
       
       # Create 50 Clients and related Emergency Contacts and Tests for each user
@@ -121,10 +121,8 @@ tenants.each do |tenant|
           label: "Label#{j + 1}",
           notes: "Notes for DwtTest #{j + 1}"
         )
-    
-    
+
       end
     end
   end
 end
-

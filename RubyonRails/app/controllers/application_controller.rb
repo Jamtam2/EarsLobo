@@ -7,9 +7,8 @@ class ApplicationController < ActionController::Base
   
   def set_current_tenant
     ActsAsTenant.current_tenant = current_user.tenant if current_user
-    puts "Current User: #{current_user.inspect}"
-    puts "Current Tenant: #{ActsAsTenant.current_tenant.inspect}"
-
+    Rails.logger.debug("[DEBUG] Current User: #{current_user.inspect}")
+    Rails.logger.debug("[DEBUG] Current Tenant: #{current_tenant.inspect}")
   end
 
   protected

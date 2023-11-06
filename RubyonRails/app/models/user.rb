@@ -49,37 +49,54 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  # function checks to see if the role of the user is a global moderator
+  # Returns true if the user's role is 'global_moderator'.
   def global_moderator?
     role == 'global_moderator'
   end
 
-  # function checks to see if the role of the user is a local moderator
+  # Returns true if the user's role is 'local_moderator'.
   def local_moderator?
     role == 'local_moderator'
   end
 
-  # function checks to see if the role of the user is the owner
+  # Returns true if the user's role is 'owner'.
   def owner?
     role == 'owner'
   end
-  
-  # functions finds the code for the registration key and checks to see if the key has been used or not. 
-  # This determines if the key for registration has been used or not.
 
+
+  # Validates the provided registration key.
+  #
+  # This method checks for the presence of a license key in the database with the given
+  # activation code and that it has not already been activated. If such a key is found,
+  # it updates the key's status to mark it as activated.
+  #
+  # It logs the details of the key check and update operations. If no valid key is found,
+  # or if it has already been activated, an error is added to the `registration_key` field,
+  # and it logs an error message.
+  #
+  # This method is meant to be called within an instance context where `registration_key`
+  # is expected to be an accessible attribute.
+  #
+  # No parameters.
+  #
+  # Returns:
+  # - nil if a valid, non-activated key is found and successfully updated.
+  # - false if no valid key is found, and the `registration_key` attribute has an error added.
   private
   def validate_registration_key
-    key = Key.find_by(code: registration_key)
-    puts "key checker: #{key.inspect}"
-  
-    if key.present? && !key.used
-      key.update(used: true)
-      puts "Valid registration key found: #{key.inspect}"
-      return 
+    key = LicenseKey.find_by(activation_code: registration_key, is_activated: false)
+    Rails.logger.debug("DEBUG fn validate_registration_key checker: #{key.inspect}")
+
+    # Verify key status; change key if not in use
+    if key.present? && !key.is_activated
+      key.update(is_activated: true)
+      Rails.logger.debug("DEBUG: Valid registration key found: #{key.inspect}")
+      nil
     else
       errors.add(:registration_key, "is invalid.")
-      puts "Invalid registration key: #{registration_key}"
-      return false
+      Rails.logger.error("ERROR: Invalid registration key: #{registration_key}")
+      false
     end
   end
   

@@ -15,6 +15,6 @@
 #  subscription_id :integer
 #
 class LicenseKey < ApplicationRecord
-  validates :activation_code, presence: true, uniqueness: true
-  validates :license_type, :customer_id, :product_id, presence: true
+  # validates :activation_code, presence: true, uniqueness: true
+  # validates :license_type, :customer_id, :product_id, presence: true
 end

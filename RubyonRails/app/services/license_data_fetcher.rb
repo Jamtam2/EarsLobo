@@ -13,7 +13,7 @@ require 'httparty'
 #
 class LicenseDataFetcher
   # .NET rest API endpoint address.
-  API_ENDPOINT = 'https://localhost:7010/api/licenses'
+  API_ENDPOINT = 'https://api.dichoticsinc.com/api/license?apiKey=ears_lobo_audia_dichotic_capstone_winter23'
 
   # Calls the service to fetch and store license data.
   #

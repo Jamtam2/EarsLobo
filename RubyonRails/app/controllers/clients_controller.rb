@@ -100,7 +100,7 @@ class ClientsController < ApplicationController
         # Calling method that enables Ransack functionality
         # sort_and_filter_clients(client_scope)
 
-      # process_hashed_search_parameters(client_scope)
+      process_hashed_search_parameters()
 
         respond_to do |format|
           format.html
@@ -165,33 +165,98 @@ end
 
 
 
-def process_hashed_search_parameters()
+def process_hashed_search_parameters
+  @q = Client.ransack(params[:q], sort: params[:s])
+  @clients = @q.result
 
-  # Check if there's a search term provided by the user
-  if params[:q]&.key?(:search_term)
-    search_term_string = params[:q][:search_term].to_s
-    # Hash the entire search term
-    hashed_search_term = Digest::SHA256.hexdigest(search_term_string)
+  if params[:all_data_search_term].present?
+    hashed_search_term = Digest::SHA256.hexdigest(params[:all_data_search_term].to_s)
+    hashed_records = HashedDatum.where(hashed_first_name: hashed_search_term)
+                                .or(HashedDatum.where(hashed_last_name: hashed_search_term))
+                                .or(HashedDatum.where(hashed_address: hashed_search_term))
+                                .or(HashedDatum.where(hashed_age: hashed_search_term))
+                                .or(HashedDatum.where(hashed_city: hashed_search_term))
+                                .or(HashedDatum.where(hashed_country: hashed_search_term))
+                                .or(HashedDatum.where(hashed_date_of_birth: hashed_search_term))
+                                .or(HashedDatum.where(hashed_email: hashed_search_term))
+                                .or(HashedDatum.where(hashed_gender: hashed_search_term))
+                                .or(HashedDatum.where(hashed_phone1: hashed_search_term))
+                                .or(HashedDatum.where(hashed_phone2: hashed_search_term))
+                                .or(HashedDatum.where(hashed_state: hashed_search_term))
+                                .or(HashedDatum.where(hashed_zip: hashed_search_term))
+                                .or(HashedDatum.where(hashed_race: hashed_search_term))
 
-    # Replace the search term with the hashed search term, specifying the associated model's attribute
-    params[:q][:"hashed_data_hashed_first_name_eq"] = hashed_search_term # please adjust the field name based on your actual field for the hashed data
-
-    # Print the original and hashed search term to the server logs
-    Rails.logger.debug "Original Search Term: #{params[:q][:search_term]}"
-    Rails.logger.debug "Hashed Search Term: #{hashed_search_term}"
-
-    @hashed_search_term = hashed_search_term
-    # Delete the original search term as we're now searching by the hashed value
-    # params[:q].delete(:search_term)
-
-    # Perform the search on the HashedDatum model, and include the associated hashable records in the results
-    @q = HashedDatum.includes(:hashable).ransack(params[:q], sort: params[:s])
-    @clients = @q.result.includes(:hashable).map(&:hashable) # This retrieves the associated hashable records
-  else
-    # If no search term was provided, you can default to a standard search on the client model
-    @q = Client.ransack(params[:q], sort: params[:s])
-    @clients = @q.result
+    @clients = @clients.where(id: hashed_records.pluck(:hashable_id)) if hashed_records.exists?
   end
+  if params[:country_search_term].present?
+    hashed_search_term = Digest::SHA256.hexdigest(params[:country_search_term].to_s)
+    hashed_records = HashedDatum.where(hashed_country: hashed_search_term)
+    @clients = @clients.where(id: hashed_records.pluck(:hashable_id)) if hashed_records.exists?
+  end
+  if params[:age_search_term].present?
+    hashed_search_term = Digest::SHA256.hexdigest(params[:age_search_term].to_s)
+    hashed_records = HashedDatum.where(hashed_age: hashed_search_term)
+    @clients = @clients.where(id: hashed_records.pluck(:hashable_id)) if hashed_records.exists?
+  end
+  # if params[:gender_search_term].present?
+  #   hashed_search_term = Digest::SHA256.hexdigest(params[:gender_search_term].to_s)
+  #   hashed_records = HashedDatum.where(hashed_gender: hashed_search_term)
+  #   @clients = @clients.where(id: hashed_records.pluck(:hashable_id)) if hashed_records.exists?
+  # end
+  if params[:name_search_term].present?
+    hashed_search_term = Digest::SHA256.hexdigest(params[:name_search_term].to_s)
+    hashed_records = HashedDatum.where(hashed_first_name: hashed_search_term)
+                       .or(HashedDatum.where(hashed_last_name: hashed_search_term))
+    @clients = @clients.where(id: hashed_records.pluck(:hashable_id)) if hashed_records.exists?
+  end
+  # if params[:date_of_birth_search_term].present?
+  #   hashed_search_term = Digest::SHA256.hexdigest(params[:date_of_birth_search_term].to_s)
+  #   hashed_records = HashedDatum.where(hashed_date_of_birth: hashed_search_term)
+  #   @clients = @clients.where(id: hashed_records.pluck(:hashable_id)) if hashed_records.exists?
+  # end
+  if params[:state_search_term].present?
+    hashed_search_term = Digest::SHA256.hexdigest(params[:state_search_term].to_s)
+    hashed_records = HashedDatum.where(hashed_state: hashed_search_term)
+    @clients = @clients.where(id: hashed_records.pluck(:hashable_id)) if hashed_records.exists?
+  end
+
+  if params[:date_of_birth_search_term].present? && params[:gender_search_term].present?
+    hashed_dob_term = Digest::SHA256.hexdigest(params[:date_of_birth_search_term].to_s)
+    hashed_gender_term = Digest::SHA256.hexdigest(params[:gender_search_term].to_s)
+
+    hashed_dob_records = HashedDatum.where(hashed_date_of_birth: hashed_dob_term)
+    hashed_gender_records = HashedDatum.where(hashed_gender: hashed_gender_term)
+
+    if hashed_dob_records.exists? && hashed_gender_records.exists?
+      @clients = @clients.where(id: hashed_dob_records.pluck(:hashable_id))
+                         .where(id: hashed_gender_records.pluck(:hashable_id))
+    end
+  elsif params[:date_of_birth_search_term].present?
+    hashed_dob_term = Digest::SHA256.hexdigest(params[:date_of_birth_search_term].to_s)
+    hashed_dob_records = HashedDatum.where(hashed_date_of_birth: hashed_dob_term)
+    @clients = @clients.where(id: hashed_dob_records.pluck(:hashable_id)) if hashed_dob_records.exists?
+  elsif params[:gender_search_term].present?
+    hashed_gender_term = Digest::SHA256.hexdigest(params[:gender_search_term].to_s)
+    hashed_gender_records = HashedDatum.where(hashed_gender: hashed_gender_term)
+    @clients = @clients.where(id: hashed_gender_records.pluck(:hashable_id)) if hashed_gender_records.exists?
+  end
+
+  # if params[:address_search].present?
+  #   address_search_term = Digest::SHA256.hexdigest(params[:address_search].to_s)
+  #   address_records = HashedDatum.where(hashed_address: address_search_term)
+  #                                .or(HashedDatum.where(hashed_state: address_search_term))
+  #                                .or(HashedDatum.where(hashed_city: address_search_term))
+  #                                .or(HashedDatum.where(hashed_country: address_search_term))
+  #                                .or(HashedDatum.where(hashed_zip: address_search_term))
+  #   @clients = @clients.where(id: address_records.pluck(:hashable_id)) if address_records.exists?
+  # end
+  #
+  # if params[:email_search].present?
+  #   email_search_term = Digest::SHA256.hexdigest(params[:email_search].to_s)
+  #   email_records = HashedDatum.where(hashed_email: email_search_term)
+  #   @clients = @clients.where(id: email_records.pluck(:hashable_id)) if email_records.exists?
+  # end
+
 end
 
       

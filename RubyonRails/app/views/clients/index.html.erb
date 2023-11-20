@@ -6,16 +6,15 @@
     <!--Filter options-->
     <div class="row mb-3">
       <div class="col-md-6">
-        <%= search_form_for @q, url: clients_path, method: :get, local: true, class: 'form-inline' do |f| %>
-          <%= f.search_field :hashed_data_hashed_first_name_eq, class: 'form-control mr-sm-2 rounded-pill' ,
-            placeholder: 'Filter by name' %>
-            <%= f.search_field :address1_or_state_or_city_or_country_or_zip_cont,
-              class: 'form-control mr-sm-2 rounded-pill' , placeholder: 'Filter by location' %>
-              <%= f.submit "Search" , class: "btn rounded-pill btn-outline-info my-2 my-sm-0" %>
-                <% end %>
-                  <!-- Filter Button -->
-                  <button type="button" id="filterButton" class="btn btn-secondary rounded-pill mr-sm-2">Filter
-                    Options</button>
+        <%= form_tag clients_path, method: :get, class: 'form-inline' do %>
+          <%= text_field_tag :all_data_search_term, params[:all_data_search_term], class: 'form-control mr-sm-2 rounded-pill', placeholder: 'Filter Results' %>
+          <%#= text_field_tag :address_search, params[:address_search], class: 'form-control mr-sm-2 rounded-pill', placeholder: 'Filter by location' %>
+          <%= submit_tag "Search", class: "btn rounded-pill btn-outline-info my-2 my-sm-0" %>
+        <% end %>
+
+        <!-- Filter Button -->
+        <button type="button" id="filterButton" class="btn btn-secondary rounded-pill mr-sm-2">Filter Options</button>
+
       </div>
 
       <!-- The filter modal -->
@@ -47,18 +46,7 @@
                     <label for="from_name">Age:</label>
                   </div>
                   <div class="col-md-8">
-                    <%= f.select :sort_by_age, [['None', nil],
-                                                ['Oldest to Youngest', 'age_in_years desc'], 
-                                                ['Youngest to Oldest', 'age_in_years asc']], 
-                              
-                              {include_blank: true, 
-                               selected: params[:q]&.dig(:sort_by_age)
-                              }, 
-                              
-                              {class: 'form-control sort-select', 
-                               id: 'sort-by-name-select', 
-                               data: {button_id: 'filterButtonName' } 
-                               } %>
+                    <%= text_field_tag :age_search_term, params[:age_search_term], class: 'form-control mr-sm-2 rounded-pill', placeholder: 'Filter by Age: e.g: 8' %>
                 
                  <!-- <%= f.number_field :age_in_years_eq %> -->
                   </div>
@@ -69,16 +57,12 @@
                     <label for="from_client">Gender:</label>
                   </div>
                   <div class="col-md-8">
-                    <%= f.select :gender_eq, [['None', nil], 
-                                            ['Male', 'Male'], 
-                                            ['Female', 'Female']
-                                            ], 
-                      {include_blank: true,
-                       selected:params[:q]&.dig(:gender_eq) 
-                       }, 
-                       
-                       { class: 'form-control sort-select', 
-                       data: {button_id: 'filterButtonClient' } } %>
+                    <%= select_tag :gender_search_term,
+                                   options_for_select([['None', nil], ['Male', 'Male'], ['Female', 'Female']], params[:gender_search_term]),
+                                   include_blank: true,
+                                   class: 'form-control',
+                                   data: { button_id: 'filterButtonClient' } %>
+
                   </div>
                 </div>
                 <!--Filter button for name-->
@@ -87,20 +71,10 @@
                     <label for="from_name">Name:</label>
                   </div>
                   <div class="col-md-8">
-                    <%= f.select :hashed_data_source_attribute, [['None', nil], 
-                                                 ['First Name (A-Z)', 'source_attribute asc' ], 
-                                                 ['First Name(Z-A)', 'source_attribute' ], 
-                                                 ['Last Name (A-Z)', 'hashed_value asc' ], 
-                                                 ['Last Name(Z-A)', 'hashed_value desc' ]], 
-                      {include_blank: true, 
-                      selected: params[:q]&.dig(:hashed_data_source_attribute) 
-                      }, 
-                      
-                      {
-                      class: 'form-control sort-select' , 
-                      id: 'sort-by-name-select' , 
-                      data: {button_id: 'filterButtonName' } 
-                      } %>
+                    <%= text_field_tag :name_search_term, params[:name_search_term],
+                                   include_blank: true,
+                                   class: 'form-control', placeholder: 'Filter by Name: e.g: Ella',
+                                   data: { button_id: 'filterButtonClient' } %>
                   </div>
                 </div>
                 <!--Filter button for client-->
@@ -127,16 +101,10 @@
                     <label for="from_date_birth">Date of Birth:</label>
                   </div>
                   <div class="col-md-8">
-                    <%= f.select :sort_by_date_birth, [['None', nil], 
-                                                       ['Date of Birth (newestfirst)', 'date_of_birth desc' ], 
-                                                       ['Date of Birth (oldest first)', 'date_of_birth asc' ]],
-                      {include_blank: true, 
-                      selected: params[:q]&.dig(:sort_by_date_birth)
-                      },
-                    
-                      { class: 'form-control sort-select' , 
-                      data: {button_id: 'filterButtonDateofBirth' } 
-                      } %>
+                    <%= text_field_tag :date_of_birth_search_term, params[:date_of_birth_search_term],
+                                       include_blank: true,
+                                       class: 'form-control', placeholder: 'Filter by DoB: e.g: 2015-08-28',
+                                       data: { button_id: 'filterButtonClient' } %>
                   </div>
                 </div>
                 <!--Filter button for country-->
@@ -145,7 +113,7 @@
                     <label for="from_client">Country:</label>
                   </div>
                   <div class="col-md-8">
-                    <%= f.select :country_eq, [['None', nil], 
+                    <%= select_tag :country_search_term, options_for_select([['None', nil],
                                             ['Afghanistan', 'AF'],
                                             ['Albania', 'AL'],
                                             ['Algeria', 'DZ'],
@@ -341,14 +309,12 @@
                                             ['Vietnam', 'VN'],
                                             ['Yemen', 'YE'],
                                             ['Zambia', 'ZM'],
-                                            ['Zimbabwe', 'ZW']], 
-                      {include_blank: true, 
-                      selected:params[:q]&.dig(:country_eq) 
-                      }, 
-                      
-                      { class: 'form-control sort-select' , 
-                      data: {button_id: 'filterButtonClient' } 
-                      } %>
+                                            ['Zimbabwe', 'ZW']],
+                                   params[:country_search_term]),
+                                   include_blank: true,
+                                   class: 'form-control',
+                                   placeholder: 'Filter by DoB: e.g: SA',
+                                   data: { button_id: 'filterButtonClient' } %>
                   </div>
                 </div>
                 <!--Filter button for state-->
@@ -357,7 +323,7 @@
                     <label for="from_client">State:</label>
                   </div>
                   <div class="col-md-8">
-                    <%= f.select :state_eq, [['None', nil], 
+                    <%= select_tag :state_search_term, options_for_select([['None', nil],
                                             ['Alabama', 'AL'],
                                             ['Alaska', 'AK'],
                                             ['Arizona', 'AZ'],
@@ -407,14 +373,11 @@
                                             ['Washington', 'WA'],
                                             ['West Virginia', 'WV'],
                                             ['Wisconsin', 'WI'],
-                                            ['Wyoming', 'WY']], 
-                      {include_blank: true, 
-                      selected:params[:q]&.dig(:state_eq) 
-                      }, 
-                      
-                      { class: 'form-control sort-select' , 
-                      data: {button_id: 'filterButtonClient' } 
-                      } %>
+                                            ['Wyoming', 'WY']], params[:state_search_term]),
+                                   include_blank: true,
+                                   class: 'form-control',
+                                   placeholder: 'Filter by DoB: e.g: TN',
+                                   data: { button_id: 'filterButtonClient' } %>
                   </div>
                 </div>
                 <!--Filter option below is broken will need to fix later for age filtering, FIX ME-->
@@ -535,66 +498,66 @@
   </div>
 
 
-  <div class="justify-content-center">
-    <div class="table-responsive">
-      <table>
-        <thead>
-        <tr>
-          <th>Edit</th>
-          <th>Record ID</th>
-          <th>Model Came From</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Email</th>
-          <th>Gender</th>
-          <th>Age</th>
-          <th>Date of Birth</th>
-          <th>Phone1</th>
-          <th>Phone2</th>
-          <th>Address</th>
-          <th>Country</th>
-          <th>State</th>
-          <th>City</th>
-          <th>Tenant_ID</th>
-          <th>Delete</th>
-        </tr>
-        </thead>
+<!--  <div class="justify-content-center">-->
+<!--    <div class="table-responsive">-->
+<!--      <table>-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--          <th>Edit</th>-->
+<!--          <th>Record ID</th>-->
+<!--          <th>Model Came From</th>-->
+<!--          <th>First Name</th>-->
+<!--          <th>Last Name</th>-->
+<!--          <th>Email</th>-->
+<!--          <th>Gender</th>-->
+<!--          <th>Age</th>-->
+<!--          <th>Date of Birth</th>-->
+<!--          <th>Phone1</th>-->
+<!--          <th>Phone2</th>-->
+<!--          <th>Address</th>-->
+<!--          <th>Country</th>-->
+<!--          <th>State</th>-->
+<!--          <th>City</th>-->
+<!--          <th>Tenant_ID</th>-->
+<!--          <th>Delete</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
 
-        <!--Take data from the Client model database and show it in the table-->
-        <tbody>
-        <% @active_hashed_data.each do |client| %>
-          <tr>
-            <td>
-              <%= link_to edit_client_path(client) do %>
-                <%= image_tag 'edit_icon.png' , alt: 'Edit' ,width: 20 %>
-              <% end %>
-            </td>
-            <td><%= client.record_id %></td>
-            <td><%= client.source_model %></td>
-            <td><%= client.hashed_first_name %></td>
-            <td><%= client.hashed_last_name %></td>
-            <td><%= client.hashed_email %></td>
-            <td><%= client.hashed_gender %></td>
-            <td><%= client.hashed_age %></td>
-            <td><%= client.hashed_date_of_birth %></td>
-            <td><%= client.hashed_phone1 %></td>
-            <td><%= client.hashed_phone2 %></td>
-            <td><%= client.hashed_address %></td>
-            <td><%= client.hashed_country %></td>
-            <td><%= client.hashed_state %></td>
-            <td><%= client.hashed_city %></td>
-            <td><%= client.hashed_tenant_id %></td>
+<!--        Take data from the Client model database and show it in the table-->
+<!--        <tbody>-->
+        <%# @active_hashed_data.each do |client| %>
+<!--          <tr>-->
+<!--            <td>-->
+              <%#= link_to edit_client_path(client) do %>
+                <%#= image_tag 'edit_icon.png' , alt: 'Edit' ,width: 20 %>
+              <%# end %>
+<!--            </td>-->
+<!--            <td><%#= client.record_id %></td>-->
+<!--            <td><%#= client.source_model %></td>-->
+<!--            <td><%#= client.hashed_first_name %></td>-->
+<!--            <td><%#= client.hashed_last_name %></td>-->
+<!--            <td><%#= client.hashed_email %></td>-->
+<!--            <td><%#= client.hashed_gender %></td>-->
+<!--            <td><%#= client.hashed_age %></td>-->
+<!--            <td><%#= client.hashed_date_of_birth %></td>-->
+<!--            <td><%#= client.hashed_phone1 %></td>-->
+<!--            <td><%#= client.hashed_phone2 %></td>-->
+<!--            <td><%#= client.hashed_address %></td>-->
+<!--            <td><%#= client.hashed_country %></td>-->
+<!--            <td><%#= client.hashed_state %></td>-->
+<!--            <td><%#= client.hashed_city %></td>-->
+<!--            <td><%#= client.hashed_tenant_id %></td>-->
 
-            <td>
-              <%= link_to client_path(client), method: :delete, data: { confirm: 'Are you sure?' } do %>
-                <%= image_tag 'delete_icon.png' , alt: 'Delete' , width: 20 %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  </div>
+<!--            <td>-->
+              <%#= link_to client_path(client), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                <%#= image_tag 'delete_icon.png' , alt: 'Delete' , width: 20 %>
+              <%# end %>
+<!--            </td>-->
+<!--          </tr>-->
+        <%# end %>
+<!--        </tbody>-->
+<!--      </table>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  </div>-->
 </body>

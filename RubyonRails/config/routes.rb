@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
 
+  get 'inquiries/new'
+  get 'inquiries/create'
   get 'users/index'
   devise_for :users
   get 'pages/home'
@@ -27,6 +29,8 @@ Rails.application.routes.draw do
   
 
   resources :users, only: [:index, :new, :create]
+  resources :inquiries, only: [:new, :create]
+
 
   resources :clients do
     resources :emergency_contacts, only: [:create, :destroy, :new, :edit, :update]

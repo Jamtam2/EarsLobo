@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_20_164326) do
+ActiveRecord::Schema.define(version: 2023_11_21_011049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -152,6 +152,14 @@ ActiveRecord::Schema.define(version: 2023_09_20_164326) do
     t.string "encrypted_state_iv"
     t.index ["client_id"], name: "index_emergency_contacts_on_client_id"
     t.index ["tenant_id"], name: "index_emergency_contacts_on_tenant_id"
+  end
+
+  create_table "inquiries", force: :cascade do |t|
+    t.string "email"
+    t.string "company"
+    t.text "purpose"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "keys", force: :cascade do |t|

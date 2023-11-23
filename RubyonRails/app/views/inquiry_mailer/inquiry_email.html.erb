@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>New Inquiry Received</title>
+</head>
+<body>
+  <h1>New Inquiry Received:</h1>
+  <p><strong>From:</strong> <%= @inquiry.email %></p>
+  <p><strong>Company/Organization:</strong> <%= @inquiry.company %></p>
+  <p><strong>Purpose:</strong></p>
+  <p><%= @inquiry.purpose %></p>
+  <p>Please respond to this inquiry within 24-48 hours.</p>
+</body>
+</html>

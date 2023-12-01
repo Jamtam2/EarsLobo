@@ -4,7 +4,6 @@
 #
 #  id              :bigint           not null, primary key
 #  activation_code :string
-#  code            :string
 #  expiration      :datetime
 #  license_type    :integer
 #  used            :boolean
@@ -15,9 +14,13 @@
 #  product_id      :integer
 #  subscription_id :integer
 #
-# Indexes
-#
-#  index_keys_on_code  (code) UNIQUE
-#
 class Key < ApplicationRecord
-end
+    before_create :set_default_used
+  
+    private
+  
+    def set_default_used
+      self.used = false if self.used.nil?
+    end
+  end
+  

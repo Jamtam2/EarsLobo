@@ -4,7 +4,6 @@
 #
 #  id              :bigint           not null, primary key
 #  activation_code :string
-#  code            :string
 #  expiration      :datetime
 #  license_type    :integer
 #  used            :boolean
@@ -15,15 +14,11 @@
 #  product_id      :integer
 #  subscription_id :integer
 #
-# Indexes
-#
-#  index_keys_on_code  (code) UNIQUE
-#
 
 one:
-  code: MyString
+  activation_code: MyString
   used: false
 
 two:
-  code: MyString
+  activation_code: MyString
   used: false

@@ -4,7 +4,6 @@
 #
 #  id              :bigint           not null, primary key
 #  activation_code :string
-#  code            :string
 #  expiration      :datetime
 #  license_type    :integer
 #  used            :boolean
@@ -14,10 +13,6 @@
 #  license_id      :integer
 #  product_id      :integer
 #  subscription_id :integer
-#
-# Indexes
-#
-#  index_keys_on_code  (code) UNIQUE
 #
 require "test_helper"
 

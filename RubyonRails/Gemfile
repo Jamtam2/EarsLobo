@@ -85,4 +85,7 @@ gem 'httparty'
 
 gem 'attr_encrypted'
 
+gem 'activesupport'
+
+gem 'whenever', require: false
 

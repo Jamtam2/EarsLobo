@@ -4,6 +4,7 @@
 #
 #  id              :bigint           not null, primary key
 #  activation_code :string
+#  email           :string
 #  expiration      :datetime
 #  license_type    :integer
 #  used            :boolean

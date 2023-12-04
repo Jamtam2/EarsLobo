@@ -81,6 +81,20 @@
   </div>
 </nav>
 
+<% flash.each do |key, messages| %>
+  <% if messages.respond_to?(:each) %>
+    <% messages.each do |message| %>
+      <div class="alert alert-<%= flash_message(key) %> fade show" role="alert">
+        <%= message %>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="alert alert-<%= flash_message(key) %> fade show" role="alert">
+      <%= messages %>
+    </div>
+  <% end %>
+<% end %>
+
 
 <%# all code for the calibration feature (inside modal made here) %>
 <div class="modal fade content-justify-center" id="myModal">

@@ -16,7 +16,8 @@ keybruh = Key.create!(
   product_id: 1,
   customer_id: 1,
   subscription_id: 1,
-  expiration: Time.zone.now + 1.year # Set expiration to 1 year from the current time
+  expiration: Time.zone.now + 1.year, # Set expiration to 1 year from the current time
+  email: "local@gmail.com"
 )
 
 keybruh = Key.create!(
@@ -26,7 +27,8 @@ keybruh = Key.create!(
   product_id: 1,
   customer_id: 1,
   subscription_id: 1,
-  expiration: Time.zone.now + 1.year # Set expiration to 1 year from the current time
+  expiration: Time.zone.now + 1.year, # Set expiration to 1 year from the current time
+  email: "global@gmail.com"
 )
 
 tenants = []

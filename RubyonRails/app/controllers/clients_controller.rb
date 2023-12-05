@@ -100,7 +100,7 @@ class ClientsController < ApplicationController
         # Calling method that enables Ransack functionality
         # sort_and_filter_clients(client_scope)
 
-      process_hashed_search_parameters()
+      process_hashed_search_parameters
 
         respond_to do |format|
           format.html

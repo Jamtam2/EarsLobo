@@ -6,13 +6,12 @@
     <!--Filter options-->
     <div class="row mb-3">
       <div class="col-md-6">
-        <%= form_tag clients_path, method: :get, class: 'form-inline' do %>
+        <!--<%= form_tag clients_path, method: :get, class: 'form-inline' do %>
           <%= text_field_tag :all_data_search_term, params[:all_data_search_term], class: 'form-control mr-sm-2 rounded-pill', placeholder: 'Filter Results' %>
           <%#= text_field_tag :address_search, params[:address_search], class: 'form-control mr-sm-2 rounded-pill', placeholder: 'Filter by location' %>
           <%= submit_tag "Search", class: "btn rounded-pill btn-outline-info my-2 my-sm-0" %>
         <% end %>
-
-        <!-- Filter Button -->
+        -->
         <button type="button" id="filterButton" class="btn btn-secondary rounded-pill mr-sm-2">Filter Options</button>
 
       </div>
@@ -46,9 +45,7 @@
                     <label for="from_name">Age:</label>
                   </div>
                   <div class="col-md-8">
-                    <%= text_field_tag :age_search_term, params[:age_search_term], class: 'form-control mr-sm-2 rounded-pill', placeholder: 'Filter by Age: e.g: 8' %>
-                
-                 <!-- <%= f.number_field :age_in_years_eq %> -->
+                    <%= text_field_tag :age_search_term, params[:age_search_term], class: 'form-control sort-select', placeholder: 'Filter by Age: e.g: 8' %>
                   </div>
                 </div> 
                 <!--Filter button for gender-->
@@ -60,7 +57,7 @@
                     <%= select_tag :gender_search_term,
                                    options_for_select([['None', nil], ['Male', 'Male'], ['Female', 'Female']], params[:gender_search_term]),
                                    include_blank: true,
-                                   class: 'form-control',
+                                   class: 'form-control sort-select',
                                    data: { button_id: 'filterButtonClient' } %>
 
                   </div>
@@ -73,26 +70,8 @@
                   <div class="col-md-8">
                     <%= text_field_tag :name_search_term, params[:name_search_term],
                                    include_blank: true,
-                                   class: 'form-control', placeholder: 'Filter by Name: e.g: Ella',
+                                   class: 'form-control sort-select', placeholder: 'Filter by Name: e.g: Ella',
                                    data: { button_id: 'filterButtonClient' } %>
-                  </div>
-                </div>
-                <!--Filter button for client-->
-                <div class="row mb-2">
-                  <div class="col-md-4">
-                    <label for="from_client">Client:</label>
-                  </div>
-                  <div class="col-md-8">
-                    <%= f.select :sort_by_client, [['None', nil], 
-                                                   ['Client Created (newest first)', 'created_at desc' ],
-                                                   ['Client Created (oldest first)', 'created_at asc' ]], 
-                      {include_blank: true, 
-                      selected:params[:q]&.dig(:sort_by_client) 
-                      }, 
-                      
-                      { class: 'form-control sort-select' , 
-                      data: {button_id: 'filterButtonClient' } 
-                      } %>
                   </div>
                 </div>
                 <!--Filter button for date of birth-->
@@ -103,7 +82,7 @@
                   <div class="col-md-8">
                     <%= text_field_tag :date_of_birth_search_term, params[:date_of_birth_search_term],
                                        include_blank: true,
-                                       class: 'form-control', placeholder: 'Filter by DoB: e.g: 2015-08-28',
+                                       class: 'form-control sort-select', placeholder: 'Filter by DoB: e.g: 2015-08-28',
                                        data: { button_id: 'filterButtonClient' } %>
                   </div>
                 </div>
@@ -312,7 +291,7 @@
                                             ['Zimbabwe', 'ZW']],
                                    params[:country_search_term]),
                                    include_blank: true,
-                                   class: 'form-control',
+                                   class: 'form-control sort-select',
                                    placeholder: 'Filter by DoB: e.g: SA',
                                    data: { button_id: 'filterButtonClient' } %>
                   </div>
@@ -375,24 +354,11 @@
                                             ['Wisconsin', 'WI'],
                                             ['Wyoming', 'WY']], params[:state_search_term]),
                                    include_blank: true,
-                                   class: 'form-control',
+                                   class: 'form-control sort-select',
                                    placeholder: 'Filter by DoB: e.g: TN',
                                    data: { button_id: 'filterButtonClient' } %>
                   </div>
                 </div>
-                <!--Filter option below is broken will need to fix later for age filtering, FIX ME-->
-                <!--
-                <div class="row mb-2">
-              <div class="col-md-4">
-                <label for="from_age">Age Range:</label>
-              </div>
-               <div class="col-md-8">
-                <%= f.number_field :age_gteq,  class: 'form-control', placeholder: 'Min Age' %>
-                <%= f.number_field :age_eq, class: 'form-control', placeholder: 'target Age' %>
-                <%= f.number_field :age_lteq, class: 'form-control', placeholder: 'Max Age' %>
-              </div>
-            </div>
-            -->
             </div>
             <div class="modal-footer">
               <button type="button" class="btn rounded-pill btn-outline-info my-2 my-sm-0" id="resetFiltersButton">Reset

@@ -176,21 +176,18 @@ def process_hashed_search_parameters
     :name_search_term => [:hashed_first_name, Digest::SHA256.hexdigest(params[:name_search_term].to_s)],
     :date_of_birth_search_term => [:hashed_date_of_birth, Digest::SHA256.hexdigest(params[:date_of_birth_search_term].to_s)],
     :country_search_term => [:hashed_country, Digest::SHA256.hexdigest(params[:country_search_term].to_s)],
-    :state_search_term => [:hashed_state, Digest::SHA256.hexdigest(params[:state_search_term].to_s)]
+    :state_search_term => [:hashed_state, Digest::SHA256.hexdigest(params[:state_search_term].to_s)],
   }
-
-  non_nil_search_terms = {}
 
   # loop over the dict of search terms and filter results if the user is using search term
   dict_of_search_terms.each do |search_term, (hashed_attribute, hashed_value)|
     if params[search_term].present?
       hashed_records = HashedDatum.where(hashed_attribute => hashed_value)
       @clients = @clients.where(id: hashed_records.pluck(:hashable_id)) if hashed_records.exists?
-      non_nil_search_terms[search_term] = hashed_value
     end
   end
-  Rails.logger.info "Here it is #{non_nil_search_terms}"
 
+  # Code below if we want to add a field that will accept input from any of the attributes below as a search parameter
   # if params[:all_data_search_term].present?
   #   hashed_search_term = Digest::SHA256.hexdigest(params[:all_data_search_term].to_s)
   #   hashed_records = HashedDatum.where(hashed_first_name: hashed_search_term)
@@ -210,44 +207,6 @@ def process_hashed_search_parameters
   #
   #   @clients = @clients.where(id: hashed_records.pluck(:hashable_id)) if hashed_records.exists?
   # end
-
-  # if params[:date_of_birth_search_term].present? && params[:gender_search_term].present?
-  #   hashed_dob_term = Digest::SHA256.hexdigest(params[:date_of_birth_search_term].to_s)
-  #   hashed_gender_term = Digest::SHA256.hexdigest(params[:gender_search_term].to_s)
-  #
-  #   hashed_dob_records = HashedDatum.where(hashed_date_of_birth: hashed_dob_term)
-  #   hashed_gender_records = HashedDatum.where(hashed_gender: hashed_gender_term)
-  #
-  #   if hashed_dob_records.exists? && hashed_gender_records.exists?
-  #     @clients = @clients.where(id: hashed_dob_records.pluck(:hashable_id))
-  #                        .where(id: hashed_gender_records.pluck(:hashable_id))
-  #   end
-  # elsif params[:date_of_birth_search_term].present?
-  #   hashed_dob_term = Digest::SHA256.hexdigest(params[:date_of_birth_search_term].to_s)
-  #   hashed_dob_records = HashedDatum.where(hashed_date_of_birth: hashed_dob_term)
-  #   @clients = @clients.where(id: hashed_dob_records.pluck(:hashable_id)) if hashed_dob_records.exists?
-  # elsif params[:gender_search_term].present?
-  #   hashed_gender_term = Digest::SHA256.hexdigest(params[:gender_search_term].to_s)
-  #   hashed_gender_records = HashedDatum.where(hashed_gender: hashed_gender_term)
-  #   @clients = @clients.where(id: hashed_gender_records.pluck(:hashable_id)) if hashed_gender_records.exists?
-  # end
-
-  # if params[:address_search].present?
-  #   address_search_term = Digest::SHA256.hexdigest(params[:address_search].to_s)
-  #   address_records = HashedDatum.where(hashed_address: address_search_term)
-  #                                .or(HashedDatum.where(hashed_state: address_search_term))
-  #                                .or(HashedDatum.where(hashed_city: address_search_term))
-  #                                .or(HashedDatum.where(hashed_country: address_search_term))
-  #                                .or(HashedDatum.where(hashed_zip: address_search_term))
-  #   @clients = @clients.where(id: address_records.pluck(:hashable_id)) if address_records.exists?
-  # end
-  #
-  # if params[:email_search].present?
-  #   email_search_term = Digest::SHA256.hexdigest(params[:email_search].to_s)
-  #   email_records = HashedDatum.where(hashed_email: email_search_term)
-  #   @clients = @clients.where(id: email_records.pluck(:hashable_id)) if email_records.exists?
-  # end
-
 end
 
       

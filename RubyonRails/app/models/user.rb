@@ -6,7 +6,9 @@
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  fname                  :string
+#  google_secret          :string
 #  lname                  :string
+#  mfa_secret             :integer
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
@@ -28,6 +30,8 @@
 #
 class User < ApplicationRecord
   acts_as_tenant(:tenant)
+  
+  acts_as_google_authenticated google_secret: :google_secret, mfa_secret: :mfa_secret
 
   belongs_to :tenant
   enum role: { regular_user: 0, local_moderator: 1, global_moderator: 2, owner: 3 }
@@ -43,6 +47,7 @@ class User < ApplicationRecord
   has_many :dnw_tests,dependent: :destroy
   has_many :rddt_tests,dependent: :destroy
   has_many :clients, foreign_key: :tenant_id, primary_key: :tenant_id
+  has_many :user_mfa_sessions, dependent: :destroy
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -62,6 +67,12 @@ class User < ApplicationRecord
   # function checks to see if the role of the user is the owner
   def owner?
     role == 'owner'
+  end
+  
+  def generate_qr_code
+    totp = ROTP::TOTP.new(self.user_mfa_sessions.first.secret_key)
+    label = "#{self.email}"
+    totp.provisioning_uri(label)
   end
   
   # functions finds the code for the registration key and checks to see if the key has been used or not. 

@@ -17,6 +17,10 @@ class ApplicationController < ActionController::Base
   def authenticate_user_with_redirect!
     # Redirect user if their license key has expired
     if user_signed_in? && license_key_expired?(current_user)
+      # Collect and send expired user their data.
+      csv_data = generate_user_data_csv(current_user)
+      UserMailer.license_key_expired_email(current_user, csv_data).deliver_later
+
       flash[:alert] = [] if flash[:alert].nil?
       flash[:alert] << 'Your account license key has expired'
       flash[:alert] << 'Please check your email address.'

@@ -25,13 +25,35 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @user.role = current_user.local_moderator? ? "regular_user" : @user.role
+    # @user.role = current_user.local_moderator? ? "regular_user" : @user.role
+    puts "Current user #{@user.inspect}"
 
-    if @user.save
-      redirect_to users_path, notice: 'User was successfully created.'
+    key = Key.find_by(activation_code: params[:registration_key])
+    if valid_registration_key?(key)
+      tenant = Tenant.create!
+      @user.tenant_id = tenant.id
+      @user.role = 'local_moderator'
+
+      if @user.save
+        key.update(used: true)
+        # User, tenant, and key update successful
+        puts "New user (local moderator) was saved with Tenant ID: #{tenant.id}"
+        # redirect_to users_path, notice: 'User was successfully created.'
+      else
+        # Handle user creation failure
+        puts "Failed to create user"
+        render :new
+      end
     else
+      # Handle invalid key
+      flash[:alert] = 'Invalid registration key.'
       render :new
     end
+  end
+
+  private
+  def valid_registration_key?(key)
+    key.present? && !key.used && (key.expiration.nil? || key.expiration > Time.current)
   end
 
   private
@@ -43,5 +65,6 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:fname, :lname, :email, :password, :password_confirmation)
+    Rails.logger("DEBUG: #{@user.email.inspect}")
   end
 end

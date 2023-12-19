@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   before_action :check_permission, only: [:new, :create]
-  acts_as_google_authenticated lookup_token: :google_secret, encrypt_secrets: true
 
   
   def index

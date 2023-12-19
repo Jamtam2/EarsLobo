@@ -1,22 +1,28 @@
 class RegistrationsController < Devise::RegistrationsController
   def create
-    super do |user|
-      if user.persisted?
-        key = Key.find_by(activation_code: user.registration_key)
-        if valid_registration_key?(key)
-          tenant = Tenant.create!
-          user.update(tenant_id: tenant.id, role: 'local_moderator')
-          key.update(used: true)
-        else
-          user.destroy # Optional: Destroy the user if the key is invalid
-          flash[:alert] = 'Invalid registration key.'
-          redirect_to new_user_registration_path and returnc
-        end
-      end
+    build_resource(sign_up_params)  # Build the user object with permitted parameters
+
+    # Validate registration key and set up tenant before saving the user
+    key = Key.find_by(activation_code: resource.registration_key)
+    # puts "DEBUG: Tenant_id: #{tenant.inspect}"
+    if valid_registration_key?(key)
+      tenant = Tenant.create!  # Ensure this line is creating a tenant
+      puts "DEBUG_tenant: Tenant_id: #{tenant.id}"
+      resource.tenant = tenant
+      puts "DEBUG: #{tenant.id}"
+      puts "DEBUG_rt: Tenant_id: #{resource.tenant}"
+      resource.role = :local_moderator
+    else
+      flash[:alert] = 'Invalid registration key.'
+      redirect_to new_user_registration_path and return
     end
+
+    # Save the user with Devise's original logic
+    super
   end
 
   private
+
   def valid_registration_key?(key)
     key.present? && !key.used && (key.expiration.nil? || key.expiration > Time.current)
   end

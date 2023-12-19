@@ -82,14 +82,7 @@ class User < ApplicationRecord
       return false
     end
   end
-  
-  
-  def generate_subdomain
-    # You may want to generate a subdomain based on some user's data (for example, email).
-    # This is a very basic implementation which takes a part before '@' symbol from the email.
-    # Be aware this might not be unique. You will need to add validations or create more sophisticated logic.
-    self.email.split('@').first
-  end
+
 
   public
   def license_key

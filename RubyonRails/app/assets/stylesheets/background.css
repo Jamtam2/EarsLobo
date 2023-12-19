@@ -52,3 +52,28 @@ background: linear-gradient(180deg, rgba(255,255,255,1) 16%, rgba(187,187,187,1)
     background: rgb(3,187,210);
     background: linear-gradient(180deg, rgba(3,187,210,1) 0%, rgba(46,131,204,1) 100%);
 }
+
+
+html {
+    min-height: 100%;
+}
+body {
+    min-height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    
+}
+
+#defBG{
+    background: hsla(353, 76%, 50%, 1);
+    background: linear-gradient(215deg, hsla(353, 76%, 50%, .49) 35%, hsla(187, 97%, 42%, .56) 65%);
+    background: -moz-linear-gradient(215deg, hsla(353, 76%, 50%, .49) 35%, hsla(187, 97%, 42%, .56) 65%);
+    background: -webkit-linear-gradient(215deg, hsla(353, 76%, 50%, .70) -75%, hsla(187, 97%, 42%, .56) 150%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#df1e36", endColorstr="#03bbd2", GradientType=1 );
+
+    font-family: kanit;
+    font-weight: bold;
+    font-size: larger;
+
+}

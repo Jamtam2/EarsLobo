@@ -69,7 +69,7 @@ class User < ApplicationRecord
 
   private
   def validate_registration_key
-    key = Key.find_by(code: registration_key)
+    key = Key.find_by(activation_code: registration_key)
     puts "key checker: #{key.inspect}"
   
     if key.present? && !key.used
@@ -89,6 +89,11 @@ class User < ApplicationRecord
     # This is a very basic implementation which takes a part before '@' symbol from the email.
     # Be aware this might not be unique. You will need to add validations or create more sophisticated logic.
     self.email.split('@').first
+  end
+
+  public
+  def license_key
+    Key.find_by(email: email)
   end
 end
 

@@ -31,23 +31,21 @@
   </head>
   <body>
 
-  <nav id= "blueGrad2"class="navbar navbar-expand-sm navbar-dark bg-primary sticky-top">
+  <nav id= "navbar"class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
     <div class="container-fluid clearfix ">
     <div class="container-fluid clearfix justify-content-start">
       <a class="navbar-brand" href="/home">
       <%= image_tag 'AUDIA_RGB_single_letter.png', style: "width: 50px", class:"d-inline-block"%>
       <%# <%= link_to edit_client_path(user) do %>
       
-      <span class="ml-2 float-start">
-        <%= link_to image_tag('info.png', alt: 'Edit', width: 15), '/about', class:"d-inline-block" %>
-      </span>
                     <%# <% end %>
       
       </a>
-      </div>
-    <div class="container-fluid clearfix justify-content-start">
+
         <ul class="navbar-nav flex-wrap">
-          
+          <span class="navbar-brand">
+        <%= link_to image_tag('info.png', alt: 'Edit', width: 15), '/about', class:"d-inline-block" %>
+      </span>
             <h5><small><li class='nav-item'>
     <%= link_to 'Clients', (current_user&.global_moderator? ? global_moderator_index_path : clients_path), class: 'nav-link ' %> </small></h5>
           </li>
@@ -65,6 +63,7 @@
 
                 <form class="d-flex" role="search">
       </div>
+      </div>
 
       <%# This changes the text and link on the right-most side of the navbar to change whether a user is logged in or not %>
 
@@ -81,6 +80,20 @@
     </form>
   </div>
 </nav>
+
+<% flash.each do |key, messages| %>
+  <% if messages.respond_to?(:each) %>
+    <% messages.each do |message| %>
+      <div class="alert alert-<%= flash_message(key) %> fade show" role="alert">
+        <%= message %>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="alert alert-<%= flash_message(key) %> fade show" role="alert">
+      <%= messages %>
+    </div>
+  <% end %>
+<% end %>
 
 
 <%# all code for the calibration feature (inside modal made here) %>

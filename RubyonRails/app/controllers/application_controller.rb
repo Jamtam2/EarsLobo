@@ -13,13 +13,38 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
   def authenticate_user_with_redirect!
-    if current_user
-      sign_in(current_user, event: :authentication)
-    elsif !devise_controller? || action_name != 'new'
-      redirect_to new_user_session_path
+    # Redirect user if their license key has expired
+    if user_signed_in? && license_key_expired?(current_user)
+      flash[:alert] = [] if flash[:alert].nil?
+      flash[:alert] << 'Your account license key has expired'
+      flash[:alert] << 'Please check your email address.'
+      sign_out(current_user)
+      redirect_to new_user_session_path and return
+    end
+
+    # Redirect to login page if not signed in and not already on a devise controller
+    if !user_signed_in? && (!devise_controller? || action_name != 'new')
+      redirect_to new_user_session_path and return
     end
   end
+
+
+  # Validate user login by verifying if the license key expiration date is less than the current date.
+  # params:
+  #         user - current user attempting an action
+  # return:
+  #         false - if no license key is found
+  #         license_key - if a license key is found
+  def license_key_expired?(user)
+    license_key = user.license_key
+    return false unless license_key
+
+    license_key.expiration < DateTime.current
+  end
+
+
 end
 
   def configure_permitted_parameters

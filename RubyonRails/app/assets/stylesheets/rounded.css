@@ -6,14 +6,14 @@
     border-radius: 50%;
   }
 
-.container {
+/*.container {
     border-radius: 10% !important;
 }
 
 .card {
     border-radius: 10% !important;
 }
-
+ */
 .modal-content {
     border-radius:10% 10%  !important;
 }

@@ -1,0 +1,21 @@
+# == Schema Information
+#
+# Table name: inquiries
+#
+#  id         :bigint           not null, primary key
+#  company    :string
+#  email      :string
+#  purpose    :text
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+one:
+  email: MyString
+  company: MyString
+  purpose: MyText
+
+two:
+  email: MyString
+  company: MyString
+  purpose: MyText

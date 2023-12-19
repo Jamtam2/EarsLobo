@@ -6,9 +6,36 @@ require 'faker'
 
 
 #First just create a global mod and local mod for testing
+<<<<<<< HEAD
 keybruh = Key.create!(code: "localmodkey", used: false)
 keybruh = Key.create!(code: "globalmodkey", used: false)
 keybruh = Key.create!(code: "regularuserkey1", used: false)
+=======
+# keybruh = Key.create!(activation_code: "localmodkey", used: false)
+# keybruh = Key.create!(activation_code: "globalmodkey", used: false)
+
+keybruh = Key.create!(
+  activation_code: "localmodkey",
+  used: false,
+  license_type: 1,
+  product_id: 1,
+  customer_id: 1,
+  subscription_id: 1,
+  expiration: Time.zone.now + 1.year, # Set expiration to 1 year from the current time
+  email: "local@gmail.com"
+)
+
+keybruh = Key.create!(
+  activation_code: "globalmodkey",
+  used: false,
+  license_type: 1,
+  product_id: 1,
+  customer_id: 1,
+  subscription_id: 1,
+  expiration: Time.zone.now + 1.year, # Set expiration to 1 year from the current time
+  email: "global@gmail.com"
+)
+>>>>>>> 5cb8ab2a3d229535198435ac761a270a6cd5533e
 
 tenants = []
 3.times { |i| tenants << Tenant.find_or_create_by!(subdomain: "tenant#{i + 1}") }
@@ -46,7 +73,7 @@ end
 #Create multiple users and seeds
 
 keys = []
-15.times { |i| keys << Key.create!(code: "key#{i + 1}", used: false) }
+15.times { |i| keys << Key.create!(activation_code: "key#{i + 1}", used: false, expiration: Time.zone.now + 1.year) }
 # puts "keys: #{keys.inspect}"
 
 tenants = [] 
@@ -63,7 +90,7 @@ tenants.each do |tenant|
         fname: Faker::Name.first_name,
         lname: Faker::Name.last_name,
         role: :local_moderator,
-        registration_key: keys.pop.code,
+        registration_key: keys.pop.activation_code,
       )
       
       # Create 50 Clients and related Emergency Contacts and Tests for each user

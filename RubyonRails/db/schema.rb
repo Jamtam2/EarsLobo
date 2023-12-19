@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2023_10_13_020444) do
+=======
+ActiveRecord::Schema.define(version: 2023_12_03_165706) do
+>>>>>>> 5cb8ab2a3d229535198435ac761a270a6cd5533e
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -143,6 +147,7 @@ ActiveRecord::Schema.define(version: 2023_10_13_020444) do
     t.index ["tenant_id"], name: "index_emergency_contacts_on_tenant_id"
   end
 
+<<<<<<< HEAD
   create_table "hashed_data", primary_key: "record_id", force: :cascade do |t|
     t.string "source_model"
     t.datetime "created_at", precision: 6, null: false
@@ -165,14 +170,28 @@ ActiveRecord::Schema.define(version: 2023_10_13_020444) do
     t.string "hashed_phone1"
     t.string "hashed_phone2"
     t.index ["hashable_type", "hashable_id"], name: "index_hashed_data_on_hashable"
+=======
+  create_table "inquiries", force: :cascade do |t|
+    t.string "email"
+    t.string "company"
+    t.text "purpose"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+>>>>>>> 5cb8ab2a3d229535198435ac761a270a6cd5533e
   end
 
   create_table "keys", force: :cascade do |t|
-    t.string "code"
     t.boolean "used"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["code"], name: "index_keys_on_code", unique: true
+    t.integer "license_id"
+    t.string "activation_code"
+    t.integer "license_type"
+    t.datetime "expiration"
+    t.integer "product_id"
+    t.integer "customer_id"
+    t.integer "subscription_id"
+    t.string "email"
   end
 
   create_table "rddt_tests", force: :cascade do |t|

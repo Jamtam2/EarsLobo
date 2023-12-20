@@ -51,10 +51,16 @@ ActsAsTenant.with_tenant(tenants.first) do
     email: "global@gmail.com",
     password: "password",
     fname: "Locality",
-  lname:"Mod",
+    lname:"Mod",
     role: :global_moderator,
     registration_key: 'globalmodkey',
   ) 
+
+  user.user_mfa_sessions.create!(
+    secret_key: ROTP::Base32.random_base32, # Generate a random secret key
+    activated: false, # You can activate it later when the user sets up MFA
+  )
+
 
   user = User.create!(
     email: "local@gmail.com",
@@ -64,6 +70,11 @@ ActsAsTenant.with_tenant(tenants.first) do
     role: :local_moderator,
     registration_key: 'localmodkey',
   ) 
+  user.user_mfa_sessions.create!(
+    secret_key: ROTP::Base32.random_base32, # Generate a random secret key
+    activated: false, # You can activate it later when the user sets up MFA
+  )
+
 end 
 
 

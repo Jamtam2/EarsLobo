@@ -89,3 +89,8 @@ gem 'activesupport'
 
 gem 'whenever', require: false
 
+gem 'google-authenticator-rails'
+
+gem 'rotp'
+
+gem 'rqrcode'

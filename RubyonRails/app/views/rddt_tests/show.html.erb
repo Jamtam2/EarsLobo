@@ -1,20 +1,150 @@
-<h1>Test type</h1>
-<h1><%= @rddt_test.test_type%></h1>
-<h1>left Score Single Buttons</h1>
-<h1><%= @rddt_test.left_score1%></h1>
-<h1>Right Score Single Buttons</h1>
-<h1><%= @rddt_test.right_score1%></h1>
-<h1>left Score 2 Button Pairs</h1>
-<h1><%= @rddt_test.left_score2%></h1>
-<h1>Right Score 2 Button Pairs</h1>
-<h1><%= @rddt_test.right_score2%></h1>
-<h1>left Score 3 Button Groups</h1>
-<h1><%= @rddt_test.left_score3%></h1>
-<h1>Right Score 3 Button Groups</h1>
-<h1><%= @rddt_test.right_score3%></h1>
-<h1>Ear Advantage</h1>
-<h1><%= @rddt_test.ear_advantage%></h1>
-<h1>Ear Advantage Score</h1>
-<h1><%= @rddt_test.ear_advantage_score%></h1>
-<h1>Interpretation</h1>
-<h1><%= @rddt_test.interpretation%></h1>
+
+<h1><b><center><%= @rddt_test.test_type%> Test Information and Results</center></b></h1>
+<hr>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <h2><center><b>Left Ear Score Singles</b></center></h2>
+            <h2><center><b><%= @rddt_test.left_score1%>%</b></center></h2>
+            <h2><center><b>Left Ear Scores Doubles</b></center></h2>
+            <h2><center><b><%= @rddt_test.left_score2%>%</b></center></h2>
+            <h2><center><b>Left Ear Scores Triples</b></center></h2>
+            <h2><center><b><%= @rddt_test.left_score3%>%</b></center></h2>
+            <h2><center><b>Left Ear Percentile</b></center></h2>
+            <h3><center><b><%= @rddt_test.left_percentile%></b></center></h3>
+        </div>
+        <div class="col-sm">
+            <%= image_tag 'head image.png', class: 'w-40 img-responsive center-block', style: 'max-width: 20rem;' %>
+        </div>
+        <div class="col-sm">
+            <h2><center><b>Right Ear Score Singles</b></center></h2>
+            <h2><center><b><%= @rddt_test.right_score1%>%</b></center></h2>
+            <h2><center><b>Right Ear Scores Doubles</b></center></h2>
+            <h2><center><b><%= @rddt_test.right_score2%>%</b></center></h2>
+            <h2><center><b>Right Ear Scores Triples</b></center></h2>
+            <h2><center><b><%= @rddt_test.right_score3%>%</b></center></h2>
+            <h2><center><b>Right Ear Percentile</b></center></h2>
+            <h3><center><b><%= @rddt_test.right_percentile%></b></center></h3>
+        </div>
+    </div>
+<div>
+<h1><b><center>Dominant Ear</center></b></h1>
+<h2><b><center><%= @rddt_test.ear_advantage%></b></center></h2>
+<h1><b><center>Ear Advantage Score</center></b></h1>
+<h2><b><center><%= @rddt_test.ear_advantage_score%>%</b></center></h2>
+<h1><b><center>Ear Advantage Percentile</center></b></h1>
+<h2><b><center><%= @rddt_test.advantage_percentile%>%</b></center></h2>
+
+<hr>
+
+<h1><b>Interpretation of Test</b></h1>
+<h2><b><%= @rddt_test.interpretation%></b></h2>
+
+<hr>
+
+<h1><b><center>Scores and Data Presented in Tables Like Test Page</center></b></h1>
+<h3><b>Scores Table</b></h3>
+
+<table class="table table-sm table-bordered m1-4" style="max-width: 25rem;">
+    <thead>
+        <tr>
+            <th scope="col">Pairs</th>
+            <th scope="col">Left</th>
+            <th scope="col">Right</th>
+            <th scope="col">Ear Adv</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td class="left-column"><%= @rddt_test.left_score1%></span>%</td>
+            <td class="right-column"><%= @rddt_test.right_score1%></span>%</td>
+            <td class="ear-advantage"><%= @rddt_test.ear_advantage_score1%></span>%</td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td class="left-column"><%= @rddt_test.left_score2%></span>%</td>
+            <td class="right-column"><%= @rddt_test.right_score2%></span>%</td>
+            <td class="ear-advantage"><%= @rddt_test.ear_advantage_score%></span>%</td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>  
+            <td class="left-column"><%= @rddt_test.left_score3%></span>%</td>
+            <td class="right-column"><%= @rddt_test.right_score3%></span>%</td>
+            <td class="ear-advantage"><%= @rddt_test.ear_advantage_score3%></span>%</td>       
+        </tr>
+    </tbody>
+</table>
+
+<hr>
+<h3><b>Percentile Table</b></h3>
+<table class="table table-sm table-bordered m1-4" style="max-width: 25rem;">
+    <thead>
+        <tr>
+            <th scope="col">Left Ear</th>
+            <th scope="col">Right Ear</th>
+            <th scope="col">Ear Advantage</th>
+        </tr>
+        <tbody>
+            <tr>
+                <td class="percentile"><%= @rddt_test.left_percentile%></span></td>
+                <td class="percentile"><%= @rddt_test.right_percentile%></span></td>
+                <td class="percentile"><%= @rddt_test.advantage_percentile%></span></td>
+            </tr>
+        </tbody>
+    </thead>
+</table>
+<hr>
+
+<style>
+    .left-column {
+        background-color: lightblue;
+    }
+    
+    .right-column {
+        background-color: lightpink;
+    }
+
+</style>
+
+
+
+<script>
+    const earAdvantageCells = document.querySelectorAll('.ear-advantage');
+    const percentileCells = document.querySelectorAll('.percentile');
+    
+    // Loop through each ear advantage cell
+    earAdvantageCells.forEach(cell => {
+    // Get the value of the cell
+    const value = parseFloat(cell.textContent);
+
+    // Check the value and set the background color accordingly
+    if (value < 0) {
+        cell.style.backgroundColor = 'lightblue';
+    } else if (value > 0) {
+        cell.style.backgroundColor = 'lightpink';
+    } else {
+        cell.style.backgroundColor = 'white';
+    }
+    });
+
+    percentileCells.forEach(cell => {
+    // Get the value of the cell
+    const percValue = cell.textContent.trim();
+
+    // Check the value and set the background color accordingly
+    if ((percValue == "5th Percentile")) {
+        cell.style.backgroundColor = 'lightpink';
+    } 
+    else if (percValue == "10th Percentile") {
+        cell.style.backgroundColor = 'hsl(60, 100%, 70%)';
+    } 
+    else if (percValue == "25th Percentile") {
+        cell.style.backgroundColor = 'lightgreen';
+    }
+    else{
+        cell.style.backgroundColor = 'lightblue';
+    }
+    });
+</script>
+

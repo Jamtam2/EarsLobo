@@ -79,7 +79,7 @@ class DwtTestsController < ApplicationController
       private
     
       def dwt_test_params
-        params.require(:dwt_test).permit(:label, :notes, :client_name, :test_type, :left_score, :right_score, :ear_advantage, :ear_advantage_score, :interpretation, :scan, :authenticity_token)
+        params.require(:dwt_test).permit(:label, :notes, :client_name, :test_type, :left_score, :right_score, :ear_advantage, :ear_advantage_score, :interpretation, :left_percentile, :right_percentile, :advantage_percentile,  :scan, :authenticity_token)
       end
         
     

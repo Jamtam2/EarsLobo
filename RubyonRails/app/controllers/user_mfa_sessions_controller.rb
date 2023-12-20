@@ -2,29 +2,38 @@ class UserMfaSessionsController < ApplicationController
   skip_before_action :check_mfa, only: [:new, :create]
 
   def new
-    # You might want to initialize the MFA setup here if not done elsewhere
+    # Initialization code (if any)
   end
-
+  
   def create
     user = current_user
-    secret_key = user.user_mfa_sessions.first&.secret_key
-    user.mfa_secret = params[:mfa_code]
-    puts "mfa: #{user.inspect}"
-
+    secret_key = user.user_mfa_sessions.first.secret_key
     user.google_secret = secret_key
-    
-
+  
     user.save!
     if user.google_authentic?(params[:mfa_code])
       user.user_mfa_sessions.first.update(activated: true)
-      # UserMfaSession.create(user)
       redirect_to root_path, notice: "MFA setup successful"
     else
-      flash.now[:alert] = "Invalid code"
+      attempted_time = Time.now
+      server_code = ROTP::TOTP.new(secret_key).at(attempted_time)
+      flash.now[:alert] = "Invalid code. Attempted Code: #{params[:mfa_code]}, Server Code: #{server_code}, Time: #{attempted_time}"
+      # flash.now[:alert] = specific_error_message(user, params[:mfa_code])
+
       render :new
     end
   end
+  
+
+  private
+
+  def specific_error_message(user, mfa_code)
+    if mfa_code.blank?
+      "MFA code cannot be blank."
+    elsif !user.google_secret.present?
+      "MFA setup not completed."
+    else
+      "Invalid MFA code. Please try again."
+    end
+  end
 end
-    
-
-

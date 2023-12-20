@@ -13,6 +13,8 @@ class CreateRddtTests < ActiveRecord::Migration[6.1]
       t.float :right_score2
       t.float :right_score3
       t.float :ear_advantage_score
+      t.float :ear_advantage_score1
+      t.float :ear_advantage_score3
       t.string :interpretation
       t.string :left_percentile
       t.string :right_percentile

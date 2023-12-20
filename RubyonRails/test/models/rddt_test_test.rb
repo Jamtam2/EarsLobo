@@ -7,6 +7,8 @@
 #  client_name              :string
 #  ear_advantage            :string
 #  ear_advantage_score      :float
+#  ear_advantage_score1     :float
+#  ear_advantage_score3     :float
 #  encrypted_client_name    :string
 #  encrypted_client_name_iv :string
 #  interpretation           :string

@@ -70,15 +70,15 @@ class User < ApplicationRecord
   private
   def validate_registration_key
     key = Key.find_by(activation_code: registration_key)
-    puts "key checker: #{key.inspect}"
+    # puts "key checker: #{key.inspect}"
   
     if key.present? && !key.used
-      key.update(used: true)
+      # key.update(used: true)
       puts "Valid registration key found: #{key.inspect}"
       return 
     else
       errors.add(:registration_key, "is invalid.")
-      puts "Invalid registration key: #{registration_key}"
+      # puts "Invalid registration key: #{registration_key}"
       return false
     end
   end

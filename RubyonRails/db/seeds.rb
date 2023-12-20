@@ -7,7 +7,19 @@ require 'faker'
 
 #First just create a global mod and local mod for testing
 # keybruh = Key.create!(activation_code: "localmodkey", used: false)
-# keybruh = Key.create!(activation_code: "globalmodkey", used: false)
+keybruh = Key.create!(
+  activation_code: "bruh",
+  used: false,
+  license_type: 1,
+  product_id: 1,
+  customer_id: 1,
+  subscription_id: 1,
+  expiration: Time.zone.now + 1.year, # Set expiration to 1 year from the current time
+)
+puts "#{keybruh.inspect})..."
+puts "Fetching keys and customer data..."
+FetchKeys.call
+puts "Data fetching complete."
 
 keybruh = Key.create!(
   activation_code: "localmodkey",

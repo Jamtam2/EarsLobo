@@ -2,20 +2,22 @@ class UsersController < ApplicationController
   before_action :check_permission, only: [:new, :create]
   
   def index
+    local_users = User.where(tenant_id: current_user.tenant_id)
+
     if params[:query]
       split_query = params[:query].split(' ')
       if split_query.length > 1
         # Case when both first name and last name are typed
-        @users = User.where('lower(fname) LIKE :first AND lower(lname) LIKE :last', 
+        @users = local_users.where('lower(fname) LIKE :first AND lower(lname) LIKE :last', 
                             first: "#{split_query.first.downcase}%", 
                             last: "#{split_query.last.downcase}%")
       else
         # Case when either first name, last name, or email is typed
-        @users = User.where('lower(fname) LIKE :query OR lower(lname) LIKE :query OR lower(email) LIKE :query', 
+        @users = local_users.where('lower(fname) LIKE :query OR lower(lname) LIKE :query OR lower(email) LIKE :query', 
                             query: "%#{params[:query].downcase}%")
       end
     else
-      @users = User.all
+      @users = User.where(tenant_id: current_user.tenant_id)
     end
   end
 
@@ -42,10 +44,9 @@ class UsersController < ApplicationController
 
       if @user.save
         Rails.logger("DEBUG: Saving user: #{@user.inspect}")
-        key.update(used: true)
+        # key.update(used: true)
         # User, tenant, and key update successful
         puts "New user (local moderator) was saved with Tenant ID: #{tenant.id}"
-        # redirect_to users_path, notice: 'User was successfully created.'
       else
         # Handle user creation failure
         puts "Failed to create user"

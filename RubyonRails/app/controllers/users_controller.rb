@@ -28,23 +28,26 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-
     key = Key.find_by(activation_code: params[:registration_key])
-    Rails.logger("DEBUG: User: #{@user.inspect}")
-    Rails.logger("DEBUG: key: #{key.inspect}")
+
+    # Rails.logger("DEBUG: User: #{@user.inspect}")
+    # Rails.logger("DEBUG: key: #{key.inspect}")
 
     if valid_registration_key?(key)
-      Rails.logger("DEBUG: KEY IS VALID!!!")
+      # Rails.logger("DEBUG: KEY IS VALID!!!")
 
       tenant = Tenant.create!
-      Rails.logger("DEBUG: Created tenant #{tenant.inspect}")
+      # Rails.logger("DEBUG: Created tenant #{tenant.inspect}")
       @user.tenant_id = tenant.id
       @user.role = 'local_moderator'
-      Rails.logger("DEBUG: tenant_id: #{@user.tenant_id.inspect}")
-      Rails.logger("DEBUG: user role: #{@user.role.inspect}")
+      
+      # Rails.logger("DEBUG: tenant_id: #{@user.tenant_id.inspect}")
+      # Rails.logger("DEBUG: user role: #{@user.role.inspect}")
 
       if @user.save
-        Rails.logger("DEBUG: Saving user: #{@user.inspect}")
+        # Rails.logger("DEBUG: Saving user: #{@user.inspect}")
+        
+    
         # key.update(used: true)
         # User, tenant, and key update successful
         puts "New user (local moderator) was saved with Tenant ID: #{tenant.id}"

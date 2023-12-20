@@ -3,6 +3,7 @@ class UserMfaSessionsController < ApplicationController
 
   def new
     # Initialization code (if any)
+
   end
   
   def create

@@ -6,12 +6,12 @@ class ApplicationController < ActionController::Base
   before_action :set_current_tenant
   before_action :check_mfa
   
-  # def set_current_tenant
-  #   ActsAsTenant.current_tenant = current_user.tenant if current_user
-  #   puts "Current User: #{current_user.inspect}"
-  #   puts "Current Tenant: #{ActsAsTenant.current_tenant.inspect}"
-  #
-  # end
+  def set_current_tenant
+    ActsAsTenant.current_tenant = current_user.tenant if current_user
+    puts "Current User: #{current_user.inspect}"
+    puts "Current Tenant: #{ActsAsTenant.current_tenant.inspect}"
+  
+  end
 
 
 

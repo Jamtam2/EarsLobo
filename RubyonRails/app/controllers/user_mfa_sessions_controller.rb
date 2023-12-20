@@ -23,6 +23,8 @@ class UserMfaSessionsController < ApplicationController
       render :new
     end
   end
+
+  
   
 
   private

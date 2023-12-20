@@ -1,15 +1,18 @@
+<div class="mfa-page">
+  <% if current_user && current_user.user_mfa_sessions.first %>
+    <div class="qr-code-container">
+      <% qr_code = RQRCode::QRCode.new(current_user.generate_qr_code) %>
+      <%= raw qr_code.as_svg(module_size: 3) %>
+    </div>
+  <% end %>
 
-<% if current_user && current_user.user_mfa_sessions.first %>
-  <% qr_code = RQRCode::QRCode.new(current_user.generate_qr_code) %>
-  <%= raw qr_code.as_svg(module_size: 3) %>
-<% end %>
-
-<div class="mfa-container">
- <%= form_tag user_mfa_session_path, method: :post, class: "search-form", role: "search" do %>
-   <div class="form-group">
-     <%= label_tag "Token", 'Google Authenticator code'%>
-     <%= text_field_tag 'mfa_code', params[:mfa_code], class: "form-control form-control-line" %>
-   </div>
-   <%= submit_tag 'Log In', class: "btn btn-block btn-lg btn-primary text-uppercase fs-12 fw-600" %>
- <% end %>
+  <div class="mfa-container">
+    <%= form_tag user_mfa_session_path, method: :post, class: "mfa-form", role: "form" do %>
+      <div class="form-group">
+        <%= label_tag "Token", 'Google Authenticator Code', class: 'mfa-label' %>
+        <%= text_field_tag 'mfa_code', params[:mfa_code], class: "form-control" %>
+      </div>
+      <%= submit_tag 'Log In', class: "btn mfa-submit" %>
+    <% end %>
+  </div>
 </div>

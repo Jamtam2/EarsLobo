@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   get 'inquiries/new'
   get 'inquiries/create'
   get 'users/index'
-  devise_for :users
+  devise_for :users, controllers: { sessions: 'users/sessions' }
+
   get 'pages/home'
   devise_scope :user do  
     get '/users/sign_out' => 'devise/sessions#destroy'     

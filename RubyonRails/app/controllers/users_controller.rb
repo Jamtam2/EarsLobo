@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :check_permission, only: [:new, :create]
+
   
   def index
     if params[:query]

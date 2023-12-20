@@ -1,5 +1,13 @@
 <div class="mfa-page">
-  <% if current_user && current_user.user_mfa_sessions.first %>
+  <% if current_user && current_user.user_mfa_sessions.first && !current_user.user_mfa_sessions.first.activated %>
+    <div class="instructions">
+      <p><strong>Set up Multi-Factor Authentication (MFA):</strong></p>
+      <ol>
+        <li>Download the <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&gl=US" target="_blank">Google Authenticator app</a> for Android or <a href="https://apps.apple.com/us/app/google-authenticator/id388497605" target="_blank">iOS</a>.</li>
+        <li>Open the app and scan the QR code displayed below.</li>
+        <li>Enter the code provided by the app in the field below.</li>
+      </ol>
+    </div>
     <div class="qr-code-container">
       <% qr_code = RQRCode::QRCode.new(current_user.generate_qr_code) %>
       <%= raw qr_code.as_svg(module_size: 3) %>

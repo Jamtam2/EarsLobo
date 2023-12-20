@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
-  
-  
+
+
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user_with_redirect!
   before_action :set_current_tenant
@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     ActsAsTenant.current_tenant = current_user.tenant if current_user
     puts "Current User: #{current_user.inspect}"
     puts "Current Tenant: #{ActsAsTenant.current_tenant.inspect}"
-
+  
   end
 
 
@@ -40,8 +40,11 @@ class ApplicationController < ActionController::Base
       redirect_to new_user_session_path and return
     end
 
-    # Redirect to login page if not signed in and not already on a devise controller
-    if !user_signed_in? && (!devise_controller? || action_name != 'new')
+    # Skip redirect if this is a devise controller (like registrations) and the action is 'create' or 'new'
+    return if devise_controller? && (action_name == 'create' || action_name == 'new')
+
+    # Redirect to login page if not signed in
+    if !user_signed_in?
       redirect_to new_user_session_path and return
     end
   end
@@ -61,12 +64,12 @@ class ApplicationController < ActionController::Base
   end
 
 
-end
+  protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:fname, :lname])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:fname, :lname])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:fname, :lname, :email, :password, :password_confirmation, :registration_key])
   end
+end
 
  
 

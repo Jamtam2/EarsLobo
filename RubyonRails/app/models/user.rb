@@ -90,26 +90,19 @@ class User < ApplicationRecord
   private
   def validate_registration_key
     key = Key.find_by(activation_code: registration_key)
-    puts "key checker: #{key.inspect}"
+    # puts "key checker: #{key.inspect}"
   
     if key.present? && !key.used
-      key.update(used: true)
+      # key.update(used: true)
       puts "Valid registration key found: #{key.inspect}"
       return 
     else
       errors.add(:registration_key, "is invalid.")
-      puts "Invalid registration key: #{registration_key}"
+      # puts "Invalid registration key: #{registration_key}"
       return false
     end
   end
-  
-  
-  def generate_subdomain
-    # You may want to generate a subdomain based on some user's data (for example, email).
-    # This is a very basic implementation which takes a part before '@' symbol from the email.
-    # Be aware this might not be unique. You will need to add validations or create more sophisticated logic.
-    self.email.split('@').first
-  end
+
 
   public
   def license_key

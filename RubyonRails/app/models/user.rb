@@ -75,6 +75,15 @@ class User < ApplicationRecord
     totp.provisioning_uri(label)
   end
   
+  def google_authentic?(provided_code)
+    totp = ROTP::TOTP.new(google_secret)
+    # Allow 30 seconds drift behind and ahead
+    drift_behind = 30
+    drift_ahead = 30
+    totp.verify(provided_code, at: Time.now, drift_behind: drift_behind, drift_ahead: drift_ahead)
+  end
+  
+  
   # functions finds the code for the registration key and checks to see if the key has been used or not. 
   # This determines if the key for registration has been used or not.
 

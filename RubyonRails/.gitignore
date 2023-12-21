@@ -21,7 +21,7 @@
 # Ignore uploaded files in development.
 /storage/*
 !/storage/.keep
-.env
+RubyonRails/.env
 
 /public/assets
 .byebug_history

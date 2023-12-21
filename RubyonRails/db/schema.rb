@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 2023_10_13_020444) do
-=======
 ActiveRecord::Schema.define(version: 2023_12_03_165706) do
->>>>>>> 5cb8ab2a3d229535198435ac761a270a6cd5533e
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,7 +143,6 @@ ActiveRecord::Schema.define(version: 2023_12_03_165706) do
     t.index ["tenant_id"], name: "index_emergency_contacts_on_tenant_id"
   end
 
-<<<<<<< HEAD
   create_table "hashed_data", primary_key: "record_id", force: :cascade do |t|
     t.string "source_model"
     t.datetime "created_at", precision: 6, null: false
@@ -170,14 +165,14 @@ ActiveRecord::Schema.define(version: 2023_12_03_165706) do
     t.string "hashed_phone1"
     t.string "hashed_phone2"
     t.index ["hashable_type", "hashable_id"], name: "index_hashed_data_on_hashable"
-=======
+  end
+
   create_table "inquiries", force: :cascade do |t|
     t.string "email"
     t.string "company"
     t.text "purpose"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
->>>>>>> 5cb8ab2a3d229535198435ac761a270a6cd5533e
   end
 
   create_table "keys", force: :cascade do |t|

@@ -15,7 +15,7 @@ keybruh = Key.create!(
   customer_id: 1,
   subscription_id: 1,
   expiration: Time.zone.now + 1.year, # Set expiration to 1 year from the current time
-  )
+)
 puts "#{keybruh.inspect})..."
 puts "Fetching keys and customer data..."
 FetchKeys.call
@@ -54,28 +54,28 @@ ActsAsTenant.with_tenant(tenants.first) do
     lname:"Mod",
     role: :global_moderator,
     registration_key: 'globalmodkey',
-    )
+  ) 
 
   user.user_mfa_sessions.create!(
     secret_key: ROTP::Base32.random_base32, # Generate a random secret key
     activated: false, # You can activate it later when the user sets up MFA
-    )
+  )
 
 
   user = User.create!(
     email: "local@gmail.com",
     password: "password",
     fname: "Locality",
-    lname:"Mod",
+  lname:"Mod",
     role: :local_moderator,
     registration_key: 'localmodkey',
-    )
+  ) 
   user.user_mfa_sessions.create!(
     secret_key: ROTP::Base32.random_base32, # Generate a random secret key
     activated: false, # You can activate it later when the user sets up MFA
-    )
+  )
 
-end
+end 
 
 
 #Create multiple users and seeds
@@ -84,7 +84,7 @@ keys = []
 15.times { |i| keys << Key.create!(activation_code: "key#{i + 1}", used: false, expiration: Time.zone.now + 1.year) }
 # puts "keys: #{keys.inspect}"
 
-tenants = []
+tenants = [] 
 3.times { |i| tenants << Tenant.find_or_create_by!(subdomain: "tenant#{i + 1}") }
 puts "tenants: #{tenants.inspect}"
 
@@ -99,8 +99,8 @@ tenants.each do |tenant|
         lname: Faker::Name.last_name,
         role: :local_moderator,
         registration_key: keys.pop.activation_code,
-        )
-
+      )
+      
       # Create 50 Clients and related Emergency Contacts and Tests for each user
       10.times do |j|
         client = Client.create!(
@@ -154,7 +154,7 @@ tenants.each do |tenant|
           label: "Label#{j + 1}",
           notes: "Notes for RddtTest #{j + 1}"
         )
-
+    
         DwtTest.create(
           client: client,
           user: client.tenant.users.sample,
@@ -166,8 +166,8 @@ tenants.each do |tenant|
           label: "Label#{j + 1}",
           notes: "Notes for DwtTest #{j + 1}"
         )
-
-
+    
+    
       end
     end
   end

@@ -51,12 +51,12 @@ class ClientsController < ApplicationController
     end
   
     def index
-      puts "Clients: #{Client.all.inspect}"
+      #Shows all clients for global mods; global dataset
       if current_user.global_moderator?
-        # For a global moderator, all clients are accessible
         client_scope = Client.unscoped.all
+      
       else
-        # For regular users, only clients of the same tenant are accessible
+        # Else, shows only local clients of the same tenant
         client_scope = current_user.clients.where(tenant_id: current_user.tenant_id)
       end
 

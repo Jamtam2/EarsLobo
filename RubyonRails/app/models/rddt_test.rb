@@ -3,17 +3,22 @@
 # Table name: rddt_tests
 #
 #  id                       :bigint           not null, primary key
+#  advantage_percentile     :string
 #  client_name              :string
 #  ear_advantage            :string
 #  ear_advantage_score      :float
+#  ear_advantage_score1     :float
+#  ear_advantage_score3     :float
 #  encrypted_client_name    :string
 #  encrypted_client_name_iv :string
 #  interpretation           :string
 #  label                    :string
+#  left_percentile          :string
 #  left_score1              :float
 #  left_score2              :float
 #  left_score3              :float
 #  notes                    :text
+#  right_percentile         :string
 #  right_score1             :float
 #  right_score2             :float
 #  right_score3             :float

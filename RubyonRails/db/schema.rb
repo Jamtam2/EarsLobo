@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_03_165706) do
+ActiveRecord::Schema.define(version: 2023_12_09_101432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,6 +107,9 @@ ActiveRecord::Schema.define(version: 2023_12_03_165706) do
     t.float "left_score"
     t.float "right_score"
     t.float "ear_advantage_score"
+    t.string "left_percentile"
+    t.string "right_percentile"
+    t.string "advantage_percentile"
     t.bigint "client_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -202,7 +205,12 @@ ActiveRecord::Schema.define(version: 2023_12_03_165706) do
     t.float "right_score2"
     t.float "right_score3"
     t.float "ear_advantage_score"
+    t.float "ear_advantage_score1"
+    t.float "ear_advantage_score3"
     t.string "interpretation"
+    t.string "left_percentile"
+    t.string "right_percentile"
+    t.string "advantage_percentile"
     t.bigint "client_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -241,6 +249,15 @@ ActiveRecord::Schema.define(version: 2023_12_03_165706) do
     t.index ["user_id"], name: "index_tests_on_user_id"
   end
 
+  create_table "user_mfa_sessions", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "secret_key"
+    t.boolean "activated"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_user_mfa_sessions_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "fname"
     t.string "lname"
@@ -254,6 +271,8 @@ ActiveRecord::Schema.define(version: 2023_12_03_165706) do
     t.integer "role"
     t.bigint "tenant_id"
     t.string "verification_key"
+    t.string "google_secret"
+    t.integer "mfa_secret"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["tenant_id"], name: "index_users_on_tenant_id"
@@ -276,5 +295,6 @@ ActiveRecord::Schema.define(version: 2023_12_03_165706) do
   add_foreign_key "tests", "clients"
   add_foreign_key "tests", "tenants"
   add_foreign_key "tests", "users"
+  add_foreign_key "user_mfa_sessions", "users"
   add_foreign_key "users", "tenants"
 end

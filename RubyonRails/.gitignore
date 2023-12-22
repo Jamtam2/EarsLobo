@@ -21,7 +21,10 @@
 # Ignore uploaded files in development.
 /storage/*
 !/storage/.keep
+
+#Ignore env file from being uploaded to repo
 RubyonRails/.env
+.idea/
 
 /public/assets
 .byebug_history

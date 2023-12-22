@@ -26,6 +26,7 @@
 RubyonRails/.env
 .idea/
 .idea/workspace.xml
+.env
 
 /public/assets
 .byebug_history

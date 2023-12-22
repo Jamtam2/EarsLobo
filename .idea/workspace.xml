@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="85f016a5-798f-4510-a7b1-3073eef6eab6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RubyonRails/.env" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RubyonRails/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +31,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "Merging hunter__backend",
+    "git-widget-placeholder": "hunter__backend",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -175,7 +173,7 @@
       <workItem from="1703014979156" duration="702000" />
       <workItem from="1703016331227" duration="9689000" />
       <workItem from="1703194924180" duration="2281000" />
-      <workItem from="1703205019292" duration="1032000" />
+      <workItem from="1703205019292" duration="1181000" />
     </task>
     <servers />
   </component>

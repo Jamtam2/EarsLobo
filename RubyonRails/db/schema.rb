@@ -110,6 +110,9 @@ ActiveRecord::Schema.define(version: 2023_12_09_101432) do
     t.float "left_score"
     t.float "right_score"
     t.float "ear_advantage_score"
+    t.string "left_percentile"
+    t.string "right_percentile"
+    t.string "advantage_percentile"
     t.bigint "client_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -281,7 +284,6 @@ ActiveRecord::Schema.define(version: 2023_12_09_101432) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "clients", "tenants"
-  # add_foreign_key "clinicians", "tenants"
   add_foreign_key "dnw_tests", "clients"
   add_foreign_key "dnw_tests", "tenants"
   add_foreign_key "dnw_tests", "users"

@@ -25,6 +25,7 @@
 #Ignore env file from being uploaded to repo
 RubyonRails/.env
 .idea/
+.idea/workspace.xml
 
 /public/assets
 .byebug_history

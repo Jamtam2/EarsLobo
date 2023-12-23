@@ -1,5 +1,5 @@
 class ClientsController < ApplicationController
- before_action:authenticate_user!, except: [:index]  
+ before_action :authenticate_user!, except: [:index]
  require 'csv'
   
   def new
@@ -62,33 +62,21 @@ class ClientsController < ApplicationController
 
       # Initialize instance variable to be used in clients > index.html.erb
       @clients = client_scope
-      
+
+      # Instance variable to be used to use scope from HashedData model for filtering
+      hashed_datum_scope = HashedDatum.unscoped.all
+      @active_hashed_data = hashed_datum_scope
+
+
       # Calling method that enables Ransack functionality
-      sort_and_filter_clients(client_scope)
-    
+      # sort_and_filter_clients(client_scope)
+
+      process_hashed_search_parameters
+
       respond_to do |format|
         format.html
         format.csv { send_data generate_csv(@clients), filename: "client_data-#{Date.today}.csv" }
       end
-
-      # Old code below was used for old search filtering
-      # if params[:query]
-      #   split_query = params[:query].split(' ')
-      #   if split_query.length > 1
-      #     # Case when both first name and last name are typed
-      #     @clients = client_scope.where('lower(first_name) LIKE :first AND lower(last_name) LIKE :last OR phone1 LIKE :query', 
-      #                                 first: "#{split_query.first.downcase}%", 
-      #                                 last: "#{split_query.last.downcase}%", 
-      #                                 query: "%#{params[:query]}%")
-          
-      #   else
-      #     # Case when either first name, last name, email, or phone number is typed
-      #     @clients = client_scope.where('lower(first_name) LIKE :query OR lower(last_name) LIKE :query OR lower(email) LIKE :query OR phone1 LIKE :query', 
-      #                                 query: "%#{params[:query].downcase}%")
-      #   end
-      # else
-      #   @clients = client_scope
-      # end
 
     end
 
@@ -110,40 +98,116 @@ class ClientsController < ApplicationController
         @clients = client_scope
 
         # Calling method that enables Ransack functionality
-        sort_and_filter_clients(client_scope)
-  
+        # sort_and_filter_clients(client_scope)
+
+      process_hashed_search_parameters
+
         respond_to do |format|
           format.html
           format.csv { send_data generate_csv(@clients), filename: "global_moderator_data-#{Date.today}.csv" }
         end
       end
   end
+
     
-  # Method that contains functionality for ransack advanced for search
-    private def sort_and_filter_clients(client_scope)
-    
-      # Set the selected sorting option based on params
-    selected_sorting_name = params[:q]&.dig(:sort_by_name)
-    selected_sort_by_client = params[:q]&.dig(:sort_by_client)
-    selected_sort_by_date_birth = params[:q]&.dig(:sort_by_date_birth)
+# Method that contains functionality for ransack advanced search
+private def sort_and_filter_clients(client_scope)
+  
+  # Initialize Ransack search object with the given scope
+  @q = client_scope.ransack(params[:q], sort: params[:s])
+  
+  # Controls search functionality for regular user
+  if current_user.regular_user?
 
-    # Initialize Ransack search object with the given scope
-    @q = client_scope.ransack(params[:q])
+    # Dictionary of sorting options for a regular user
+    sorting_options_regular = {
+      age: params[:q]&.dig(:sort_by_age),
+      gender: params[:q]&.dig(:gender_eq),
+      name: params[:q]&.dig(:hashed_data_source_attribute),
+      client: params[:q]&.dig(:sort_by_client),
+      date_birth: params[:q]&.dig(:sort_by_date_birth),
+      country: params[:q]&.dig(:country_eq),
+      state: params[:q]&.dig(:state_eq),
+    }
 
-    # Will update the two search bars for name and location
-    @clients = @q.result
-
-    # Set the sorting option based on the parameter chosen by user from modal popup.
-    if selected_sorting_name || selected_sort_by_client || selected_sort_by_date_birth
-      @q.sorts = selected_sorting_name
-      @q.sorts = selected_sort_by_client
-      @q.sorts = selected_sort_by_date_birth
-      
-      # Will update the model filtering options when submitted by user
-      @clients = @q.result
-
+    # Choose which filter to use
+    sorting_options_regular.each do |key, value|
+      @q.sorts = value if value
     end
   end
+
+  # Controls search functionality for global moderator
+  if current_user.global_moderator?
+    
+    # Set the selected sorting option based on params
+    sorting_options_global = {
+      client: params[:q]&.dig(:sort_by_client),
+      date_birth: params[:q]&.dig(:sort_by_date_birth),
+      age: params[:q]&.dig(:sort_by_age),
+      gender: params[:q]&.dig(:gender_eq),
+      race: params[:q]&.dig(:race_eq),
+      country: params[:q]&.dig(:country_eq),
+      state: params[:q]&.dig(:state_eq),
+      ear_advantage: params[:q]&.dig(:dwt_tests_ear_advantage_eq),
+      ear_advantage_score: params[:q]&.dig(:dwt_tests_ear_advantage_score),
+      test_type: params[:q]&.dig(:dwt_tests_test_type_eq)
+    }
+    
+    # Choose which filter to use
+    sorting_options_global.each do |key, value|
+      @q.sorts = value if value
+    end
+  end
+  
+  # Will update the two search bars for name and location, and other possible filters
+  @clients = @q.result
+end
+
+
+
+def process_hashed_search_parameters
+  @q = Client.ransack(params[:q], sort: params[:s])
+  @clients = @q.result
+
+  # Store the search terms with the following model attributes with the hashed data
+  dict_of_search_terms = {
+    :age_search_term => [:hashed_age, Digest::SHA256.hexdigest(params[:age_search_term].to_s)],
+    :gender_search_term => [:hashed_gender, Digest::SHA256.hexdigest(params[:gender_search_term].to_s)],
+    :name_search_term => [:hashed_first_name, Digest::SHA256.hexdigest(params[:name_search_term].to_s)],
+    :date_of_birth_search_term => [:hashed_date_of_birth, Digest::SHA256.hexdigest(params[:date_of_birth_search_term].to_s)],
+    :country_search_term => [:hashed_country, Digest::SHA256.hexdigest(params[:country_search_term].to_s)],
+    :state_search_term => [:hashed_state, Digest::SHA256.hexdigest(params[:state_search_term].to_s)],
+  }
+
+  # loop over the dict of search terms and filter results if the user is using search term
+  dict_of_search_terms.each do |search_term, (hashed_attribute, hashed_value)|
+    if params[search_term].present?
+      hashed_records = HashedDatum.where(hashed_attribute => hashed_value)
+      @clients = @clients.where(id: hashed_records.pluck(:hashable_id)) if hashed_records.exists?
+    end
+  end
+
+  # Code below if we want to add a field that will accept input from any of the attributes below as a search parameter
+  # if params[:all_data_search_term].present?
+  #   hashed_search_term = Digest::SHA256.hexdigest(params[:all_data_search_term].to_s)
+  #   hashed_records = HashedDatum.where(hashed_first_name: hashed_search_term)
+  #                               .or(HashedDatum.where(hashed_last_name: hashed_search_term))
+  #                               .or(HashedDatum.where(hashed_address: hashed_search_term))
+  #                               .or(HashedDatum.where(hashed_age: hashed_search_term))
+  #                               .or(HashedDatum.where(hashed_city: hashed_search_term))
+  #                               .or(HashedDatum.where(hashed_country: hashed_search_term))
+  #                               .or(HashedDatum.where(hashed_date_of_birth: hashed_search_term))
+  #                               .or(HashedDatum.where(hashed_email: hashed_search_term))
+  #                               .or(HashedDatum.where(hashed_gender: hashed_search_term))
+  #                               .or(HashedDatum.where(hashed_phone1: hashed_search_term))
+  #                               .or(HashedDatum.where(hashed_phone2: hashed_search_term))
+  #                               .or(HashedDatum.where(hashed_state: hashed_search_term))
+  #                               .or(HashedDatum.where(hashed_zip: hashed_search_term))
+  #                               .or(HashedDatum.where(hashed_race: hashed_search_term))
+  #
+  #   @clients = @clients.where(id: hashed_records.pluck(:hashable_id)) if hashed_records.exists?
+  # end
+end
 
       
     def show

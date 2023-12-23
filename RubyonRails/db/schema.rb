@@ -76,17 +76,6 @@ ActiveRecord::Schema.define(version: 2023_12_09_101432) do
     t.index ["tenant_id"], name: "index_clients_on_tenant_id"
   end
 
-  create_table "clinicians", force: :cascade do |t|
-    t.string "fname"
-    t.string "lname"
-    t.string "email"
-    t.string "phone"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "tenant_id"
-    t.index ["tenant_id"], name: "index_clinicians_on_tenant_id"
-  end
-
   create_table "dnw_tests", force: :cascade do |t|
     t.string "label"
     t.string "test_type"
@@ -96,6 +85,9 @@ ActiveRecord::Schema.define(version: 2023_12_09_101432) do
     t.float "left_score"
     t.float "right_score"
     t.float "ear_advantage_score"
+    t.string "left_percentile"
+    t.string "right_percentile"
+    t.string "advantage_percentile"
     t.string "interpretation"
     t.bigint "client_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -155,6 +147,30 @@ ActiveRecord::Schema.define(version: 2023_12_09_101432) do
     t.string "encrypted_state_iv"
     t.index ["client_id"], name: "index_emergency_contacts_on_client_id"
     t.index ["tenant_id"], name: "index_emergency_contacts_on_tenant_id"
+  end
+
+  create_table "hashed_data", primary_key: "record_id", force: :cascade do |t|
+    t.string "source_model"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "hashable_type", null: false
+    t.bigint "hashable_id", null: false
+    t.string "hashed_first_name"
+    t.string "hashed_last_name"
+    t.string "hashed_email"
+    t.string "hashed_gender"
+    t.string "hashed_age"
+    t.string "hashed_date_of_birth"
+    t.string "hashed_address"
+    t.string "hashed_country"
+    t.string "hashed_state"
+    t.string "hashed_city"
+    t.string "hashed_tenant_id"
+    t.string "hashed_zip"
+    t.string "hashed_race"
+    t.string "hashed_phone1"
+    t.string "hashed_phone2"
+    t.index ["hashable_type", "hashable_id"], name: "index_hashed_data_on_hashable"
   end
 
   create_table "inquiries", force: :cascade do |t|
@@ -268,7 +284,6 @@ ActiveRecord::Schema.define(version: 2023_12_09_101432) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "clients", "tenants"
-  add_foreign_key "clinicians", "tenants"
   add_foreign_key "dnw_tests", "clients"
   add_foreign_key "dnw_tests", "tenants"
   add_foreign_key "dnw_tests", "users"

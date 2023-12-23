@@ -172,4 +172,3 @@ tenants.each do |tenant|
     end
   end
 end
-

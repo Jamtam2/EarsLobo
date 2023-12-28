@@ -3,6 +3,7 @@
 # Table name: dnw_tests
 #
 #  id                       :bigint           not null, primary key
+#  advantage_percentile     :string
 #  client_name              :string
 #  ear_advantage            :string
 #  ear_advantage_score      :float
@@ -10,8 +11,10 @@
 #  encrypted_client_name_iv :string
 #  interpretation           :string
 #  label                    :string
+#  left_percentile          :string
 #  left_score               :float
 #  notes                    :text
+#  right_percentile         :string
 #  right_score              :float
 #  test_type                :string
 #  created_at               :datetime         not null

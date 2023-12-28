@@ -22,6 +22,12 @@
 /storage/*
 !/storage/.keep
 
+#Ignore env file from being uploaded to repo
+RubyonRails/.env
+.idea/
+.idea/workspace.xml
+.env
+
 /public/assets
 .byebug_history
 

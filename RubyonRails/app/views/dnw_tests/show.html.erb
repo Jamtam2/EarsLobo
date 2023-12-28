@@ -1,10 +1,108 @@
-<h1>Test type</h1>
-<h1><%= @dnw_test.test_type%></h1>
-<h1>left Score</h1>
-<h1><%= @dnw_test.left_score%></h1>
-<h1>Right Score</h1>
-<h1><%= @dnw_test.right_score%></h1>
-<h1>Ear Advantage</h1>
-<h1><%= @dnw_test.ear_advantage%></h1>
-<h1>Ear Advantage Score</h1>
-<h1><%= @dnw_test.ear_advantage_score%></h1>
+<h1><b><center><%= @dnw_test.test_type%> Test Information and Results</center></b></h1>
+<hr>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <h2><center><b>Left Ear Score</b></center></h2>
+            <h2><center><b><%= @dnw_test.left_score%>%</b></center></h2>
+
+        </div>
+        <div class="col-sm">
+            <%= image_tag 'head image.png', class: 'w-40 img-responsive center-block', style: 'max-width: 20rem;' %>
+        </div>
+        <div class="col-sm">
+            <h2><center><b>Right Ear Score</b></center></h2>
+            <h2><center><b><%= @dnw_test.right_score%>%</b></center></h2>
+
+        </div>
+    </div>
+<div>
+<h1><b><center>Dominant Ear</center></b></h1>
+<h2><b><center><%= @dnw_test.ear_advantage%></b></center></h2>
+<h1><b><center>Ear Advantage Score</center></b></h1>
+<h2><b><center><%= @dnw_test.ear_advantage_score%>%</b></center></h2>
+
+
+<hr>
+
+<h1><b><center>Scores and Data Presented in Tables Like Test Page</center></b></h1>
+<h3><b>Scores Table</b></h3>
+<table class="table table-sm table-bordered m1-4" style="max-width: 25rem;">
+    <thead>
+        <tr>
+            <th scope="col">Pairs</th>
+            <th scope="col">Left</th>
+            <th scope="col">Right</th>
+            <th scope="col">Ear Adv</th>
+        </tr>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td class="left-column"><%= @dnw_test.left_score%></span>%</p></td>
+                <td class="right-column"><%= @dnw_test.right_score%></span>%</td>
+                <td class="ear-advantage"><%= @dnw_test.ear_advantage_score%>0</span>%</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+            </tr>
+            <tr>
+                <th scope="row">3</th>           
+            </tr>
+        </tbody>
+    </thead>
+</table>
+<hr>
+
+
+<script>
+    const earAdvantageCells = document.querySelectorAll('.ear-advantage');
+    const percentileCells = document.querySelectorAll('.percentile');
+    
+    // Loop through each ear advantage cell
+    earAdvantageCells.forEach(cell => {
+    // Get the value of the cell
+    const value = parseFloat(cell.textContent);
+
+    // Check the value and set the background color accordingly
+    if (value < 0) {
+        cell.style.backgroundColor = 'lightblue';
+    } else if (value > 0) {
+        cell.style.backgroundColor = 'lightpink';
+    } else {
+        cell.style.backgroundColor = 'white';
+    }
+    });
+
+    percentileCells.forEach(cell => {
+    // Get the value of the cell
+    const percValue = cell.textContent.trim();
+
+    // Check the value and set the background color accordingly
+    if ((percValue == "5th Percentile")) {
+        cell.style.backgroundColor = 'lightpink';
+    } 
+    else if (percValue == "10th Percentile") {
+        cell.style.backgroundColor = 'hsl(60, 100%, 70%)';
+    } 
+    else if (percValue == "25th Percentile") {
+        cell.style.backgroundColor = 'lightgreen';
+    }
+    else{
+        cell.style.backgroundColor = 'lightblue';
+    }
+    });
+</script>
+
+
+<style>
+    .left-column {
+        background-color: lightblue;
+    }
+    
+    .right-column {
+        background-color: lightpink;
+    }
+
+</style>
+
+

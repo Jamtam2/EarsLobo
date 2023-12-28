@@ -167,18 +167,19 @@
      <div class ="col">
       <div class="col-md-12">
         <h2 class="display-5" style="padding-bottom:20px"><strong>Tests</strong></h2>
-        <!-- Buttons and dropdowns to add new tests -->
+        <!-- Buttons and dropdowns to add new tests  -->
         <div class="container">
           <div class="row">
-              <button class="btn btn-primary rounded-pill btn-block btn-lg dropdown-toggle" type="button" data-toggle="dropdown">
+              <button class="btn btn-primary rounded-pill btn-block btn-lg dropdown-toggle" type="button" data-toggle="dropdown" data-dropup-auto="false">
                 Add Evaluation
                 </button>
               <div class="dropdown-menu">
               <h5 class="dropdown-header">Add DWT Test</h5>
-                <a class="dropdown-item"> <%= link_to 'List 1', dwt_list1_client_dwt_tests_path(@client) %></a>
-                <a class="dropdown-item"> <%= link_to 'List 2', dwt_list2_client_dwt_tests_path(@client) %></a>
-                <a class="dropdown-item"> <%= link_to 'List 3', dwt_list3_client_dwt_tests_path(@client) %></a>
-                <a class="dropdown-item"> <%= link_to 'List 4', dwt_list4_client_dwt_tests_path(@client) %></a>          
+                <a class="dropdown-item" href="<%= dwt_list1_client_dwt_tests_path(@client) %>">List 1</a>
+                <a class="dropdown-item" href="<%= dwt_list2_client_dwt_tests_path(@client) %>">List 2</a>
+                <a class="dropdown-item" href="<%= dwt_list3_client_dwt_tests_path(@client) %>">List 3</a>
+                <a class="dropdown-item" href="<%= dwt_list4_client_dwt_tests_path(@client) %>">List 4</a>
+       
               <%# </div>
               </div>
               <div class="col-sm-4">
@@ -186,8 +187,8 @@
                   Add RDDT Test
                 </button> %>
                 <h5 class="dropdown-header">Add RDDT Test</h5>
-                  <a class="dropdown-item"> <%= link_to 'List 1', rddt_list1_client_rddt_tests_path(@client) %></a>
-                  <a class="dropdown-item"> <%= link_to 'List 2', rddt_list2_client_rddt_tests_path(@client) %></a>         
+                  <a class="dropdown-item" href="<%= rddt_list1_client_rddt_tests_path(@client) %>">List 1</a>
+                  <a class="dropdown-item" href="<%= rddt_list2_client_rddt_tests_path(@client) %>">List 2</a>         
                 <%# </div>
               </div>
               <div class="col-sm-4">
@@ -196,10 +197,11 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3"> %>
                 <h5 class="dropdown-header">Add DNW Test</h5>
-                  <a class="dropdown-item"> <%= link_to 'List 1', dnw_list1_client_dnw_tests_path(@client) %></a>
-                  <a class="dropdown-item"> <%= link_to 'List 2', dnw_list2_client_dnw_tests_path(@client) %></a>
-                  <a class="dropdown-item"> <%= link_to 'List 3', dnw_list3_client_dnw_tests_path(@client) %></a>
-                  <a class="dropdown-item"> <%= link_to 'List 4', dnw_list4_client_dnw_tests_path(@client) %></a>             
+                  <a class="dropdown-item" href="<%= dnw_list1_client_dnw_tests_path(@client) %>">List 1</a>
+                  <a class="dropdown-item" href="<%= dnw_list2_client_dnw_tests_path(@client) %>">List 2</a>
+                  <a class="dropdown-item" href="<%= dnw_list3_client_dnw_tests_path(@client) %>">List 3</a>
+                  <a class="dropdown-item" href="<%= dnw_list4_client_dnw_tests_path(@client) %>">List 4</a>
+         
                 </div>
           </div>
         </div>

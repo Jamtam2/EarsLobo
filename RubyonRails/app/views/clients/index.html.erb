@@ -6,12 +6,12 @@
     <!--Filter options-->
     <div class="row mb-3">
       <div class="col-md-6">
-        <!--<%= form_tag clients_path, method: :get, class: 'form-inline' do %>
+        <%= form_tag clients_path, method: :get, class: 'form-inline' do %>
           <%= text_field_tag :all_data_search_term, params[:all_data_search_term], class: 'form-control mr-sm-2 rounded-pill', placeholder: 'Filter Results' %>
           <%#= text_field_tag :address_search, params[:address_search], class: 'form-control mr-sm-2 rounded-pill', placeholder: 'Filter by location' %>
           <%= submit_tag "Search", class: "btn rounded-pill btn-outline-info my-2 my-sm-0" %>
         <% end %>
-        -->
+
         <button type="button" id="filterButton" class="btn btn-secondary rounded-pill mr-sm-2">Filter Options</button>
 
       </div>
@@ -462,68 +462,4 @@
       </div>
     </div>
   </div>
-
-
-<!--  <div class="justify-content-center">-->
-<!--    <div class="table-responsive">-->
-<!--      <table>-->
-<!--        <thead>-->
-<!--        <tr>-->
-<!--          <th>Edit</th>-->
-<!--          <th>Record ID</th>-->
-<!--          <th>Model Came From</th>-->
-<!--          <th>First Name</th>-->
-<!--          <th>Last Name</th>-->
-<!--          <th>Email</th>-->
-<!--          <th>Gender</th>-->
-<!--          <th>Age</th>-->
-<!--          <th>Date of Birth</th>-->
-<!--          <th>Phone1</th>-->
-<!--          <th>Phone2</th>-->
-<!--          <th>Address</th>-->
-<!--          <th>Country</th>-->
-<!--          <th>State</th>-->
-<!--          <th>City</th>-->
-<!--          <th>Tenant_ID</th>-->
-<!--          <th>Delete</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-
-<!--        Take data from the Client model database and show it in the table-->
-<!--        <tbody>-->
-        <%# @active_hashed_data.each do |client| %>
-<!--          <tr>-->
-<!--            <td>-->
-              <%#= link_to edit_client_path(client) do %>
-                <%#= image_tag 'edit_icon.png' , alt: 'Edit' ,width: 20 %>
-              <%# end %>
-<!--            </td>-->
-<!--            <td><%#= client.record_id %></td>-->
-<!--            <td><%#= client.source_model %></td>-->
-<!--            <td><%#= client.hashed_first_name %></td>-->
-<!--            <td><%#= client.hashed_last_name %></td>-->
-<!--            <td><%#= client.hashed_email %></td>-->
-<!--            <td><%#= client.hashed_gender %></td>-->
-<!--            <td><%#= client.hashed_age %></td>-->
-<!--            <td><%#= client.hashed_date_of_birth %></td>-->
-<!--            <td><%#= client.hashed_phone1 %></td>-->
-<!--            <td><%#= client.hashed_phone2 %></td>-->
-<!--            <td><%#= client.hashed_address %></td>-->
-<!--            <td><%#= client.hashed_country %></td>-->
-<!--            <td><%#= client.hashed_state %></td>-->
-<!--            <td><%#= client.hashed_city %></td>-->
-<!--            <td><%#= client.hashed_tenant_id %></td>-->
-
-<!--            <td>-->
-              <%#= link_to client_path(client), method: :delete, data: { confirm: 'Are you sure?' } do %>
-                <%#= image_tag 'delete_icon.png' , alt: 'Delete' , width: 20 %>
-              <%# end %>
-<!--            </td>-->
-<!--          </tr>-->
-        <%# end %>
-<!--        </tbody>-->
-<!--      </table>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  </div>-->
 </body>

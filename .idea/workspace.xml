@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85f016a5-798f-4510-a7b1-3073eef6eab6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/EarsLobo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/EarsLobo.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/RubyonRails.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/RubyonRails.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/views/clients/global_moderator_index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/views/clients/global_moderator_index.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/views/clients/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/views/clients/index.html.erb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +34,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "Merging hunter__backend",
+    "git-widget-placeholder": "hunter__backend",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -151,6 +150,7 @@
       <workItem from="1703205019292" duration="1913000" />
       <workItem from="1703479096965" duration="212000" />
       <workItem from="1703627198169" duration="701000" />
+      <workItem from="1703727437842" duration="1758000" />
     </task>
     <servers />
   </component>

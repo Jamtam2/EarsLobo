@@ -9,6 +9,9 @@
       </configuration>
     </facet>
   </component>
+  <component name="ModuleRunConfigurationManager">
+    <shared />
+  </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$/../../RubyonRails">
       <sourceFolder url="file://$MODULE_DIR$/../../RubyonRails/features" isTestSource="true" />

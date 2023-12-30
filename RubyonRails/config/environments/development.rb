@@ -80,7 +80,7 @@ Rails.application.configure do
     port: 587,
     domain: 'http://localhost:3000/',
     user_name: 'dichoticdataresearch@gmail.com',
-    # password: '[input it]',
+    password: 'pjl txyq pbdi bmjnr', # It's recommended to use credentials from environment variables or encrypted secrets
     authentication: 'plain',
     enable_starttls_auto: true
   }

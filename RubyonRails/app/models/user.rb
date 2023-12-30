@@ -37,6 +37,8 @@ class User < ApplicationRecord
   enum role: { regular_user: 0, local_moderator: 1, global_moderator: 2, owner: 3 }
 
   attr_accessor :registration_key
+  attr_accessor :email_2fa_code
+  
   before_validation :validate_registration_key, on: :create
 
   # Will validate the verification key only for the owner.

@@ -35,6 +35,10 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :new, :create]
   resources :inquiries, only: [:new, :create]
 
+  resources :user_mfa_sessions do
+    post :send_email_2fa, on: :collection
+  end
+  
 
   resources :clients do
     resources :emergency_contacts, only: [:create, :destroy, :new, :edit, :update]

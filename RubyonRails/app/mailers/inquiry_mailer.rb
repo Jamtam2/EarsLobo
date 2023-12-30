@@ -3,6 +3,8 @@ class InquiryMailer < ApplicationMailer
   
     def inquiry_email(inquiry)
       @inquiry = inquiry
+      puts "Got here: #{inquiry.inspect}"
+
       mail(to: 'dichoticdataresearch@gmail.com', subject: 'New Dataset Inquiry')
     end
   

@@ -14,13 +14,21 @@
     </div>
   <% end %>
 
+  <%= form_tag send_email_2fa_user_mfa_sessions_path, method: :post, class: "email-2fa-form" do %>
+    <%= submit_tag 'Send 2FA Code via Email', class: "btn btn-secondary" %>
+  <% end %>
+
   <div class="mfa-container">
     <%= form_tag user_mfa_session_path, method: :post, class: "mfa-form", role: "form" do %>
       <div class="form-group">
         <%= label_tag "Token", 'Google Authenticator Code', class: 'mfa-label' %>
         <%= text_field_tag 'mfa_code', params[:mfa_code], class: "form-control" %>
+
+        <%= label_tag "email_2fa_code", 'Email 2FA Code', class: 'mfa-label' %>
+        <%= text_field_tag 'email_2fa_code', nil, class: "form-control" %>
       </div>
       <%= submit_tag 'Log In', class: "btn mfa-submit" %>
     <% end %>
   </div>
 </div>
+

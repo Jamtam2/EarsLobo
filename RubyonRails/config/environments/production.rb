@@ -123,7 +123,7 @@ Rails.application.configure do
     port: 587,
     domain: 'gmail.com',
     user_name: 'dichoticdataresearch@gmail.com',
-    password: 'pjl txyq pbdi bmjnr', # It's recommended to use credentials from environment variables or encrypted secrets
+    password: 'sqcngtxqyrjdbncm', # It's recommended to use credentials from environment variables or encrypted secrets
     authentication: 'plain',
     enable_starttls_auto: true
   }

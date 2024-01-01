@@ -1,50 +1,71 @@
+<body class="bg-light center">
+  <div class="container p-5 my-3 w-50 border rounded bg-white">
+    <h2 class="display-4" style='padding-bottom:20px'><strong>Sign Up</strong></h2>
 
-<body class= "bg-light center">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
 
-<div class="container p-5 my-3 w-50 border rounded bg-white">
-<h2 class= "display-1", style= 'padding-bottom:20px' ><strong>Sign up </strong></h2>
+      <div class="form-group">
+        <%= f.label :first_name %><br />
+        <%= f.text_field :fname, autofocus: true, class: "form-control form-control-lg", style: 'padding:10px;' %>
+      </div>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+      <div class="form-group">
+        <%= f.label :last_name %><br />
+        <%= f.text_field :lname, autofocus: true, class: "form-control form-control-lg", style: 'padding:10px;' %>
+      </div>
 
-<div class="form-group">
-    <%= f.label :first_name %><br />
-    <%=f.text_field :fname, autofocus: true, class: "form-control form-control-lg", style: ' padding:10px;'%>
+      <div class="form-group">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-control-lg", style: 'padding:10px;' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password %>
+        <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br />
+        <%= f.password_field :password, autocomplete: "new-password", class: "form-control form-control-lg", style: 'padding:10px;' %>
+      </div>
+
+      <div class="form-group">
+        <label>Select Account Type:</label><br />
+        <input type="radio" name="account_type" value="local_moderator" id="localModerator"> Create a Local Moderator<br />
+        <input type="radio" name="account_type" value="signup_code" id="signupCode"> I Have a Sign-Up Code
+      </div>
+
+      <div class="form-group" id="registrationKeyField" style="display:none;">
+        <%= f.label :registration_key %>
+        <%= f.text_field :registration_key, class: "form-control form-control-lg", style: 'padding:10px;' %>
+      </div>
+
+      <div class="form-group" id="signUpCodeField" style="display:none;">
+        <%= f.label :sign_up_code, "Enter Sign-Up Code" %>
+        <%#= f.text_field :sign_up_code, class: "form-control form-control-lg", style: 'padding:10px;' %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Sign up", class: 'btn btn-primary btn-lg btn-block' %>
+      </div>
+    <% end %>
   </div>
+  <script>
+      document.addEventListener('turbolinks:load', function () {
+          var localModeratorRadioButton = document.getElementById('localModerator');
+          var signUpCodeRadioButton = document.getElementById('signupCode');
 
-  <div class="form-group">
-    <%= f.label :last_name %><br />
-    <%=f.text_field :lname, autofocus: true, class: "form-control form-control-lg", style: ' padding:10px;'%>
-  </div>
+          localModeratorRadioButton.addEventListener('change', toggleFields);
+          signUpCodeRadioButton.addEventListener('change', toggleFields);
 
-  <div class="form-group">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-control-lg", style: ' padding:10px;' %>
-  </div>
+          // Initialize the form with the correct fields visible
+          toggleFields();
+      });
 
-  <div class="form-group">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password", class: "form-control form-control-lg", style: ' padding:10px;' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control form-control-lg", style: ' padding:10px;' %>
-  </div>
-
-
-  <%= f.label :registration_key %>
-  <%= f.text_field :registration_key, class: "form-control form-control-lg", style: ' padding:10px;'  %>
-
-  <div class="actions">
-    <%= f.submit "Sign up",  class: 'btn btn-primary btn-lg btn-block' %>
-  </div>
-<% end %>
-
-
-
-</div>
+      function toggleFields() {
+          var localModerator = document.getElementById('localModerator').checked;
+          var signUpCode = document.getElementById('signupCode').checked;
+          document.getElementById('registrationKeyField').style.display = localModerator ? 'block' : 'none';
+          document.getElementById('signUpCodeField').style.display = signUpCode ? 'block' : 'none';
+      }
+  </script>
 </body>

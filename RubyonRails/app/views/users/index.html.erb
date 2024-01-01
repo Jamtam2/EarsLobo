@@ -16,6 +16,7 @@
       <div class="col-md-6 text-right">
         <% if current_user.local_moderator? || current_user.global_moderator? %>
           <%= link_to 'Add New User', new_user_path, class: 'btn btn-primary btn-lg'%>
+          <%=  %>
         <% end %>
       </div>
     </div>

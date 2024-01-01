@@ -103,10 +103,15 @@ class User < ApplicationRecord
     end
   end
 
+  private
+  # Local moderators have a unique generated signup code for new users to use during registration
+  def generate_unique_code
+    self.unique.code = SecureRandom.hex(10)
+  end
+
 
   public
   def license_key
     Key.find_by(email: email)
   end
 end
-

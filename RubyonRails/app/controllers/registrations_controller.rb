@@ -1,5 +1,15 @@
 class RegistrationsController < Devise::RegistrationsController
   def create
+    # In registration form, user selects regular or local mod
+    if user.regular
+    # do something here
+    end
+
+    if user.local_moderator
+    #   do something here
+    end
+
+
     tenant = Tenant.create!  # Ensure this line is creating a tenant
     user = nil
     ActsAsTenant.with_tenant(tenant) do

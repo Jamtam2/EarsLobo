@@ -41,7 +41,7 @@
 
       <div class="form-group" id="signUpCodeField" style="display:none;">
         <%= f.label :sign_up_code, "Enter Sign-Up Code" %>
-        <%#= f.text_field :sign_up_code, class: "form-control form-control-lg", style: 'padding:10px;' %>
+        <%= f.text_field :moderator_code, class: "form-control form-control-lg", style: 'padding:10px;' %>
       </div>
 
       <div class="actions">
@@ -51,8 +51,8 @@
   </div>
   <script>
       document.addEventListener('turbolinks:load', function () {
-          var localModeratorRadioButton = document.getElementById('localModerator');
-          var signUpCodeRadioButton = document.getElementById('signupCode');
+          let localModeratorRadioButton = document.getElementById('localModerator');
+          let signUpCodeRadioButton = document.getElementById('signupCode');
 
           localModeratorRadioButton.addEventListener('change', toggleFields);
           signUpCodeRadioButton.addEventListener('change', toggleFields);
@@ -62,8 +62,8 @@
       });
 
       function toggleFields() {
-          var localModerator = document.getElementById('localModerator').checked;
-          var signUpCode = document.getElementById('signupCode').checked;
+          let localModerator = document.getElementById('localModerator').checked;
+          let signUpCode = document.getElementById('signupCode').checked;
           document.getElementById('registrationKeyField').style.display = localModerator ? 'block' : 'none';
           document.getElementById('signUpCodeField').style.display = signUpCode ? 'block' : 'none';
       }

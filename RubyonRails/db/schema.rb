@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_09_101432) do
+ActiveRecord::Schema.define(version: 2024_01_01_015421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -276,7 +276,9 @@ ActiveRecord::Schema.define(version: 2023_12_09_101432) do
     t.string "verification_key"
     t.string "google_secret"
     t.integer "mfa_secret"
+    t.string "moderator_code"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["moderator_code"], name: "index_users_on_moderator_code"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["tenant_id"], name: "index_users_on_tenant_id"
   end

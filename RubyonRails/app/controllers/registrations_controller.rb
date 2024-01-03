@@ -1,13 +1,14 @@
 class RegistrationsController < Devise::RegistrationsController
-  def create
-    # In registration form, user selects regular or local mod
-    if user.regular
-    # do something here
-    end
 
-    if user.local_moderator
-    #   do something here
-    end
+def create
+    # TODO: This was crashing app before, commented out.
+    # In registration form, user selects regular or local mod
+    # if user.regular
+    # # do something here
+    # end
+    #
+    # if user.local_moderator
+    # end
 
 
     tenant = Tenant.create!  # Ensure this line is creating a tenant
@@ -45,4 +46,5 @@ class RegistrationsController < Devise::RegistrationsController
   def valid_registration_key?(key)
     key.present? && !key.used && (key.expiration.nil? || key.expiration > Time.current)
   end
+
 end

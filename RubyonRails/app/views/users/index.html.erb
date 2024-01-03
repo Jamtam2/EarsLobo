@@ -14,59 +14,44 @@
 
       <!-- Link to add a new user -->
       <div class="col-md-6 text-right">
-        <% if current_user.local_moderator? || current_user.global_moderator? %>
-          <%= link_to 'Add New User', new_user_path, class: 'btn btn-primary btn-lg'%>
-          <%=  %>
+        <%# if current_user.local_moderator? || current_user.global_moderator? %>
+          <%#= link_to 'Add New User', new_user_path, class: 'btn btn-primary btn-lg'%>
+          <%#=  %>
+        <%# end %>
+        <% if current_user.local_moderator? %>
+          <td><%= current_user.moderator_code %></td> <!-- Display the unique code for local moderators -->
         <% end %>
+
       </div>
     </div>
     <% if @users.any? { |user| user.local_moderator? || user.global_moderator? } %>
-
-    <h2>Moderators</h2>
-    <table>
-      <thead>
+      <h2>Moderators</h2>
+      <table>
+        <thead>
         <tr>
           <th>First Name</th>
           <th>Last Name</th>
           <th>Email</th>
+          <th>Unique Code</th> <!-- New column for the unique code -->
         </tr>
-      </thead>
-      <tbody>
+        </thead>
+        <tbody>
         <% @users.each do |user| %>
           <% if user.local_moderator? || user.global_moderator? %>
             <tr>
               <td><%= user.fname %></td>
               <td><%= user.lname %></td>
               <td><%= user.email %></td>
+              <% if user.local_moderator? %>
+                <td><%= user.moderator_code %></td> <!-- Display the unique code for local moderators -->
+              <% else %>
+                <td>N/A</td> <!-- Placeholder for global moderators -->
+              <% end %>
             </tr>
           <% end %>
         <% end %>
-      </tbody>
-    </table>
-    <% end %>
-
-  <% if @users.any? { |user| user.regular_user? } %>
-    <h2>Regular Users</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Email</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @users.each do |user| %>
-          <% if user.regular_user? %>
-            <tr>
-              <td><%= user.fname %></td>
-              <td><%= user.lname %></td>
-              <td><%= user.email %></td>
-            </tr>
-          <% end %>
-        <% end %>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
     <% end %>
 
   </div>

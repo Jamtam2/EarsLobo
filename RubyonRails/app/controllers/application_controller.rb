@@ -13,12 +13,17 @@ class ApplicationController < ActionController::Base
   
   end
 
-
-
   private
+
   def check_mfa
+    # Bypass MFA check in development
+    # TODO: Remove this when moving to production
+    if Rails.env.development?
+      return
+    end
+
     return unless user_signed_in? && "/logout" != request.path
-  
+
     user_mfa_session = current_user.user_mfa_sessions.first
 
     if user_mfa_session.nil? || !user_mfa_session.activated
@@ -27,7 +32,8 @@ class ApplicationController < ActionController::Base
 
     # Additional logic if needed...
   end
-  
+
+
   protected
 
   def authenticate_user_with_redirect!

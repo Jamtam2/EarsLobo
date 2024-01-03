@@ -9,6 +9,7 @@
 #  google_secret          :string
 #  lname                  :string
 #  mfa_secret             :integer
+#  moderator_code         :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
@@ -21,6 +22,7 @@
 # Indexes
 #
 #  index_users_on_email                 (email) UNIQUE
+#  index_users_on_moderator_code        (moderator_code)
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #  index_users_on_tenant_id             (tenant_id)
 #
@@ -29,6 +31,13 @@
 #  fk_rails_...  (tenant_id => tenants.id)
 #
 class User < ApplicationRecord
+
+  # Add a field for the unique moderator code
+  attribute :moderator_code, :string
+
+  # Callback to generate a unique code for local moderators
+  before_create :generate_unique_code, if: :local_moderator?
+
   acts_as_tenant(:tenant)
   
   acts_as_google_authenticated google_secret: :google_secret, mfa_secret: :mfa_secret
@@ -104,9 +113,14 @@ class User < ApplicationRecord
   end
 
   private
-  # Local moderators have a unique generated signup code for new users to use during registration
+
+  # Generate a unique code only for local moderators
   def generate_unique_code
-    self.unique.code = SecureRandom.hex(10)
+    # Ensure the generated code is unique across all users
+    loop do
+      self.moderator_code = SecureRandom.hex(10)
+      break unless User.exists?(moderator_code: self.moderator_code)
+    end
   end
 
 

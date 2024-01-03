@@ -7,9 +7,9 @@
     <div class="row mb-3">
       <div class="col-md-6">
         <%= form_tag clients_path, method: :get, class: 'form-inline' do %>
-          <%= text_field_tag :all_data_search_term, params[:all_data_search_term], class: 'form-control mr-sm-2 rounded-pill', placeholder: 'Filter Results' %>
+          <%#= text_field_tag :all_data_search_term, params[:all_data_search_term], class: 'form-control mr-sm-2 rounded-pill', placeholder: 'Filter Results' %>
           <%#= text_field_tag :address_search, params[:address_search], class: 'form-control mr-sm-2 rounded-pill', placeholder: 'Filter by location' %>
-          <%= submit_tag "Search", class: "btn rounded-pill btn-outline-info my-2 my-sm-0" %>
+          <%#= submit_tag "Search", class: "btn rounded-pill btn-outline-info my-2 my-sm-0" %>
         <% end %>
 
         <button type="button" id="filterButton" class="btn btn-secondary rounded-pill mr-sm-2">Filter Options</button>
@@ -92,7 +92,7 @@
                     <label for="from_client">Country:</label>
                   </div>
                   <div class="col-md-8">
-                    <%= select_tag :country_search_term, options_for_select([['None', nil],
+                    <%= select_tag :country_search_term, options_for_select([['None', nil], ['United States of America', 'US'],
                                             ['Afghanistan', 'AF'],
                                             ['Albania', 'AL'],
                                             ['Algeria', 'DZ'],
@@ -280,7 +280,6 @@
                                             ['Ukraine', 'UA'],
                                             ['United Arab Emirates', 'AE'],
                                             ['United Kingdom', 'GB'],
-                                            ['United States of America', 'US'],
                                             ['Uruguay', 'UY'],
                                             ['Uzbekistan', 'UZ'],
                                             ['Vanuatu', 'VU'],

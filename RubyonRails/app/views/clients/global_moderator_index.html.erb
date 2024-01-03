@@ -6,9 +6,9 @@
     <div class="row mb-3">
       <div class="col-md-6">
         <%= form_tag global_moderator_index_path, method: :get, class: 'form-inline' do %>
-          <%= text_field_tag :all_data_search_term, params[:all_data_search_term], class: 'form-control mr-sm-2 rounded-pill', placeholder: 'Filter Results' %>
+          <%#= text_field_tag :all_data_search_term, params[:all_data_search_term], class: 'form-control mr-sm-2 rounded-pill', placeholder: 'Filter Results' %>
           <%#= text_field_tag :address_search, params[:address_search], class: 'form-control mr-sm-2 rounded-pill', placeholder: 'Filter by location' %>
-          <%= submit_tag "Search", class: "btn rounded-pill btn-outline-info my-2 my-sm-0" %>
+          <%#= submit_tag "Search", class: "btn rounded-pill btn-outline-info my-2 my-sm-0" %>
         <% end %>
         <button type="button" id="filterButton" class="btn btn-secondary rounded-pill mr-sm-2">Filter Options</button>
       </div>
@@ -90,6 +90,7 @@
                   </div>
                   <div class="col-md-8">
                     <%= select_tag :country_search_term, options_for_select([['None', nil],
+                                                                             ['United States of America', 'US'],
                                                                              ['Afghanistan', 'AF'],
                                                                              ['Albania', 'AL'],
                                                                              ['Algeria', 'DZ'],
@@ -277,7 +278,6 @@
                                                                              ['Ukraine', 'UA'],
                                                                              ['United Arab Emirates', 'AE'],
                                                                              ['United Kingdom', 'GB'],
-                                                                             ['United States of America', 'US'],
                                                                              ['Uruguay', 'UY'],
                                                                              ['Uzbekistan', 'UZ'],
                                                                              ['Vanuatu', 'VU'],
@@ -387,7 +387,7 @@
       <th>Left Score</th>
       <th>Right Score</th>
       <th>Edit</th> <!-- Add a new column for the Edit button -->
-      <th>Testing Issue</th>
+<!--      <th>Testing Issue</th>-->
     </tr>
   </thead>
   <tbody>
@@ -406,7 +406,7 @@
           <td><%= dwt_test.left_score %></td>
           <td><%= dwt_test.right_score %></td>
           <td><%= link_to "Edit", edit_client_path(client) %></td> <!-- Add the Edit button link -->
-          <td><%= dwt_test.test_type %></td> <!--FIX ME - the types of test are not being stored in attribute-->
+          <!--<td><%= dwt_test.test_type %></td>--> <!--FIX ME - the types of test are not being stored in attribute-->
         </tr>
       <% end %>
       <% client.dnw_tests.each do |dnw_test| %>

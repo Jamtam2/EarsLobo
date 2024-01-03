@@ -1,7 +1,7 @@
 <body id="defBG" class="bg-white center">
   <div id="whiteGrad" class="container p-5 my-3 w-100 bg-white border-0">
     <!-- Heading for clients page -->
-    <h1 class="display-3" style='padding-bottom:20px'><strong>Users<strong></h1>
+    <h1 class="display-4" style='padding-bottom:20px'>Users</h1>
 
     <div  class="row mb-3">
       <!-- Search bar -->
@@ -12,17 +12,27 @@
         <% end %>
       </div>
 
-      <!-- Link to add a new user -->
-      <div class="col-md-6 text-right">
-        <%# if current_user.local_moderator? || current_user.global_moderator? %>
-          <%#= link_to 'Add New User', new_user_path, class: 'btn btn-primary btn-lg'%>
-          <%#=  %>
-        <%# end %>
-        <% if current_user.local_moderator? %>
-          <td><%= current_user.moderator_code %></td> <!-- Display the unique code for local moderators -->
-        <% end %>
+      <!-- Display local moderator unique generated code. -->
+      <% if current_user.local_moderator? %>
+        <div class="col-md-6 text-right">
+          <div class="clipboard-container-moderator">
+            <input
+              type="text"
+              class="moderator-code-input"
+              id="copy-target"
+              value="<%= current_user.moderator_code %>"
+              readonly />
 
-      </div>
+            <button
+              id="copy-button"
+              type="button"
+              class="copy-button-moderator">
+              Copy
+            </button>
+          </div>
+        </div>
+      <% end %>
+
     </div>
     <% if @users.any? { |user| user.local_moderator? || user.global_moderator? } %>
       <h2>Moderators</h2>
@@ -55,4 +65,5 @@
     <% end %>
 
   </div>
+  <%= javascript_include_tag 'clipboard', 'data-turbolinks-track': 'reload' %>
 </body>

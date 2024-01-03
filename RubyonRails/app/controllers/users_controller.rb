@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   before_action :check_permission, only: [:new, :create]
 
-  
   def index
     local_users = User.where(tenant_id: current_user.tenant_id)
 
@@ -65,11 +64,13 @@ class UsersController < ApplicationController
   end
 
   private
+
   def valid_registration_key?(key)
     key.present? && !key.used && (key.expiration.nil? || key.expiration > Time.current)
   end
 
   private
+
   def check_permission
     unless current_user.local_moderator? || current_user.global_moderator?
       redirect_to users_path, alert: "You don't have permission to perform this action."

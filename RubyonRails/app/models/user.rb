@@ -49,6 +49,8 @@ class User < ApplicationRecord
   has_many :clients, foreign_key: :tenant_id, primary_key: :tenant_id
   has_many :user_mfa_sessions, dependent: :destroy
 
+  # has_one :key
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -102,7 +104,6 @@ class User < ApplicationRecord
       return false
     end
   end
-
 
   public
   def license_key

@@ -94,3 +94,5 @@ gem 'google-authenticator-rails'
 gem 'rotp'
 
 gem 'rqrcode'
+
+gem 'dotenv-rails'

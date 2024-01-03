@@ -16,7 +16,7 @@
       <% if current_user.local_moderator? %>
         <div class="col-md-6 text-right">
           <div class="clipboard-container-moderator">
-            <input
+            <label for="copy-target"></label><input
               type="text"
               class="moderator-code-input"
               id="copy-target"
@@ -65,5 +65,4 @@
     <% end %>
 
   </div>
-  <%= javascript_include_tag 'clipboard', 'data-turbolinks-track': 'reload' %>
 </body>

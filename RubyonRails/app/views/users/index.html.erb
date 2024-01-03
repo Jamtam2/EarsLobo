@@ -42,7 +42,8 @@
           <th>First Name</th>
           <th>Last Name</th>
           <th>Email</th>
-          <th>Unique Code</th> <!-- New column for the unique code -->
+          <!-- New column for the unique code -->
+<!--          <th>Unique Code</th>-->
         </tr>
         </thead>
         <tbody>
@@ -52,17 +53,20 @@
               <td><%= user.fname %></td>
               <td><%= user.lname %></td>
               <td><%= user.email %></td>
-              <% if user.local_moderator? %>
-                <td><%= user.moderator_code %></td> <!-- Display the unique code for local moderators -->
-              <% else %>
-                <td>N/A</td> <!-- Placeholder for global moderators -->
-              <% end %>
+
+<!--              TODO: MAY OR MAY NOT USE THIS, IT WILL DISPLAY MODERATOR CODE FOR REGULARS UNDER A LOCAL MOD-->
+              <%# if user.local_moderator? %>
+                <!-- Display the unique code for local moderators -->
+<!--                <td><%#= user.moderator_code %></td>-->
+              <%# else %>
+                <!-- Placeholder for global moderators -->
+<!--                <td>N/A</td>-->
+              <%# end %>
             </tr>
           <% end %>
         <% end %>
         </tbody>
       </table>
     <% end %>
-
   </div>
 </body>

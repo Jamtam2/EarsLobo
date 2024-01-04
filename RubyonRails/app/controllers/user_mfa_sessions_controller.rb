@@ -20,7 +20,12 @@ class UserMfaSessionsController < ApplicationController
         return
       end
     elsif params[:email_2fa_code].present?
+      puts "we are in here with this user: #{user.inspect})..."
+
       if params[:email_2fa_code] == user.email_2fa_code
+        user.update(email_2fa_code: nil) # Save the generated code
+        user.save!
+
         redirect_to root_path, notice: "2fa setup successful"
         return
       end
@@ -35,9 +40,12 @@ class UserMfaSessionsController < ApplicationController
   
   def send_email_2fa
     user = current_user
-    user.email_2fa_code = SecureRandom.hex(4)
+    user.update(email_2fa_code: SecureRandom.hex(4)) # Save the generated code
+    user.save!
+
+    puts "#{user.inspect})..."
     UserMailer.send_2fa_code(user, user.email_2fa_code).deliver_now
-    flash[:notice] = "2FA code sent to your email."
+  flash[:notice] = "2FA code sent to your email."
     redirect_to new_user_mfa_session_path
   end
   

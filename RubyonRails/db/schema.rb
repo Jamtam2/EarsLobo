@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_04_002146) do
+ActiveRecord::Schema.define(version: 2024_01_04_024635) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -258,6 +258,8 @@ ActiveRecord::Schema.define(version: 2024_01_04_002146) do
     t.string "secret_key"
     t.boolean "activated"
     t.bigint "user_id"
+    t.string "email_2fa_code"
+    t.boolean "email_verified"
     t.index ["user_id"], name: "index_user_mfa_sessions_on_user_id"
   end
 

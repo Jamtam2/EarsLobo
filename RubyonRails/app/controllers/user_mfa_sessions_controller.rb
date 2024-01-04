@@ -2,11 +2,9 @@ class UserMfaSessionsController < ApplicationController
   skip_before_action :check_mfa, only: [:new, :create]
 
   def new
-    # Initialization code (if any)
-
   end
   
-  def create
+def create
     user = current_user
   
     if params[:mfa_code].present?
@@ -19,16 +17,6 @@ class UserMfaSessionsController < ApplicationController
         redirect_to root_path, notice: "MFA setup successful"
         return
       end
-    elsif params[:email_2fa_code].present?
-      puts "we are in here with this user: #{user.inspect})..."
-
-      if params[:email_2fa_code] == user.email_2fa_code
-        user.update(email_2fa_code: nil) # Save the generated code
-        user.save!
-
-        redirect_to root_path, notice: "2fa setup successful"
-        return
-      end
     end
   
     # If neither condition is met, it's an invalid code
@@ -37,18 +25,67 @@ class UserMfaSessionsController < ApplicationController
     flash.now[:alert] = "Invalid code. Attempted Code: #{params[:mfa_code] || params[:email_2fa_code]}, Server Code: #{server_code}, Time: #{attempted_time}"
     render :new
   end
-  
-  def send_email_2fa
-    user = current_user
-    user.update(email_2fa_code: SecureRandom.hex(4)) # Save the generated code
-    user.save!
 
-    puts "#{user.inspect})..."
-    UserMailer.send_2fa_code(user, user.email_2fa_code).deliver_now
-  flash[:notice] = "2FA code sent to your email."
-    redirect_to new_user_mfa_session_path
-  end
   
+
+  
+
+  def setup_google_auth
+    Rails.logger.debug "-----------------------------------------------"
+    Rails.logger.debug "IN HERE AT LEAST, AUTH"
+    Rails.logger.debug "-----------------------------------------------"
+    # Assuming you already have logic for QR code generation
+
+
+    @user_mfa_session = current_user.user_mfa_sessions.first_or_create(secret_key: ROTP::Base32.random_base32)
+
+    # @qr_code = RQRCode::QRCode.new(current_user.generate_qr_code)
+  end
+
+  def setup_email_auth
+    Rails.logger.debug "-----------------------------------------------"
+    Rails.logger.debug "IN HERE AT LEAST, EMAIL"
+    Rails.logger.debug "-----------------------------------------------"
+
+    @user_mfa_session = current_user.user_mfa_sessions.first_or_create(secret_key: ROTP::Base32.random_base32, )
+
+    user = current_user
+    user.email_2fa_code = SecureRandom.hex(4)
+    user.save!
+    Rails.logger.debug "Sending 2FA code via email"
+    UserMailer.send_2fa_code(user, user.email_2fa_code).deliver_now
+    Rails.logger.debug "2FA code sent via email"
+
+    redirect_to enter_email_code_user_mfa_sessions_path
+  end
+
+  def enter_email_code
+    # This action might be empty if it's just displaying a form
+  end
+
+
+
+  
+  def verify_email_2fa
+    user = current_user
+    
+
+    if user.email_2fa_code == params[:email_2fa_code]
+      # The code matches, handle successful verification
+      user_mfa_session = user.user_mfa_sessions.first
+      user_mfa_session.update(email_verified: true)  # Clear the code and set email_verified to true
+      user.update(email_2fa_code: nil)  # Clear the code after successful verification
+      puts "#{user_mfa_session.inspect}"
+      puts "#{user.inspect}"
+
+      redirect_to root_path, notice: "Email verification successful"
+    else
+      # The code does not match, handle the failure
+      flash.now[:alert] = "Invalid verification code. Please try again."
+      render :enter_email_code
+    end
+  end
+
 
 
   

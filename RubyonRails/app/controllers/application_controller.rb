@@ -19,14 +19,26 @@ class ApplicationController < ActionController::Base
   def check_mfa
     return unless user_signed_in? && "/logout" != request.path
   
+    # Paths that should bypass MFA check
+    mfa_setup_paths = [
+      setup_google_auth_user_mfa_sessions_path,
+      setup_email_auth_user_mfa_sessions_path,
+      enter_email_code_user_mfa_sessions_path,
+      verify_email_2fa_user_mfa_sessions_path
+    ]
+  
+    # Bypass MFA check if the current path is one of the MFA setup paths
+    return if mfa_setup_paths.include?(request.path)
+  
     user_mfa_session = current_user.user_mfa_sessions.first
-
-    if user_mfa_session.nil? || !user_mfa_session.activated
+  
+    if user_mfa_session.nil? || (!user_mfa_session.activated && !user_mfa_session.email_verified)
       redirect_to new_user_mfa_session_path
     end
-
+  
     # Additional logic if needed...
   end
+  
   
   protected
 

@@ -43,6 +43,10 @@ class User < ApplicationRecord
 
   # Will validate the verification key only for the owner.
   validates :verification_key, presence: true, if: :owner?
+  after_create :create_mfa_session
+
+ 
+ 
 
 
   has_many :dwt_tests,dependent: :destroy
@@ -105,6 +109,11 @@ class User < ApplicationRecord
     end
   end
 
+  def create_mfa_session
+    self.user_mfa_sessions.create(secret_key: ROTP::Base32.random_base32, activated: false) # Activates later when the user sets up MFA)
+  end
+
+      
 
   public
   def license_key

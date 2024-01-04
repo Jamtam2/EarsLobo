@@ -4,6 +4,7 @@
 #
 #  id                     :bigint           not null, primary key
 #  email                  :string           default(""), not null
+#  email_2fa_code         :string
 #  encrypted_password     :string           default(""), not null
 #  fname                  :string
 #  google_secret          :string
@@ -37,10 +38,15 @@ class User < ApplicationRecord
   enum role: { regular_user: 0, local_moderator: 1, global_moderator: 2, owner: 3 }
 
   attr_accessor :registration_key
+  
   before_validation :validate_registration_key, on: :create
 
   # Will validate the verification key only for the owner.
   validates :verification_key, presence: true, if: :owner?
+  after_create :create_mfa_session
+
+ 
+ 
 
 
   has_many :dwt_tests,dependent: :destroy
@@ -103,6 +109,11 @@ class User < ApplicationRecord
     end
   end
 
+  def create_mfa_session
+    self.user_mfa_sessions.create(secret_key: ROTP::Base32.random_base32, activated: false) # Activates later when the user sets up MFA)
+  end
+
+      
 
   public
   def license_key

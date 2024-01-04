@@ -12,6 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2024_01_01_015421) do
 
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -258,6 +259,8 @@ ActiveRecord::Schema.define(version: 2024_01_01_015421) do
     t.string "secret_key"
     t.boolean "activated"
     t.bigint "user_id"
+    t.string "email_2fa_code"
+    t.boolean "email_verified"
     t.index ["user_id"], name: "index_user_mfa_sessions_on_user_id"
   end
 
@@ -277,6 +280,7 @@ ActiveRecord::Schema.define(version: 2024_01_01_015421) do
     t.string "google_secret"
     t.integer "mfa_secret"
     t.string "moderator_code"
+    t.string "email_2fa_code"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["moderator_code"], name: "index_users_on_moderator_code"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

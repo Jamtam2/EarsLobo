@@ -4,6 +4,7 @@
 #
 #  id                     :bigint           not null, primary key
 #  email                  :string           default(""), not null
+#  email_2fa_code         :string
 #  encrypted_password     :string           default(""), not null
 #  fname                  :string
 #  google_secret          :string

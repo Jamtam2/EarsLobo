@@ -10,4 +10,14 @@ class Users::SessionsController < Devise::SessionsController
       end
     end
   end
+  def destroy
+    if current_user
+      # Update email_verified status
+      current_user.user_mfa_sessions.update_all(email_verified: false)
+    end
+
+    # Proceed with the normal sign out process
+    super
+  end
 end
+

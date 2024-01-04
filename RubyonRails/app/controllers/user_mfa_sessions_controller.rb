@@ -3,6 +3,7 @@ class UserMfaSessionsController < ApplicationController
 
   def new
   end
+
   
 def create
     user = current_user
@@ -87,8 +88,6 @@ def create
   end
 
 
-
-  
 
   private
 

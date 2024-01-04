@@ -66,7 +66,7 @@ ActsAsTenant.with_tenant(tenants.first) do
     email: "local@gmail.com",
     password: "password",
     fname: "Locality",
-  lname:"Mod",
+    lname:"Mod",
     role: :local_moderator,
     registration_key: 'localmodkey',
   ) 

@@ -10,6 +10,7 @@
 #  google_secret          :string
 #  lname                  :string
 #  mfa_secret             :integer
+#  moderator_code         :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
@@ -22,6 +23,7 @@
 # Indexes
 #
 #  index_users_on_email                 (email) UNIQUE
+#  index_users_on_moderator_code        (moderator_code)
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #  index_users_on_tenant_id             (tenant_id)
 #

@@ -1,6 +1,4 @@
 class ApplicationController < ActionController::Base
-
-
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user_with_redirect!
   before_action :set_current_tenant
@@ -13,11 +11,17 @@ class ApplicationController < ActionController::Base
   
   end
 
-
-
   private
+
   def check_mfa
+    # Bypass MFA check in development
+    # TODO: Remove this when moving to production
+    if Rails.env.development?
+      return
+    end
+
     return unless user_signed_in? && "/logout" != request.path
+
   
     # Paths that should bypass MFA check
     mfa_setup_paths = [
@@ -38,8 +42,6 @@ class ApplicationController < ActionController::Base
   
     # Additional logic if needed...
   end
-  
-  
   protected
 
   def authenticate_user_with_redirect!
@@ -75,14 +77,10 @@ class ApplicationController < ActionController::Base
     license_key.expiration < DateTime.current
   end
 
-
   protected
 
+  # TODO: Because this requires a moderator_code, regular and global users will need have set special way to bypass this.
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:fname, :lname, :email, :password, :password_confirmation, :registration_key])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:fname, :lname, :email, :password, :password_confirmation, :registration_key, :moderator_code])
   end
 end
-
- 
-
-

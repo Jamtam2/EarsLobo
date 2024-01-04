@@ -36,6 +36,16 @@ Rails.application.routes.draw do
   resources :inquiries, only: [:new, :create]
 
 
+  # config/routes.rb
+  resources :user_mfa_sessions do
+    get 'setup_google_auth', on: :collection
+    get 'setup_email_auth', on: :collection
+    get 'enter_email_code', on: :collection
+    post 'verify_email_2fa', on: :collection
+
+  end
+
+
   resources :clients do
     resources :emergency_contacts, only: [:create, :destroy, :new, :edit, :update]
     resources :dwt_tests do

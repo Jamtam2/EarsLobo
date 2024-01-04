@@ -1,0 +1,30 @@
+<%# app/views/user_mfa_sessions/setup_google_auth.html.erb %>
+<div class="mfa-page">
+  <% if current_user && current_user.user_mfa_sessions.first && !current_user.user_mfa_sessions.first.activated %>
+    <h2>Set up Google Authenticator</h2>
+    <div class="instructions">
+      <p><strong>Follow the steps below to enable Google Authenticator:</strong></p>
+      <ol>
+        <li>Download the <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&gl=US" target="_blank">Google Authenticator app</a> for Android or <a href="https://apps.apple.com/us/app/google-authenticator/id388497605" target="_blank">iOS</a>.</li>
+        <li>Open the app and scan the QR code displayed below.</li>
+        <li>Enter the code provided by the app in the field below.</li>
+      </ol>
+    </div>
+    <div class="qr-code-container">
+      <% qr_code = RQRCode::QRCode.new(current_user.generate_qr_code) %>
+      <%= raw qr_code.as_svg(module_size: 3) %>
+    </div>
+  <% else %>
+    <p>Your Google Authenticator is already set up.</p>
+  <% end %>
+
+  <div class="mfa-container">
+    <%= form_tag user_mfa_session_path, method: :post, class: "mfa-form", role: "form" do %>
+      <div class="form-group">
+        <%= label_tag "Token", 'Google Authenticator Code', class: 'mfa-label' %>
+        <%= text_field_tag 'mfa_code', params[:mfa_code], class: "form-control" %>
+      </div>
+      <%= submit_tag 'Verify', class: "btn btn-primary mfa-submit" %>
+    <% end %>
+  </div>
+</div>

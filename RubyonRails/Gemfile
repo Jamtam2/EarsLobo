@@ -96,3 +96,5 @@ gem 'rotp'
 gem 'rqrcode'
 
 gem 'dotenv-rails'
+
+gem 'securerandom'

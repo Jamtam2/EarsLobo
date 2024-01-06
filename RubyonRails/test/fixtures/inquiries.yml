@@ -2,12 +2,14 @@
 #
 # Table name: inquiries
 #
-#  id         :bigint           not null, primary key
-#  company    :string
-#  email      :string
-#  purpose    :text
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id           :bigint           not null, primary key
+#  bug_report   :string
+#  company      :string
+#  email        :string
+#  inquiry_type :string
+#  purpose      :text
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
 #
 
 one:

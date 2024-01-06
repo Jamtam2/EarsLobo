@@ -43,9 +43,9 @@ class User < ApplicationRecord
   validates :verification_key, presence: true, if: :owner?
 
 
-  has_many :dwt_tests,dependent: :destroy
-  has_many :dnw_tests,dependent: :destroy
-  has_many :rddt_tests,dependent: :destroy
+  has_many :dwt_tests, foreign_key: 'tenant_id', primary_key: 'tenant_id', dependent: :destroy
+  has_many :dnw_tests, foreign_key: 'tenant_id', primary_key: 'tenant_id', dependent: :destroy
+  has_many :rddt_tests, foreign_key: 'tenant_id', primary_key: 'tenant_id', dependent: :destroy
   has_many :clients, foreign_key: :tenant_id, primary_key: :tenant_id
   has_many :user_mfa_sessions, dependent: :destroy
 

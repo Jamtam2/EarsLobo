@@ -1,5 +1,13 @@
+# The registration form's fields are dynamically updated based on the selected account type.
+# See corresponding JavaScript in app/assets/javascripts/accountSignupButtons.js
+
+# RegistrationsController handles user registration for different roles
+# including regular users and local moderators. It includes custom logic
+# for validating registration keys and moderator codes.
 class RegistrationsController < Devise::RegistrationsController
 
+  # create: Determines the type of user account to be created based on
+  # the 'account_type' parameter and delegates to the appropriate method.
   def create
     case params[:account_type]
     when 'regular_user'
@@ -12,30 +20,40 @@ class RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  # create_regular_user: Creates a regular user account. Requires a valid
+  # local moderator code and a registration key. Associates the user with
+  # a local moderator's tenant_id.
   def create_regular_user
-    user = User.new(sign_up_params)
+    # The moderator code will be used for validation but will not be be stored under regular use.
+    user = User.new(sign_up_params.except(:moderator_code))
     user.role = :regular_user
     local_moderator = User.find_by(role: User.roles[:local_moderator], moderator_code: params[:user][:moderator_code])
+    # Validate the registration key for security purposes.
+    key = Key.find_by(activation_code: user.registration_key)
 
-    if local_moderator.present?
-      # Assign regular user with the local moderator group tenant_id
+    if local_moderator.present? && valid_registration_key?(key)
+      # The user is associated with the tenant of the local moderator whose code was entered.
       user.tenant_id = local_moderator.tenant_id
 
+      # Check if user record was saved before proceeding.
       if user.save
-        secret_key = ROTP::Base32.random_base32
-        user.user_mfa_sessions.create!(secret_key: secret_key, activated: false)
+        key.update(used: true)
+        flash[:notice] = 'Regular user was successfully created.'
         sign_in(:user, user)
         redirect_to root_path, notice: 'User was successfully created set up 2FA auth.'
       else
+        # If user creation fails, render the registration form again with error messages.
         flash.now[:alert] = user.errors.full_messages.join(', ')
         render :new
       end
     else
-      flash[:alert] = 'Invalid moderator code.'
-      redirect_to new_user_registration_path and nil
+      flash[:alert] = 'Invalid moderator code or registration key.'
+      redirect_to new_user_registration_path and return
     end
   end
 
+  # create_local_moderator: Creates a local moderator account. Requires a
+  # valid, unused registration key. Creates a new tenant for the moderator.
   def create_local_moderator
     tenant = Tenant.create!
 
@@ -53,7 +71,7 @@ class RegistrationsController < Devise::RegistrationsController
           secret_key = ROTP::Base32.random_base32
           user.user_mfa_sessions.create!(secret_key: secret_key, activated: false)
           sign_in(:user, user)
-          redirect_to root_path, notice: 'User was successfully created set up 2FA auth.'
+          redirect_to root_path, notice: 'Local moderator was successfully created set up 2FA auth.'
         else
           # Handler for save failures
           flash[:alert] = 'An internal error occurred.'
@@ -77,8 +95,7 @@ class RegistrationsController < Devise::RegistrationsController
   private
 
   def sign_up_params
-    allowed_params = [:fname, :lname, :email, :password, :password_confirmation]
-    allowed_params << :registration_key if params[:account_type] == 'local_moderator'
+    allowed_params = [:fname, :lname, :email, :password, :password_confirmation, :registration_key]
     allowed_params << :moderator_code if params[:account_type] == 'regular_user'
     params.require(:user).permit(allowed_params)
   end

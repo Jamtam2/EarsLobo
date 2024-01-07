@@ -37,23 +37,33 @@
             If you run into any other issues, before trying to contact an administrator, attempt to close and reopen the site and sign out and back in. If these solutions did not work contact your admistrator for assistance.
         </p>
 
-        <%= form_with(model: Inquiry.new, url: inquiries_path, local: true) do |form| %>
-        <div>
-            <%= form.label :email, 'Your Email' %>
-            <%= form.email_field :email, required: true %>
-        </div>
-        <div>
-            <%= form.label :company, 'Company/Organization' %>
-            <%= form.text_field :company, required: true %>
-        </div>
-        <div>
-            <%= form.label :purpose, 'Purpose for Dataset Use' %>
-            <%= form.text_area :purpose, required: true %>
-        </div>
-        <%= form.submit 'Send Inquiry' %>
-        <% end %>
+
+<%= form_with(model: Inquiry.new, url: inquiries_path, local: true) do |form| %>
+    <div class="form-group">
+        <label>Select an Option:</label><br />
+        <%= form.radio_button :inquiry_type, 'dataset_access', id: 'datasetAccess' %> I want access to the global dataset<br />
+        <%= form.radio_button :inquiry_type, 'bug_report', id: 'bugReport' %> I want to report a bug
+    </div>
+
+    
+    <div>
+        <%= form.label :email, 'Your Email' %>
+        <%= form.email_field :email, required: true %>
+    </div>
+    <div>
+        <%= form.label :company, 'Company/Organization (Required for Dataset)' %>
+        <%= form.text_field :company, required: false %>
+    </div>
+    <div>
+        <%= form.label :purpose, 'Purpose for Dataset Use' %>
+        <%= form.text_area :purpose, required: true %>
+    </div>
+    <%= form.submit 'Send Inquiry' %>
+    <% end %>
 
 
 
     </div>
 </body>
+
+

@@ -1,7 +1,12 @@
 <%# app/views/user_mfa_sessions/enter_email_code.html.erb %>
-
+<%# views/user_mfa_sessions/new.html.erb %>
+<body id= "defBG">
+<div class="container p-5 my-3 w-50 border bg-white">
+<div class="d-flex justify-content-center">
+<%= image_tag 'AudiaShield1.png', style: "margin: 0 auto; width: 125px " %>
+</div>
 <div class="email-verification-page">
-  <h2>Email Verification</h2>
+  <h2 class= "display-4", style= 'padding-bottom:20px' ><strong>Email Verification</strong></h2>
   <p>A verification code has been sent to: <%= current_user.email %></p>
 
   <%= form_tag verify_email_2fa_user_mfa_sessions_path, method: :post do %>
@@ -9,6 +14,8 @@
       <%= label_tag :email_2fa_code, 'Enter the code from your email' %>
       <%= text_field_tag :email_2fa_code, nil, class: "form-control" %>
     </div>
-    <%= submit_tag 'Verify Code', class: "btn btn-primary" %>
+    <%= submit_tag 'Verify Code', class: "btn mfa-submit btn-lg btn-block" %>
   <% end %>
 </div>
+</div>
+</body>

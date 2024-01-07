@@ -2,12 +2,13 @@
 #
 # Table name: user_mfa_sessions
 #
-#  id         :bigint           not null, primary key
-#  activated  :boolean
-#  secret_key :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  user_id    :bigint
+#  id             :bigint           not null, primary key
+#  activated      :boolean
+#  email_verified :boolean
+#  secret_key     :string
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  user_id        :bigint
 #
 # Indexes
 #

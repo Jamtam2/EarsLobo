@@ -1,6 +1,12 @@
 
+<!--RDDT Test Show page, displays data in 3 columns so its easy for clinicians to review and understand the scores gotten 
+The RDDT contains much more data and has more going on due to the multi button per cell setup-->
+
 <h1><b><center><%= @rddt_test.test_type%> Test Information and Results</center></b></h1>
+<h3><b><center>Note*: RDDT tests, collect scores for all 3 button types, single, double and triple. However, only the double button scores arethe only scores used for interpretation, ear advantage and percentile.</center></b></h3>
 <hr>
+<!--This contains the 3 rows for the data stored on the page all test scores are pulled from the rddt test model -->
+
 <div class="container">
     <div class="row">
         <div class="col-sm">
@@ -28,6 +34,9 @@
         </div>
     </div>
 <div>
+
+<!--Data stored outside of the columns with the image -->
+
 <h1><b><center>Dominant Ear</center></b></h1>
 <h2><b><center><%= @rddt_test.ear_advantage%></b></center></h2>
 <h1><b><center>Ear Advantage Score</center></b></h1>
@@ -41,6 +50,8 @@
 <h2><b><%= @rddt_test.interpretation%></b></h2>
 
 <hr>
+<!--Same data, just stored in exactly same format as is on normal test page, if that is easier for the clinician to use for review -->
+
 
 <h1><b><center>Scores and Data Presented in Tables Like Test Page</center></b></h1>
 <h3><b>Scores Table</b></h3>
@@ -95,6 +106,9 @@
     </thead>
 </table>
 <hr>
+
+
+<!--this begins the backend functions to keep the test tables looking exactly as they do on the normal test page, these are taken straight from the test page so reivew that for how they work -->
 
 <style>
     .left-column {

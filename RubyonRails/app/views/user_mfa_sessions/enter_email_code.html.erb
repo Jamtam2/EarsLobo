@@ -1,0 +1,14 @@
+<%# app/views/user_mfa_sessions/enter_email_code.html.erb %>
+
+<div class="email-verification-page">
+  <h2>Email Verification</h2>
+  <p>A verification code has been sent to: <%= current_user.email %></p>
+
+  <%= form_tag verify_email_2fa_user_mfa_sessions_path, method: :post do %>
+    <div class="form-group">
+      <%= label_tag :email_2fa_code, 'Enter the code from your email' %>
+      <%= text_field_tag :email_2fa_code, nil, class: "form-control" %>
+    </div>
+    <%= submit_tag 'Verify Code', class: "btn btn-primary" %>
+  <% end %>
+</div>

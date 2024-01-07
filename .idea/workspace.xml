@@ -5,10 +5,48 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85f016a5-798f-4510-a7b1-3073eef6eab6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules/RubyonRails.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/RubyonRails.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RubyonRails/app/assets/javascripts/accountSignupButtons.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RubyonRails/app/assets/javascripts/clipboard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RubyonRails/app/assets/stylesheets/clipboard.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RubyonRails/app/views/inquiry_mailer/send_2fa_code.html.erb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RubyonRails/app/views/user_mailer/send_2fa_code.html.erb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RubyonRails/app/views/user_mfa_sessions/enter_email_code.html.erb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RubyonRails/app/views/user_mfa_sessions/setup_google_auth.html.erb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RubyonRails/db/migrate/20240101015421_add_moderator_code_to_users.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RubyonRails/db/migrate/20240104002146_add_email2fa_code_to_users.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RubyonRails/db/migrate/20240104011614_add_email2fa_code_to_user_mfa.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RubyonRails/db/migrate/20240104024635_add_email_verified_to_user_mfa_sessions.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/Gemfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/Gemfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/assets/config/manifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/assets/config/manifest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/controllers/application_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/controllers/application_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/controllers/registrations_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/controllers/registrations_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/controllers/user_mfa_sessions_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/controllers/user_mfa_sessions_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/controllers/users/sessions_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/controllers/users/sessions_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/controllers/users_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/controllers/users_controller.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RubyonRails/app/jobs/license_key_check_job.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/jobs/license_key_check_job.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/mailers/inquiry_mailer.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/mailers/inquiry_mailer.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/mailers/user_mailer.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/mailers/user_mailer.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/models/client.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/models/client.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RubyonRails/app/models/user.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/models/user.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/models/user_mfa_session.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/models/user_mfa_session.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/views/devise/registrations/new.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/views/devise/registrations/new.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/views/dnw_tests/show.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/views/dnw_tests/show.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/views/dwt_tests/show.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/views/dwt_tests/show.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/views/layouts/application.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/views/layouts/application.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/views/rddt_tests/show.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/views/rddt_tests/show.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/views/user_mfa_sessions/new.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/views/user_mfa_sessions/new.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/views/users/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/views/users/index.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/config/environments/development.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/config/environments/development.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/config/environments/production.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/config/environments/production.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/config/routes.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/config/routes.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/db/schema.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/db/schema.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/db/seeds.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/db/seeds.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/test/fixtures/user_mfa_sessions.yml" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/test/fixtures/user_mfa_sessions.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/test/fixtures/users.yml" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/test/fixtures/users.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/test/models/user_mfa_session_test.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/test/models/user_mfa_session_test.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/test/models/user_test.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/test/models/user_test.rb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,23 +67,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;custom__mailer__csv&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/hunterjackson/Documents/Dead Project UofM/EarsLobo&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;ruby.rails.projectView.checked&quot;: &quot;true&quot;,
-    &quot;ruby.structure.view.model.defaults.configured&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.ruby.settings.RubyActiveModuleSdkConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "Merging custom__mailer__csv",
+    "last_opened_file_path": "/Users/hunterjackson/Documents/Dead Project UofM/EarsLobo",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "ruby.rails.projectView.checked": "true",
+    "ruby.structure.view.model.defaults.configured": "true",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.ruby.settings.RubyActiveModuleSdkConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RubyModuleManagerSettings">
     <option name="blackListedRootsPaths">
       <list>
@@ -163,6 +201,7 @@
       <workItem from="1704254794539" duration="5060000" />
       <workItem from="1704329349785" duration="9497000" />
       <workItem from="1704494749931" duration="11660000" />
+      <workItem from="1704583907409" duration="12757000" />
     </task>
     <servers />
   </component>

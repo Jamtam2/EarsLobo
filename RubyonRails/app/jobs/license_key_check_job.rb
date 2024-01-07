@@ -1,4 +1,5 @@
 require 'csv'
+# require 'encryptor'
 
 class LicenseKeyCheckJob < ApplicationJob
   queue_as :default
@@ -6,13 +7,20 @@ class LicenseKeyCheckJob < ApplicationJob
   def perform(license_key)
     csv_data = generate_csv_data_for(license_key)
     associated_user = license_key.associated_user_by_email
-    UserMailer.license_key_expired_mail(associated_user, csv_data).deliver_later if associated_user
+    encrypted_csv_data = encrypt_csv_data(csv_data)
+    UserMailer.license_key_expired_mail(associated_user, encrypted_csv_data).deliver_later if associated_user
   end
 
-  # private
+  def encrypt_csv_data(csv_data)
+    key = ENV['CSV_EMAILER_ENCRYPTION_KEY']
+    iv = OpenSSL::Cipher.new('aes-256-gcm').random_iv
+    encrypted_data = Encryptor.encrypt(value: csv_data, key: key, iv: iv, algorithm: 'aes-256-gcm')
+    encrypted_data
+  end
+
   def generate_csv_data_for(license_key)
     CSV.generate(headers: true) do |csv|
-      # Define headers
+
       headers = ["Test Type", "Tenant ID", "Client ID", "Client Name", "Advantage Percentile",
                  "Ear Advantage", "Ear Advantage Score", "Interpretation", "label",
                  "Left Percentile", "Left Score", "Right Percentile", "Right Score", "Notes", "Test Type",
@@ -24,6 +32,7 @@ class LicenseKeyCheckJob < ApplicationJob
 
       # Iterate over each client associated with the user's tenant_id
       associated_user.clients.each do |client|
+
         # Iterate over DNW tests
         client.dnw_tests.each do |dnw_test|
           csv << ["DNW TEST",

@@ -1,7 +1,7 @@
 <body id="defBG" class="bg-white center">
   <div id="whiteGrad" class="container p-5 my-3 w-100 bg-white border-0">
     <!-- Heading for clients page -->
-    <h1 class="display-3" style='padding-bottom:20px'><strong>Users<strong></h1>
+    <h1 class="display-5" style='padding-bottom:20px'>Your Group</h1>
 
     <div  class="row mb-3">
       <!-- Search bar -->
@@ -12,61 +12,52 @@
         <% end %>
       </div>
 
-      <!-- Link to add a new user -->
-      <div class="col-md-6 text-right">
-        <% if current_user.local_moderator? || current_user.global_moderator? %>
-          <%= link_to 'Add New User', new_user_path, class: 'btn btn-primary btn-lg'%>
-        <% end %>
-      </div>
+      <!-- Display local moderator unique generated code. -->
+      <% if current_user.local_moderator? %>
+        <div class="col-md-6 text-right">
+          <div class="clipboard-container-moderator">
+            <label for="copy-target"></label><input
+              type="text"
+              class="moderator-code-input"
+              id="copy-target"
+              value="<%= current_user.moderator_code %>"
+              readonly />
+
+            <button
+              id="copy-button"
+              type="button"
+              class="copy-button-moderator">
+              Copy
+            </button>
+          </div>
+        </div>
+      <% end %>
     </div>
-    <% if @users.any? { |user| user.local_moderator? || user.global_moderator? } %>
 
-    <h2>Moderators</h2>
-    <table>
-      <thead>
+    <% if @users.any? %>
+      <h2>Users</h2>
+      <table>
+        <thead>
         <tr>
+          <th>Role</th>
+          <th>Email</th>
           <th>First Name</th>
           <th>Last Name</th>
-          <th>Email</th>
         </tr>
-      </thead>
-      <tbody>
+        </thead>
+        <tbody>
         <% @users.each do |user| %>
-          <% if user.local_moderator? || user.global_moderator? %>
+          <% if user.tenant_id == current_user.tenant_id %>
             <tr>
+              <td><%= user.role.humanize %></td>
+              <td><%= user.email %></td>
               <td><%= user.fname %></td>
               <td><%= user.lname %></td>
-              <td><%= user.email %></td>
             </tr>
           <% end %>
         <% end %>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
     <% end %>
-
-  <% if @users.any? { |user| user.regular_user? } %>
-    <h2>Regular Users</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Email</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @users.each do |user| %>
-          <% if user.regular_user? %>
-            <tr>
-              <td><%= user.fname %></td>
-              <td><%= user.lname %></td>
-              <td><%= user.email %></td>
-            </tr>
-          <% end %>
-        <% end %>
-      </tbody>
-    </table>
-    <% end %>
-
   </div>
 </body>

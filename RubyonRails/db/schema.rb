@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_01_015421) do
-
+ActiveRecord::Schema.define(version: 2024_01_04_024635) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,9 +85,6 @@ ActiveRecord::Schema.define(version: 2024_01_01_015421) do
     t.float "left_score"
     t.float "right_score"
     t.float "ear_advantage_score"
-    t.string "left_percentile"
-    t.string "right_percentile"
-    t.string "advantage_percentile"
     t.string "interpretation"
     t.bigint "client_id", null: false
     t.datetime "created_at", precision: 6, null: false

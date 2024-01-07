@@ -49,7 +49,7 @@ class User < ApplicationRecord
 
   attr_accessor :registration_key
   # before_validation :validate_registration_key, on: :create
-  before_validation :validate_registration_key, on: :create, if: -> { local_moderator? || registration_key.present? }
+  before_validation :validate_registration_key, on: :create
 
   # Will validate the verification key only for the owner.
   validates :verification_key, presence: true, if: :owner?
@@ -107,8 +107,6 @@ class User < ApplicationRecord
 
   # Also move this method back to the User model
   def validate_registration_key
-    return if registration_key.blank?
-
     key = Key.find_by(activation_code: registration_key)
 
     if key.present? && !key.used

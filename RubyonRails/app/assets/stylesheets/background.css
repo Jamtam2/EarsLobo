@@ -70,7 +70,7 @@ body {
     background: linear-gradient(215deg, hsla(353, 76%, 50%, .49) 35%, hsla(187, 97%, 42%, .56) 65%);
     background: -moz-linear-gradient(215deg, hsla(353, 76%, 50%, .49) 35%, hsla(187, 97%, 42%, .56) 65%);
     background: -webkit-linear-gradient(215deg, hsla(353, 76%, 50%, .70) -75%, hsla(187, 97%, 42%, .56) 150%);
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#df1e36", endColorstr="#03bbd2", GradientType=1 );
+    /* filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#df1e36", endColorstr="#03bbd2", GradientType=1 ); */
 
     font-family: kanit;
 

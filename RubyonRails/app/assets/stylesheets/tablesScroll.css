@@ -1,7 +1,7 @@
 /* Set a fixed scrollable wrapper */
 .tableWrap {
     height: 500px;
-    border: 2px solid rgb(0,140,186,255);
+    border: 2px solid rgba(0, 140, 186, 1);
     overflow: auto;
   }
   /* Set header to stick to the top of the container. */

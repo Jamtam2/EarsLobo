@@ -4,6 +4,7 @@
 #
 #  id                     :bigint           not null, primary key
 #  email                  :string           default(""), not null
+#  email_2fa_code         :string
 #  encrypted_password     :string           default(""), not null
 #  fname                  :string
 #  google_secret          :string
@@ -60,6 +61,7 @@ class User < ApplicationRecord
   has_many :rddt_tests,dependent: :destroy
   has_many :clients, foreign_key: :tenant_id, primary_key: :tenant_id
   has_many :user_mfa_sessions, dependent: :destroy
+  has_many :payments, dependent: :destroy
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable

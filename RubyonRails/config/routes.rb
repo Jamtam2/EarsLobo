@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-
   get 'inquiries/new'
   get 'inquiries/create'
   get 'users/index'
@@ -26,7 +25,15 @@ Rails.application.routes.draw do
 
   get "/clinicians/new", to: "clinicians#new", as: 'new_clinician'
   get 'clinicians/:id/edit', to: 'clinicians#edit', as: 'edit_clinician'
-  
+
+  get 'stripe_payment/initialize_payment'
+  get 'stripe_payment/process_payment'
+  get 'stripe_payment/apply_discount'
+  get 'stripe_payment/webhook'
+  get 'stripe_payment/success'
+  get 'stripe_payment/failure'
+
+
   # Route for new user MFA session
   get 'user_mfa_sessions/new', to: 'user_mfa_sessions#new', as: :new_user_mfa_session
   # You might also need to define the create route if not already done

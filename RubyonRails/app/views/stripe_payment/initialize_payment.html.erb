@@ -1,0 +1,32 @@
+<h1>StripePayment#initialize_payment</h1>
+<p>Find me in app/views/stripe_payment/initialize_payment.html.erb</p>
+
+
+<!-- app/views/stripe_payments/initialize_payment.html.erb -->
+<h1>Initialize Payment</h1>
+<button id="payment-button">Pay with Stripe</button>
+
+<script>
+    // Create an instance of Stripe
+    const stripe = Stripe('<%= Rails.application.credentials.stripe[:publishable_key] %>');
+
+    const paymentButton = document.getElementById('payment-button');
+    paymentButton.addEventListener('click', function() {
+        fetch('/stripe_payment/initialize_payment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+            },
+        })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(session) {
+                return stripe.redirectToCheckout({ sessionId: session.session_id });
+            })
+            .catch(function(error) {
+                console.error('Error:', error);
+            });
+    });
+</script>

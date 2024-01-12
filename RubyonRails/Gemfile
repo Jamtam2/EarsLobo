@@ -62,6 +62,7 @@ gem 'pgreset'
 
 group :development do
   gem 'annotate'
+  # test driven framework
 end
 
 # Replaces Rails form helpers with bootstrap-specific form helpers
@@ -95,4 +96,8 @@ gem 'rotp'
 
 gem 'rqrcode'
 
+# Randomize local moderator code. Used for regular users to join a organization owned by a local moderator.
 gem 'securerandom'
+
+# Handler for payment processing
+gem 'stripe'

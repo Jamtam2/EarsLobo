@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_06_222813) do
+ActiveRecord::Schema.define(version: 2024_01_11_225349) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -194,6 +194,19 @@ ActiveRecord::Schema.define(version: 2024_01_06_222813) do
     t.string "email"
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.decimal "amount", precision: 10, scale: 2
+    t.string "stripe_transaction_id"
+    t.bigint "user_id", null: false
+    t.bigint "tenant_id"
+    t.string "currency"
+    t.string "status"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_payments_on_user_id"
+  end
+
   create_table "rddt_tests", force: :cascade do |t|
     t.string "label"
     t.string "test_type"
@@ -295,6 +308,7 @@ ActiveRecord::Schema.define(version: 2024_01_06_222813) do
   add_foreign_key "dwt_tests", "users"
   add_foreign_key "emergency_contacts", "clients"
   add_foreign_key "emergency_contacts", "tenants"
+  add_foreign_key "payments", "users"
   add_foreign_key "rddt_tests", "clients"
   add_foreign_key "rddt_tests", "tenants"
   add_foreign_key "rddt_tests", "users"

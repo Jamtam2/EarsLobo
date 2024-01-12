@@ -15,6 +15,9 @@ class ApplicationController < ActionController::Base
 
   def check_mfa
     # Bypass MFA check in development
+    if Rails.env.development?
+      return
+    end
     
 
     return unless user_signed_in? && "/users/sign_out" != request.path

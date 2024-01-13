@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
     <title>Dichotics Inc</title>
     <%= stylesheet_link_tag 'tabs', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'tabs', 'data-turbolinks-track': 'reload' %>
@@ -28,13 +26,16 @@
     float:left;
   }
 
+ .main-content {
+    padding-top: 70px; 
+  }
   
   </style>
 
   </head>
   <body>
 
-  <nav id= "navbar"class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+  <nav id= "navbar"class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top mb-3">
     <div class="container-fluid clearfix ">
     <div class="container-fluid clearfix justify-content-start">
       <a class="navbar-brand" href="/home">
@@ -144,7 +145,7 @@
   </div>
   
 </div>
-    <main role="main" class="container">
+    <main role="main" class="container main-content">
       <%= yield %>
     </main>
   <!--  Web page scripts-->

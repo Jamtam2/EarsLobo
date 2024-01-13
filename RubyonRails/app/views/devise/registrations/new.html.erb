@@ -34,13 +34,15 @@
         <input type="radio" name="account_type" value="regular_user" id="regularUser"> I Have a Sign-Up Code
       </div>
 
+      <!-- Registration Key Field -->
       <div class="form-group" id="registrationKeyField" style="display:none;">
         <%= f.label :registration_key %>
         <%= f.text_field :registration_key, class: "form-control form-control-lg", style: 'padding:10px;' %>
       </div>
 
+      <!-- Local Moderator Code Field -->
       <div class="form-group" id="signUpCodeField" style="display:none;">
-        <%= f.label :sign_up_code, "Enter Sign-Up Code" %>
+        <%= f.label :moderator_code, "Enter Local Moderator Code" %>
         <%= f.text_field :moderator_code, class: "form-control form-control-lg", style: 'padding:10px;' %>
       </div>
 

@@ -1,0 +1,11 @@
+<!-- app/views/clients/expired_license.html.erb -->
+<h1>License Expired</h1>
+<p>Your license key has expired. Please download your data or enter a new registration key.</p>
+
+<%= link_to 'Download CSV', clients_path(format: "csv"), class: 'btn btn-secondary mb-3' %>
+
+<%= form_with(url: update_registration_key_path, method: :post) do |form| %>
+  <%= form.label :registration_key, "Enter New Registration Key" %>
+  <%= form.text_field :registration_key %>
+  <%= form.submit "Update Key", class: 'btn btn-primary' %>
+<% end %>

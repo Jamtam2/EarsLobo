@@ -85,6 +85,8 @@ gem 'httparty'
 
 gem 'attr_encrypted'
 
+gem 'encryptor'
+
 gem 'activesupport'
 
 gem 'whenever', require: false
@@ -94,5 +96,7 @@ gem 'google-authenticator-rails'
 gem 'rotp'
 
 gem 'rqrcode'
+
+gem 'dotenv-rails'
 
 gem 'securerandom'

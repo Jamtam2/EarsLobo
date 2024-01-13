@@ -1,4 +1,5 @@
 module ApplicationHelper
+    require 'csv'
     def flash_message(flash_type)
         case flash_type
         when 'notice' then 'success'
@@ -12,6 +13,16 @@ module ApplicationHelper
             return 'active'
         else
             return ''
+        end
+    end
+
+    def generate_user_data_csv(user)
+        CSV.generate(headers: true) do |csv|
+            csv << ['p']
+
+            user.data_each do |data_item|
+                csv << [data_item.attribute, data_item.attribute2]
+            end
         end
     end
 end

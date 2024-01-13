@@ -48,8 +48,9 @@ class User < ApplicationRecord
   scope :local_moderators, -> { where(role: roles[:local_moderator]) }
 
   attr_accessor :registration_key
-  # before_validation :validate_registration_key, on: :create
-  before_validation :validate_registration_key, on: :create
+
+  before_validation :validate_verification_key, on: :create, if: -> { local_moderator? || verification_key.present? }  
+
 
   # Will validate the verification key only for the owner.
   validates :verification_key, presence: true, if: :owner?
@@ -107,11 +108,14 @@ class User < ApplicationRecord
   private
 
   # Also move this method back to the User model
-  def validate_registration_key
-    key = Key.find_by(activation_code: registration_key)
+  def validate_verification_key
+    return false if verification_key.blank?
+
+    key = Key.find_by(activation_code: verification_key)
 
     if key.present? && !key.used
       puts "Valid registration key found: #{key.inspect}"
+      return true
     else
       errors.add(:registration_key, "is invalid.")
       return false

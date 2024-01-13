@@ -43,6 +43,17 @@ keybruh = Key.create!(
   email: "global@gmail.com"
 )
 
+keybruh = Key.create!(
+  activation_code: "expkey",
+  used: false,
+  license_type: 1,
+  product_id: 1,
+  customer_id: 1,
+  subscription_id: 1,
+  expiration: Time.zone.now + 1.year, # Set expiration to 1 year from the current time
+  email: "exp@gmail.com"
+)
+
 tenants = []
 3.times { |i| tenants << Tenant.find_or_create_by!(subdomain: "tenant#{i + 1}") }
 ActsAsTenant.with_tenant(tenants.first) do
@@ -53,7 +64,7 @@ ActsAsTenant.with_tenant(tenants.first) do
     fname: "Locality",
     lname:"Mod",
     role: :global_moderator,
-    registration_key: 'globalmodkey',
+    verification_key: 'globalmodkey',
   ) 
 
   user.user_mfa_sessions.create!(
@@ -68,7 +79,20 @@ ActsAsTenant.with_tenant(tenants.first) do
     fname: "Locality",
     lname:"Mod",
     role: :local_moderator,
-    registration_key: 'localmodkey',
+    verification_key: 'localmodkey',
+  ) 
+  user.user_mfa_sessions.create!(
+    secret_key: ROTP::Base32.random_base32, # Generate a random secret key
+    activated: false, # You can activate it later when the user sets up MFA
+  )
+
+  user = User.create!(
+    email: "exp@gmail.com",
+    password: "password",
+    fname: "Locality",
+    lname:"Mod",
+    role: :local_moderator,
+    verification_key: 'expkey',
   ) 
   user.user_mfa_sessions.create!(
     secret_key: ROTP::Base32.random_base32, # Generate a random secret key
@@ -76,6 +100,8 @@ ActsAsTenant.with_tenant(tenants.first) do
   )
 
 end 
+keybruh.update(expiration: Time.zone.now - 1.day) # Set expiration to 1 day ago
+keybruh.save
 
 
 #Create multiple users and seeds
@@ -98,7 +124,7 @@ tenants.each do |tenant|
         fname: Faker::Name.first_name,
         lname: Faker::Name.last_name,
         role: :local_moderator,
-        registration_key: keys.pop.activation_code,
+        verification_key: keys.pop.activation_code,
       )
       
       # Create 50 Clients and related Emergency Contacts and Tests for each user

@@ -23,6 +23,8 @@
     </div>
   <% else %>
     <p>Your Google Authenticator is already set up.</p>
+    <%= button_to 'Reset QR Code', reset_qr_code_user_mfa_sessions_path, method: :post, class: "btn btn-warning" %>
+
   <% end %>
 </div>
   <div class="mfa-container">

@@ -102,6 +102,18 @@ class User < ApplicationRecord
     totp.verify(provided_code, at: Time.now, drift_behind: drift_behind, drift_ahead: drift_ahead)
   end
   
+
+  def reset_google_authenticator!
+    # Generate a new secret key and clear existing 2FA setup
+    new_secret = ROTP::Base32.random_base32
+    self.update!(google_secret: new_secret, email_2fa_code: SecureRandom.hex(4))
+
+    # You might also want to reset the user_mfa_sessions here
+    self.user_mfa_sessions.destroy_all
+    self.user_mfa_sessions.create!(secret_key: new_secret, activated: false, email_verified: false)
+
+  end
+  
   # functions finds the code for the registration key and checks to see if the key has been used or not. 
   # This determines if the key for registration has been used or not.
 

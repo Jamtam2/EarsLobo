@@ -17,7 +17,9 @@ class ApplicationController < ActionController::Base
   
   def root_directory
     if !user_signed_in?
-      unless request.path == "/users/sign_in"
+      if request.path == "/users/sign_in" || request.path == "/users/sign_up" || request.path == "/users" || mfa_setup_paths.include?(request.path)
+        return
+      else
         redirect_to new_user_session_path 
       end
     end
@@ -52,7 +54,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def authenticate_user_with_redirect!
-    if request.path == "/users/sign_out"
+    if request.path == "/users/sign_out" 
       sign_out(current_user)
       redirect_to new_user_session_path and return
     end

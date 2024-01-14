@@ -6,6 +6,8 @@ class BillingDashboardController < ApplicationController
     def index
       @current_month_tests = current_tests
       @previous_tests = previous_tests
+      @total_cost = calculate_total_cost(@current_month_tests)
+
     end
   
     private
@@ -33,5 +35,16 @@ class BillingDashboardController < ApplicationController
         dwt_tests: @user.dwt_tests.where(created_at: range)
       }
     end
+  
+    private
+
+  def calculate_total_cost(tests)
+    total_cost = 0
+    tests.values.flatten.each do |test|
+      total_cost += test.price
+    end
+    total_cost
   end
+end
+
   

@@ -3,6 +3,8 @@
 <% if @current_month_tests.present? %>
   <h2>Current Month's Tests</h2>
   <%= render 'tests_table', tests: @current_month_tests %>
+  <h3>Total Cost for This Month: <%= @total_cost %></h3>
+
 <% end %>
 
 <% if @previous_tests.present? %>

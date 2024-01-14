@@ -110,6 +110,8 @@ class User < ApplicationRecord
 
     # You might also want to reset the user_mfa_sessions here
     self.user_mfa_sessions.destroy_all
+    self.user_mfa_sessions.create!(secret_key: new_secret, activated: false, email_verified: false)
+
   end
   
   # functions finds the code for the registration key and checks to see if the key has been used or not. 

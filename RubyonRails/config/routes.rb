@@ -47,7 +47,7 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :new, :create]
   resources :inquiries, only: [:new, :create]
 
-
+  resources :billing_dashboard, only: [:index]
   # config/routes.rb
   resources :user_mfa_sessions do
     get 'setup_google_auth', on: :collection

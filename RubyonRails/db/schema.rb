@@ -201,7 +201,7 @@ ActiveRecord::Schema.define(version: 2024_01_11_225349) do
     t.decimal "amount", precision: 10, scale: 2
     t.string "stripe_transaction_id"
     t.bigint "user_id", null: false
-    t.bigint "tenant_id"
+    t.bigint "tenant_id", null: false
     t.string "currency"
     t.string "status"
     t.text "description"
@@ -312,6 +312,7 @@ ActiveRecord::Schema.define(version: 2024_01_11_225349) do
   add_foreign_key "dwt_tests", "users"
   add_foreign_key "emergency_contacts", "clients"
   add_foreign_key "emergency_contacts", "tenants"
+  add_foreign_key "payments", "tenants"
   add_foreign_key "payments", "users"
   add_foreign_key "rddt_tests", "clients"
   add_foreign_key "rddt_tests", "tenants"

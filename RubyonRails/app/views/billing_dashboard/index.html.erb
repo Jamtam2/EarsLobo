@@ -1,0 +1,11 @@
+<!-- app/views/billing_dashboard/index.html.erb -->
+
+<% if @current_month_tests.present? %>
+  <h2>Current Month's Tests</h2>
+  <%= render 'tests_table', tests: @current_month_tests %>
+<% end %>
+
+<% if @previous_tests.present? %>
+  <h2>Previous Month's Tests</h2>
+  <%= render 'tests_table', tests: @previous_tests %>
+<% end %>

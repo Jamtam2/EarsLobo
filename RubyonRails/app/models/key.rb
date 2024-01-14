@@ -17,11 +17,22 @@
 #
 class Key < ApplicationRecord
     before_create :set_default_used
+
+    # belongs_to :user
   
     private
   
     def set_default_used
       self.used = false if self.used.nil?
     end
-  end
+
+    def self.expired
+      where('expiration > ?', Time.current)
+    end
+
+    public
+    def associated_user_by_email
+      User.find_by(email: self.email)
+    end
+end
   

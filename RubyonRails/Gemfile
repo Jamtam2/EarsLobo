@@ -86,6 +86,8 @@ gem 'httparty'
 
 gem 'attr_encrypted'
 
+gem 'encryptor'
+
 gem 'activesupport'
 
 gem 'whenever', require: false
@@ -95,6 +97,8 @@ gem 'google-authenticator-rails'
 gem 'rotp'
 
 gem 'rqrcode'
+
+gem 'dotenv-rails'
 
 # Randomize local moderator code. Used for regular users to join a organization owned by a local moderator.
 gem 'securerandom'

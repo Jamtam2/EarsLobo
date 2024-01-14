@@ -17,6 +17,11 @@ Rails.application.routes.draw do
   get 'clients', to: 'clients#index'
   get 'clients/:id/edit', to: 'clients#edit', as: 'edit_client'
   get 'global_moderator_index', to: 'clients#global_moderator_index'
+  get 'expired_license', to: 'clients#expired_license'
+  post 'update_registration_key', to: 'clients#update_registration_key'
+  post 'user_mfa_sessions/reset_qr_code', to: 'user_mfa_sessions#reset_qr_code', as: :reset_qr_code_user_mfa_sessions
+
+
   
   get 'users', to:'users#index'
   get 'combined', to: 'clients#combined'

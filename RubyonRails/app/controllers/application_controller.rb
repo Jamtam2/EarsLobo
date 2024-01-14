@@ -1,8 +1,10 @@
 class ApplicationController < ActionController::Base
+  before_action :root_directory
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :authenticate_user_with_redirect!
   before_action :set_current_tenant
   before_action :check_mfa
+  before_action :authenticate_user_with_redirect!, unless: :mfa_process?
+
   
   def set_current_tenant
     ActsAsTenant.current_tenant = current_user.tenant if current_user
@@ -11,6 +13,17 @@ class ApplicationController < ActionController::Base
   
   end
 
+
+  
+  def root_directory
+    if !user_signed_in?
+      if request.path == "/users/sign_in" || request.path == "/users/sign_up" || request.path == "/users" || mfa_setup_paths.include?(request.path)
+        return
+      else
+        redirect_to new_user_session_path 
+      end
+    end
+  end
   private
 
   def check_mfa
@@ -19,25 +32,24 @@ class ApplicationController < ActionController::Base
       return
     end
     
+    # TODO: Remove this when moving to production
+    # if Rails.env.development?
+    #   return
+    # end
 
     return unless user_signed_in? && "/users/sign_out" != request.path
 
-  
-    # Paths that should bypass MFA check
-    mfa_setup_paths = [
-      setup_google_auth_user_mfa_sessions_path,
-      setup_email_auth_user_mfa_sessions_path,
-      enter_email_code_user_mfa_sessions_path,
-      verify_email_2fa_user_mfa_sessions_path
-    ]
-  
     # Bypass MFA check if the current path is one of the MFA setup paths
     return if mfa_setup_paths.include?(request.path)
   
     user_mfa_session = current_user.user_mfa_sessions.first
   
     if user_mfa_session.nil? || (!user_mfa_session.activated && !user_mfa_session.email_verified)
-      redirect_to new_user_mfa_session_path
+      redirect_to new_user_mfa_session_path and return
+    
+    else
+      authenticate_user_with_redirect!
+      
     end
   
     # Additional logic if needed...
@@ -45,21 +57,29 @@ class ApplicationController < ActionController::Base
   protected
 
   def authenticate_user_with_redirect!
-    # Redirect user if their license key has expired
-    if user_signed_in? && license_key_expired?(current_user)
-      flash[:alert] = [] if flash[:alert].nil?
-      flash[:alert] << 'Your account license key has expired'
-      flash[:alert] << 'Please check your email address.'
+    if request.path == "/users/sign_out" 
       sign_out(current_user)
       redirect_to new_user_session_path and return
     end
+    
+    if mfa_setup_paths.include?(request.path)
+      Rails.logger.info("DEBUG:THIS IS THE PATH: #{request.path}")
+      return
+    end
+    if user_signed_in? && license_key_expired?(current_user)
+      Rails.logger.info("DEBUG: USER SIGNED IN AND KEY IS EXPIRED: #{current_user.inspect}")
+      Rails.logger.info("DEBUG: KEY INFO: #{current_user.license_key.inspect}")
 
-    # Skip redirect if this is a devise controller (like registrations) and the action is 'create' or 'new'
-    return if devise_controller? && (action_name == 'create' || action_name == 'new')
 
-    # Redirect to login page if not signed in
-    if !user_signed_in?
-      redirect_to new_user_session_path and return
+      if [clients_path(format: "csv") ,expired_license_path,update_registration_key_path].include?(request.path)
+        Rails.logger.info("DEBUG: GOT IN REQUEST PATH")
+        return
+      else
+        flash[:alert] = [] if flash[:alert].nil?
+        flash[:alert] << 'Your account license key has expired'
+        # sign_out(current_user)
+        redirect_to expired_license_path and return
+      end
     end
   end
 
@@ -73,14 +93,32 @@ class ApplicationController < ActionController::Base
   def license_key_expired?(user)
     license_key = user.license_key
     return false unless license_key
+    Rails.logger.info("KEY IN EXPIRATION METHOD: #{license_key.inspect}")
 
     license_key.expiration < DateTime.current
   end
+
+  def mfa_process?
+    # Define the logic to determine if the user is in the MFA process
+    user_signed_in? && !mfa_setup_paths.include?(request.path)
+  end
+
+
+  def mfa_setup_paths
+    # List of paths for MFA setup
+    [
+      setup_google_auth_user_mfa_sessions_path,
+      setup_email_auth_user_mfa_sessions_path,
+      enter_email_code_user_mfa_sessions_path,
+      verify_email_2fa_user_mfa_sessions_path
+    ]
+  end
+
 
   protected
 
   # TODO: Because this requires a moderator_code, regular and global users will need have set special way to bypass this.
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:fname, :lname, :email, :password, :password_confirmation, :registration_key, :moderator_code])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:fname, :lname, :email, :password, :password_confirmation, :verification_key, :moderator_code])
   end
 end

@@ -18,7 +18,10 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-every 1.day do
-    runner "FetchKeys.call"
-  end
+
+# Schedule runs everyday at 9:00 am to check all license keys
+every 1.day, at: '12:00 am' do
+  runner "LicenseKeyCheckJob.perform_later"
+end
+
   

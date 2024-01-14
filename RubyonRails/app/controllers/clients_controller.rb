@@ -2,11 +2,48 @@ class ClientsController < ApplicationController
  before_action :authenticate_user!, except: [:index]
  require 'csv'
   
-  def new
+    def new
       @client = Client.new
       @client.emergency_contacts.build
     end
 
+    def update_registration_key
+      Rails.logger.info("---------------------------------")
+      Rails.logger.info("---------------------------------")
+      Rails.logger.info("---------------------------------")
+      Rails.logger.info("DEBUG: WE ALTEAST GOT IN HERE")
+      Rails.logger.info("---------------------------------")
+      Rails.logger.info("---------------------------------")
+      Rails.logger.info("---------------------------------")
+
+      
+      user = current_user
+      curr_key = user.license_key
+      verification_key = params[:registration_key]
+      key = Key.find_by(activation_code: verification_key)
+      
+
+      Rails.logger.info("---------------------------------")
+      Rails.logger.info("---------------------------------")
+      Rails.logger.info("---------------------------------")
+      Rails.logger.info("DEBUG:UPDATED USER KEY: #{key.inspect}")
+      Rails.logger.info("---------------------------------")
+      Rails.logger.info("---------------------------------")
+      Rails.logger.info("---------------------------------")
+
+
+      if key.present? && !key.used
+
+        puts "Valid registration key found: #{key.inspect}"
+        user.update(verification_key: verification_key)
+        curr_key.update(email:  "OLDKEYSFOR#{user.email}")
+        key.update(used: true, email: user.email)
+        redirect_to home_path
+
+      else
+        redirect_to expired_license_path, alert: 'Invalid registration key.'
+      end
+    end
   
     def create
       @client = Client.new(client_params)
@@ -226,6 +263,12 @@ end
       end
     end
    
+    def expired_license
+    end
+   
+    
+    
+    
     
 # Method generates a CSV that can be downloaded
 def generate_csv(clients)

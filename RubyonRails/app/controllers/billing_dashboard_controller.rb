@@ -30,14 +30,16 @@ class BillingDashboardController < ApplicationController
   
     def fetch_tests(range)
       {
-        rddt_tests: @user.rddt_tests.where(created_at: range),
-        dnw_tests: @user.dnw_tests.where(created_at: range),
-        dwt_tests: @user.dwt_tests.where(created_at: range)
+        rddt_tests: RddtTest.where(created_at: range, tenant_id: @user.tenant_id),
+        dnw_tests: DnwTest.where(created_at: range, tenant_id: @user.tenant_id),
+        dwt_tests: DwtTest.where(created_at: range, tenant_id: @user.tenant_id)
       }
+    
     end
   
     private
 
+    
   def calculate_total_cost(tests)
     total_cost = 0
     tests.values.flatten.each do |test|

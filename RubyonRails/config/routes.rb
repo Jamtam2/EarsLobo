@@ -35,9 +35,10 @@ Rails.application.routes.draw do
   get 'stripe_payment/process_payment'
   get 'stripe_payment/apply_discount'
   get 'stripe_payment/webhook'
-  get 'stripe_payment/success'
-  get 'stripe_payment/failure'
+  get '/stripe_payment/success', to: 'stripe_payment#success', as: 'success_stripe_payment'
+  get '/stripe_payment/failure', to: 'stripe_payment#failure', as: 'failure_stripe_payment'
 
+  post '/stripe_payment/initialize_payment_setup', to: 'stripe_payment#initialize_payment_setup'
 
   # Route for new user MFA session
   get 'user_mfa_sessions/new', to: 'user_mfa_sessions#new', as: :new_user_mfa_session

@@ -4,6 +4,7 @@ class BillingDashboardController < ApplicationController
     before_action :set_local_moderator
   
     def index
+
       @current_month_tests = current_tests
       @previous_tests = previous_tests
       @total_cost = calculate_total_cost(@current_month_tests)
@@ -15,6 +16,8 @@ class BillingDashboardController < ApplicationController
     def set_local_moderator
       # Ensure the user is a local moderator
       @user = current_user
+      puts "DEBUG: USER CUSTOMER ID: #{current_user.stripe_customer_id}"
+      
       redirect_to(root_url) unless @user.local_moderator?
     end
   

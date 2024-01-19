@@ -61,7 +61,7 @@ end
     begin
       sig_header = require.env['HTTP_STRIPE_SIGNATURE']
       payload = request.body.read
-      secret = 'sk_test_51OXZ5bEdjXO5pqxuePO6DT10pZtW1Lr23vxeUFw1Kxwc6cucGy5RO9cBe7g7eGnNJSuf7Rwrbrg7eTNibZMWsmOR00ll5PAxeH'
+      secret = 'apikey'
       event = Stripe::Webhook.construct_event(payload, sig_header, secret)
     rescue JSON::ParseError, Stripe::SignatureVerificationError => e
     #   Invalid payload signature
@@ -96,5 +96,5 @@ end
   end
 
   def set_stripe_api_key
-    Stripe.api_key = 'sk_test_51OXZ5bEdjXO5pqxuePO6DT10pZtW1Lr23vxeUFw1Kxwc6cucGy5RO9cBe7g7eGnNJSuf7Rwrbrg7eTNibZMWsmOR00ll5PAxeH'
+    Stripe.api_key = 'apikey'
   end

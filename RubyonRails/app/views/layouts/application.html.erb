@@ -79,6 +79,11 @@
             <%= link_to 'Billing Dashboard', billing_dashboard_index_path, class: 'nav-link' %>
           </li>
         <% end %>
+        <% if current_user.global_moderator? %>
+          <li class='nav-item'>
+            <%= link_to 'Moderator Dashboard', global_moderators_dashboard_index_path, class: 'nav-link' %>
+          </li>
+      <% end %>
       <h5><small><li class='nav-item'>
         <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, data: { turbo: false }, class: 'nav-link text-white text-decoration-none' %>
           </small></h5></li>

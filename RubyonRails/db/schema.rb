@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_19_172946) do
+ActiveRecord::Schema.define(version: 2024_01_19_233118) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,13 @@ ActiveRecord::Schema.define(version: 2024_01_19_172946) do
     t.string "encrypted_dob_string"
     t.string "encrypted_dob_string_iv"
     t.index ["tenant_id"], name: "index_clients_on_tenant_id"
+  end
+
+  create_table "discounts", force: :cascade do |t|
+    t.string "code"
+    t.integer "percentage_off"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "dnw_tests", force: :cascade do |t|
@@ -197,6 +204,7 @@ ActiveRecord::Schema.define(version: 2024_01_19_172946) do
     t.integer "customer_id"
     t.integer "subscription_id"
     t.string "email"
+    t.integer "created_by_id"
   end
 
   create_table "payments", force: :cascade do |t|

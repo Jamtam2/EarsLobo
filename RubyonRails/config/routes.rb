@@ -40,6 +40,12 @@ Rails.application.routes.draw do
 
   post '/stripe_payment/initialize_payment_setup', to: 'stripe_payment#initialize_payment_setup'
 
+  resources :global_moderators_dashboard, only: [:index] do
+    post :create_discount, on: :collection
+    post :create_key, on: :collection
+  end
+  delete 'global_moderators_dashboard/destroy_discount/:id', to: 'global_moderators_dashboard#destroy_discount', as: 'destroy_discount_global_moderators_dashboard'
+
   # Route for new user MFA session
   get 'user_mfa_sessions/new', to: 'user_mfa_sessions#new', as: :new_user_mfa_session
   # You might also need to define the create route if not already done
@@ -69,7 +75,11 @@ Rails.application.routes.draw do
         get 'new_dwt_list4', to: 'dwt_tests#new_dwt_list4', as: 'dwt_list4'
         get 'dwt_tests/:id', to: 'dwt_tests#show', as: 'show'
       end
-    end
+        member do
+          post 'apply_discount'
+        end
+  
+      end
     resources :dnw_tests do
       collection do
         get 'new_dnw_list1', to: 'dnw_tests#new_dnw_list1', as: 'dnw_list1'
@@ -78,12 +88,19 @@ Rails.application.routes.draw do
         get 'new_dnw_list4', to: 'dnw_tests#new_dnw_list4', as: 'dnw_list4'
         get 'dnw_tests/:id', to: 'dnw_tests#show', as: 'show'
       end
+      member do
+        post 'apply_discount'
+      end
+
     end
     resources :rddt_tests do
       collection do
         get 'new_rddt_list1', to: 'rddt_tests#new_rddt_list1', as: 'rddt_list1'
         get 'new_rddt_list2', to: 'rddt_tests#new_rddt_list2', as: 'rddt_list2'
         get 'rddt_tests/:id', to: 'rddt_tests#show', as: 'show'
+      end
+      member do
+        post 'apply_discount'
       end
     end
   end

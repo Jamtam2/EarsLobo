@@ -94,7 +94,7 @@ class ClientsController < ApplicationController
       
       else
         # Else, shows only local clients of the same tenant
-        client_scope = current_user.clients.where(tenant_id: current_user.tenant_id)
+        client_scope = Client.where(tenant_id: current_user.tenant_id)
       end
 
       # Initialize instance variable to be used in clients > index.html.erb

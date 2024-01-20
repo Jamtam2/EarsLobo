@@ -1,0 +1,64 @@
+
+<!-- Display tables for Keys and Discounts -->
+<h2>Generated License Keys</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Activation Code</th>
+      <th>License Type</th>
+      <th>Expiration</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @keys.each do |key| %>
+      <tr>
+        <td><%= key.activation_code %></td>
+        <td><%= key.license_type %></td>
+        <td><%= key.expiration %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>Generated Discount Codes</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Percentage Off</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @discounts.each do |discount| %>
+      <tr>
+        <td><%= discount.code %></td>
+        <td><%= discount.percentage_off %></td>
+        <td>
+          <%= link_to 'Delete', destroy_discount_global_moderators_dashboard_path(id: discount.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+
+<%= form_with url: create_discount_global_moderators_dashboard_index_path, method: :post do |form| %>
+  <%= form.label :code %>
+  <%= form.text_field :code, name: 'discount[code]' %>
+
+  <%= form.label :percentage_off %>
+  <%= form.number_field :percentage_off, name: 'discount[percentage_off]' %>
+
+  <%= form.submit "Create Discount" %>
+<% end %>
+
+
+<%= form_with url: create_key_global_moderators_dashboard_index_path, method: :post do |form| %>
+  <%= form.label :license_type %>
+  <%= form.select :license_type, [1,2], {}, { name: 'key[license_type]' } %>
+
+  <%= form.submit "Create License Key" %>
+<% end %>

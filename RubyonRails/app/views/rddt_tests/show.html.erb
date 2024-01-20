@@ -162,3 +162,11 @@ The RDDT contains much more data and has more going on due to the multi button p
     });
 </script>
 
+<hr>
+<h2>Apply Discount Code</h2>
+<%= form_with url: apply_discount_client_rddt_test_path(@rddt_test), method: :post do |form| %>
+  <%= form.label :discount_code, "Enter Discount Code:" %>
+  <%= form.text_field :discount_code %>
+  <%= form.submit "Apply Discount" %>
+<% end %>
+

@@ -214,6 +214,7 @@
         <tr>
           <th>ID</th>
           
+          <th>Price</th>
           <th>Test Giver</th>
           <th>Test Type</th>
           <th>Left Score</th>
@@ -230,6 +231,7 @@
             <td class="btn btn-link" data-toggle="collapse" href="#collapseExample<%index.to_s%>" role="link" aria-expanded="false" aria-controls="collapseExample">
             <%= link_to dwt_test.id, client_dwt_test_path(@client, dwt_test) %></td>
             
+            <td><%= dwt_test.price %> </td>
             <td><%= dwt_test.user.fname %> <%= dwt_test.user.lname %></td>
             <td><%= dwt_test.test_type %></td>
             <td><%= dwt_test.left_score %></td>
@@ -242,7 +244,7 @@
           <tr>
             <td class="btn btn-link" data-toggle="collapse" href="#collapseExample<%index.to_s%>" role="link" aria-expanded="false" aria-controls="collapseExample">
             <%= link_to dnw_test.id, client_dnw_test_path(@client, dnw_test) %></td>
-            
+            <td><%= dnw_test.price %> </td>
             <td><%= dnw_test.user.fname %> <%= dnw_test.user.lname %></td>
             <td><%= dnw_test.test_type %></td>
             <td><%= dnw_test.left_score %></td>
@@ -255,7 +257,7 @@
           <tr>
             <td class="btn btn-link" data-toggle="collapse" href="#collapseExample<%index.to_s%>" role="link" aria-expanded="false" aria-controls="collapseExample">
             <%= link_to rddt_test.id, client_rddt_test_path(@client, rddt_test) %></td>
-            
+            <td><%= rddt_test.price %> </td>
             <td><%= rddt_test.user.fname %> <%= rddt_test.user.lname %></td>
             <td><%= rddt_test.test_type %></td>
             <td><%= rddt_test.left_score2 %></td>

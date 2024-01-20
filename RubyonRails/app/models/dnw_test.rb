@@ -48,25 +48,14 @@ class DnwTest < ApplicationRecord
     def set_default_price
       self.price ||= 2.00 # set default price if not present
     end
-  
+
     def apply_discount(discount_code)
-      if valid_discount_code?(discount_code)
-        self.price = discounted_price
-      end
-    end
+      discount = Discount.find_by(code: discount_code)
+      return unless discount
   
-    private
-  
-    def valid_discount_code?(code)
-      # Define how to validate a discount code
-      # This is just a placeholder
-      code == "SPECIALDISCOUNT"
-    end
-  
-    def discounted_price
-      # This is just a placeholder
-      0.00
+      self.price *= (1 - discount.percentage_off / 100.0)
     end
   end
+  
   
 

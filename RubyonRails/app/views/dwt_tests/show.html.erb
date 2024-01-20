@@ -139,3 +139,11 @@
     }
     });
 </script>
+
+<hr>
+<h2>Apply Discount Code</h2>
+<%= form_with url: apply_discount_client_dwt_test_path(@dwt_test), method: :post do |form| %>
+  <%= form.label :discount_code, "Enter Discount Code:" %>
+  <%= form.text_field :discount_code %>
+  <%= form.submit "Apply Discount" %>
+<% end %>

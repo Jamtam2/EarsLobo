@@ -1,11 +1,22 @@
 <!-- app/views/clients/expired_license.html.erb -->
-<h1>License Expired</h1>
-<p>Your license key has expired. Please download your data or enter a new registration key.</p>
 
-<%= link_to 'Download CSV', clients_path(format: "csv"), class: 'btn btn-secondary mb-3' %>
+<body id= "defBG">
+<div class="container p-5 my-3 w-50 border bg-white">
+<div class="d-flex justify-content-center">
+<%= image_tag 'expired.png', style: "margin: 0 auto; width: 125px " %>
+</div>
+<h2 class="display-4", style= 'padding-bottom:20px'><strong>License Expired!</strong></h2>
+
+
+<p class="d-flex justify-content-center text-align: center",style= 'padding-bottom:20px'>Your license key has expired. Please download your data or enter a new registration key.</p>
+
+<%= link_to 'Download CSV', clients_path(format: "csv"), class: 'btn mfa-other btn-secondary border-none btn-lg btn-block' %>
 
 <%= form_with(url: update_registration_key_path, method: :post) do |form| %>
-  <%= form.label :registration_key, "Enter New Registration Key" %>
-  <%= form.text_field :registration_key %>
-  <%= form.submit "Update Key", class: 'btn btn-primary' %>
+  <%= form.label :registration_key, "Enter New Registration Key" , class: "pt-4",style: "font-size: 18px" %><br>
+  <%= form.text_field :registration_key , class: "form-control"%>
+  <%= form.submit "Update Key", class: 'btn btn mfa-submit btn-lg btn-block pt-2' %>
 <% end %>
+
+</div>
+</body>

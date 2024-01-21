@@ -1,69 +1,109 @@
 <body id= "defBG">
-    <div class="card text-center mb-3 border-0", style="padding-top:25px">
+    <div class="card mb-3 border-0", style="padding-top:25px">
         <img class="card-img-top">
-        <%= image_tag 'AIDA_RGB.png', class: ' d-block m-auto' , style: ' max-width: 50rem;'%>
+        <%= image_tag 'AIDA_RGB_Beta.png', class: ' d-block m-auto' , style: ' max-width: 50rem;'%>
         <div class="card-body">
             <h5 class="card-title text-center"></h5>
         </div>
-        <h1 style="font-size:50px;">What is the goal of this website?</h1>
-        <p style="font-size:20px;">
-            The goal is to help diagnose hearing problems in children using testing.
-        </p>
-        <h1 style="font-size:50px;">The types of tests and what they do</h1>
-        <p style="font-size:20px;">
-            There are 3 types of tests: DWT, RDDT, and DNW.
-        </p>
-        <h1 style="font-size:50px;">DWT</h1>
-        <p style="font-size:20px;">
-            DWT or Dichotic Words Test is a test that uses real words in a 2 column table of buttons. Play the audio file and the words on the left and right will be played simultaneously in each of the childs ear, click the buttons based on which words the child recalls correctly. This test provides interpretation based on normative score data.
-        </p>
-        <h1 style="font-size:50px;">RDDT</h1>
-        <p style="font-size:20px;">
-            RDDT or Randomized Dichotic Digit Test is a test that uses random numbers in a 2 column table of buttons, however each row of buttons may contain 1, 2 or 3 buttons. The test functions the same however if there is more than one button in the row, those numbers will be read in rapid sequence. This test provides interpretation based on normative score data.
-        </p>
-        <h1 style="font-size:50px;">DNW</h1>
-        <p style="font-size:20px;">
-            DNW or Dichotic Nonsense Words is a test that uses nonsense or fake words in a 2 column table of buttons. This test does not provide interpretation.
-        </p>
-        <h1 style="font-size:50px;">How to run tests</h1>
+
+        <h1 class="display-3 pl-4", style= 'padding-top:30px'> <strong>About</strong></h1>
+        <hr>
+        <div class="pl-5 pr-5">
+            <p style="font-size:20px;">
+                Binaural integration is assessed through dichotic listening tests. During dichotic listening, two different words are simultaneously presented to the two ears and the listener is asked to repeat both words. Weaknesses in binaural integration are shown by poor performance in both ears or by a large difference in performance between the two ears. A large difference in performance between the two ears is typically the result of weak performance in the listener's non-dominant ear which in most (but not all) listeners is the left ear.
+            </p>
+        </div>
+
+        
+
+        <h1 class="display-3 pl-4", style= 'padding-top: 60px'> <strong>Amblyaudia</strong></h1>
+        <hr>
+        <div class="pl-5 pr-5">
+            <p style="font-size:20px;">
+                Amblyaudia is a type of auditory processing deficit. It is due to a weakness in binaural integration. Binaural integration occurs when all information arriving at both ears is adequately coded by the central auditory system, whether the information is the same or different between the ears. When all features arriving at the two ears are preserved, integrated and coded by the auditory system, the listener will correctly perceive what has been heard. When features are not preserved, as in individuals with the binaural integration deficit of amblyaudia, the listener struggles to perceive the sounds that have been taken in. A binaural integration deficit is likely to be greatest when listening to unfamiliar material or during challenging listening situations as when background noise is present.
+            </p>
+        </div>
+
+        <h1 class="display-3 pl-4", style= 'padding-top:60px'> <strong>Running Tests</strong></h1>
+        <hr>
+        <div class="pl-5 pr-5">
         <p style="font-size:20px;">
             Ensure the headphones or speakers are on child so that the left words play in the childs left ear and right in right. You can start the audio to test this pefore putting them on the child. Then give a brief explanation to the child and start the test. Have the child recall what they heard and record their responses. Finally submit the test when complete.
         </p>
-        <h1 style="font-size:50px;">Troubleshooting website problems</h1>
-        <p style="font-size:20px;">
-            The most common issue you might run into is the testing buttons not working or dropdowns for different test lists not working. This is normaly caused by using the back arrows in the browser to exit a test before it is submitted. To fix this refresh the page and try again and ensure that if you start a test it is submitted properly.
-        </p>
-        <p style="font-size:20px;">
-            If you run into any other issues, before trying to contact an administrator, attempt to close and reopen the site and sign out and back in. If these solutions did not work contact your admistrator for assistance.
-        </p>
+        </div>
 
 
-<%= form_with(model: Inquiry.new, url: inquiries_path, local: true) do |form| %>
-    <div class="form-group">
-        <label>Select an Option:</label><br />
-        <%= form.radio_button :inquiry_type, 'dataset_access', id: 'datasetAccess' %> I want access to the global dataset<br />
-        <%= form.radio_button :inquiry_type, 'bug_report', id: 'bugReport' %> I want to report a bug
-    </div>
+        <h1 class="display-3 pl-4", style= 'padding-top:60px'><strong>Test Types</strong></h1>
+        <hr>
+        <div class="card-deck pl-5 pr-5", style= 'padding-top:10px'>
+            <div class="card border-0">
+                <h1 class="card-title display-4"><strong>DWT</strong></h1>
+                <hr>
+                <p style="font-size:17px;">
+                 DWT or Dichotic Words Test is a test that uses real words in a 2 column table of buttons. Play the audio file and the words on the left and right will be played simultaneously in each of the childs ear, click the buttons based on which words the child recalls correctly. This test provides interpretation based on normative score data.
+                </p>
+            </div>
 
-    
-    <div>
-        <%= form.label :email, 'Your Email' %>
-        <%= form.email_field :email, required: true %>
-    </div>
-    <div>
-        <%= form.label :company, 'Company/Organization (Required for Dataset)' %>
-        <%= form.text_field :company, required: false %>
-    </div>
-    <div>
-        <%= form.label :purpose, 'Purpose for Dataset Use' %>
-        <%= form.text_area :purpose, required: true %>
-    </div>
-    <%= form.submit 'Send Inquiry' %>
-    <% end %>
+            <div class="card border-0">
+            <h1 class="card-title display-4"><strong>RDDT</strong></h1>
+            <hr>
+            <p style="font-size:17px;">
+                RDDT or Randomized Dichotic Digit Test is a test that uses random numbers in a 2 column table of buttons, however each row of buttons may contain 1, 2 or 3 buttons. The test functions the same however if there is more than one button in the row, those numbers will be read in rapid sequence. This test provides interpretation based on normative score data.
+             </p>
+            </div>
+            <div class="card border-0">
+            <h1 class="card-title display-4"><strong>DNW</strong></h1>
+            <hr>
+             <p style="font-size:17px;">
+                 DNW or Dichotic Nonsense Words is a test that uses nonsense or fake words in a 2 column table of buttons. This test does not provide interpretation.
+            </p>
+            </div>
+        </div>
+
+
+        <h1 class="display-3 pl-4", style= 'padding-top:60px'><strong>Troubleshooting</strong></h1>
+        <hr>
+        <div class="card-deck pl-5 pr-5 pb-5">
+            <div class="card border-0">
+                <p style="font-size:20px;">
+                     The most common issue you might run into is the testing buttons not working or dropdowns for different test lists not working. This is normaly caused by using the back arrows in the browser to exit a test before it is submitted. To fix this refresh the page and try again and ensure that if you start a test it is submitted properly.
+                </p>
+                <p style="font-size:20px;">
+                    If you run into any other issues, before trying to contact an administrator, attempt to close and reopen the site and sign out and back in. If these solutions did not work contact your admistrator for assistance or issue a report. 
+                </p>
+            </div>
+
+            <div class="card bg-secondary border-0">
+                <%= form_with(model: Inquiry.new, url: inquiries_path, local: true) do |form| %>
+                    <div class="form-group pl-2 pr-2 ">
+                    <h1 class="card-title display-4 pt-1 text-center"><strong>Issue Report</strong></h1>
+                        <label>Select an Option:</label><br />
+                        <%= form.radio_button :inquiry_type, 'dataset_access', id: 'datasetAccess' %> I want access to the global dataset<br />
+                        <%= form.radio_button :inquiry_type, 'bug_report', id: 'bugReport' %> I want to report a bug
+                    </div>
+
+                    
+                    <div class="form-group pl-3 pr-3 ">
+                        <%= form.label :email, 'Email', style:"font-size:17px" %><br />
+                        <%= form.email_field :email, required: true %>
+                    </div>
+                    <div class="form-group pl-3 pr-3 ">
+                        <%= form.label :company, 'Company/Organization (Required for Dataset)',style:"font-size:17px" %><br />
+                        <%= form.text_field :company, required: false , style:"inline-block"%>
+                    </div>
+                    <div class=" form-group pl-3 pr-3 ">
+                        <%= form.label :purpose, 'Purpose for Dataset Use' , style:"font-size:17px"%><br />
+                        <%= form.text_area :purpose, required: true %>
+                    </div>
+                    <div class="pl-3 pr-3 pb-2 btn-lg btn-block rounded-pill">
+                        <%= form.submit 'Send Inquiry', class: "btn-lg btn-block btn-primary mfa-submit rounded-pill" %>
+                        <% end %>
+                    <div class="pl-3 pr-3 pb-2">
 
 
 
-    </div>
+                    </div>
+            </div>
 </body>
 
 

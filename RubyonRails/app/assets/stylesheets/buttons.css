@@ -2,7 +2,7 @@ button {
     padding: 17px 40px;
     border-radius: 50px;
     border: 0;
-    background-color: #2a0307;
+    background-color: linear-gradient(180deg, rgba(3,187,210,1) 0%, rgba(46,131,204,1) 100%);
     box-shadow: rgba(0, 0, 0, 0.15) 0 0 10px;
 
     text-transform: uppercase;
@@ -12,9 +12,9 @@ button {
    
    button:hover {
     letter-spacing: 1.5px;
-    background-color: hsl(272, 52%, 67%);
+    background-color: hsl(288, 73%, 66%);
     color: hsl(0, 88%, 3%);
-    box-shadow: rgba(228, 112, 183, 0.759) 0px 7px 29px 0px;
+    box-shadow: rgba(148, 62, 115, 0.759) 0px 7px 29px 0px;
    }
    
    button:active {

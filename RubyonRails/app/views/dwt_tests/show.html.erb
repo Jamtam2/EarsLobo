@@ -1,48 +1,45 @@
-
+<body id= "defBG">
 <!--DWT Test Show page, displays data in 3 columns so its easy for clinicians to review and understand the scores gotten -->
 
-
-<h1><b><center><%= @dwt_test.test_type%> Test Information and Results</center></b></h1>
+<div class="container p-5 my-3 w-100 bg-white border-0">
+<h1 class="display-3 pl-4", style= 'padding-top:20px'><b><%= @dwt_test.test_type%> Test Results</b></h1>
 <hr>
 <!--This contains the 3 rows for the data stored on the page all test scores are pulled from the dwt test model -->
 <div class="container">
     <div class="row">
         <div class="col-sm">
-            <h2><center><b>Left Ear Score</b></center></h2>
-            <h2><center><b><%= @dwt_test.left_score%>%</b></center></h2>
-            <h2><center><b>Left Ear Percentile</b></center></h2>
-            <h3><center><b><%= @dwt_test.left_percentile%></b></center></h3>
+            <h2 class="pt-5", style= 'padding-top:20px'><center><b>Left Ear Score</b></center></h2>
+            <h2 class="display-5", style= 'padding-top:7px'><center><b><%= @dwt_test.left_score%>%</b></center></h2>
+            <h2 class="pt-3", style= 'padding-top:17px'><center><b>Left Ear Percentile</b></center></h2>
+            <h3 class="display-5", style= 'padding-top:7px'><center><b><%= @dwt_test.left_percentile%></b></center></h3>
         </div>
         <div class="col-sm">
-            <%= image_tag 'head image.png', class: 'w-40 img-responsive center-block', style: 'max-width: 20rem;' %>
+            <%= image_tag 'person.png', class: 'w-40 img-responsive center-block', style: 'max-width: 20rem;' %>
         </div>
         <div class="col-sm">
-            <h2><center><b>Right Ear Score</b></center></h2>
-            <h2><center><b><%= @dwt_test.right_score%>%</b></center></h2>
-            <h2><center><b>Right Ear Percentile</b></center></h2>
-            <h3><center><b><%= @dwt_test.right_percentile%></b></center></h3>
+            <h2 class="pt-5", style= 'padding-top:20px'><center><b>Right Ear Score</b></center></h2>
+            <h2 class="display-5", style= 'padding-top:7px'><center><b><%= @dwt_test.right_score%>%</b></center></h2>
+            <h2 class="pt-3", style= 'padding-top:17px'><center><b>Right Ear Percentile</b></center></h2>
+            <h3 class="display-5", style= 'padding-top:7px'><center><b><%= @dwt_test.right_percentile%></b></center></h3>
         </div>
     </div>
 <div>
 <!--Data stored outside of the columns with the image -->
 
-<h1><b><center>Dominant Ear</center></b></h1>
-<h2><b><center><%= @dwt_test.ear_advantage%></b></center></h2>
-<h1><b><center>Ear Advantage Score</center></b></h1>
-<h2><b><center><%= @dwt_test.ear_advantage_score%>%</b></center></h2>
-<h1><b><center>Ear Advantage Percentile</center></b></h1>
-<h2><b><center><%= @dwt_test.advantage_percentile%>%</b></center></h2>
+
+
 
 <hr>
 
-<h1><b>Interpretation of Test</b></h1>
+<h1><b>Interpretation of Test:  </b></h1>
 <h2><b><%= @dwt_test.interpretation%></b></h2>
 
 <hr>
 <!--Same data, just stored in exactly same format as is on normal test page, if that is easier for the clinician to use for review -->
 
-<h1><b><center>Scores and Data Presented in Tables Like Test Page</center></b></h1>
-<h3><b>Scores Table</b></h3>
+<h3 class="display-4 pl-2", style= 'padding-top:20px'><b>Scores Table</b></h3>
+<div class="row">
+<div class="col-md">
 <table class="table table-sm table-bordered m1-4" style="max-width: 25rem;">
     <thead>
         <tr>
@@ -67,8 +64,19 @@
         </tbody>
     </thead>
 </table>
+</div>
+    <div class="col-md">
+            <h1><b>Dominant Ear:    </b> <%= @dwt_test.ear_advantage%></h1>
+            <h2><b><center></b></center></h2>
+            <h1><b>Ear Advantage Score:     </b> <%= @dwt_test.ear_advantage_score%>%</h1>
+            <h2><b><center></b></center></h2>
+    </div>
+</div>
+
 <hr>
-<h3><b>Percentile Table</b></h3>
+<h3 class="display-4 pl-2", style= 'padding-top:20px'><b>Percentile Table</b></h3>
+<div class="row">
+<div class="col-md">
 <table class="table table-sm table-bordered m1-4" style="max-width: 25rem;">
     <thead>
         <tr>
@@ -85,6 +93,12 @@
         </tbody>
     </thead>
 </table>
+</div>
+
+    <div class="col-md">
+        <h1><b>Ear Advantage Percentile:    </b> <%= @dwt_test.advantage_percentile%>%</h1>
+    </div>
+</div>
 <hr>
 <!--this begins the backend functions to keep the test tables looking exactly as they do on the normal test page, these are taken straight from the test page so reivew that for how they work -->
 
@@ -139,3 +153,6 @@
     }
     });
 </script>
+</div>
+
+</body>

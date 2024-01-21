@@ -1,4 +1,4 @@
-<body class="bg-light center">
+<body id="defBG">
 
 <!-- A container for the form -->
 <div class="container p-5 my-3 w-100 border rounded bg-white border-0">
@@ -12,7 +12,7 @@
     <%= f.fields :client, model: @client do |client_fields| %>
 
     <!-- A submit button for the form -->
-    <%= f.submit "Save", class: "btn btn-block btn-secondary" %>
+    
 
     <!-- A row that contains two columns -->
     <div class="row">
@@ -97,7 +97,7 @@
 
  <!-- Emergency Contact Information form -->
     <div class="col-md-12">
-        <h2 class= "display-4", style= 'padding-bottom:20px' ><strong>Emergency Contact Info</strong></h2>
+        <h2 class= "display-4 pt-5", style= 'padding-bottom:20px' ><strong>Emergency Contact Info</strong></h2>
     </div>
 
     <div class="col-md-6">
@@ -135,6 +135,8 @@
             </div>
         </div>
     </div>
+
+    <%= f.submit "Save", class: "btn btn-primary rounded-pill btn-lg btn-block" %>
     <% end %>
 
 </div> <!-- This is the closing tag for the main "row" div -->

@@ -29,6 +29,10 @@
   .main-content {
     padding-top: 70px; 
   }
+  .flash-messages {
+  padding-top: 70px; /* Adjust this value based on the actual height of your navbar */
+}
+
 
   
   </style>
@@ -96,19 +100,22 @@
   </div>
 </nav>
 
-<% flash.each do |key, messages| %>
-  <% if messages.respond_to?(:each) %>
-    <% messages.each do |message| %>
+<div class="flash-messages">
+  <% flash.each do |key, messages| %>
+    <% if messages.respond_to?(:each) %>
+      <% messages.each do |message| %>
+        <div class="alert alert-<%= flash_message(key) %> fade show" role="alert">
+          <%= message %>
+        </div>
+      <% end %>
+    <% else %>
       <div class="alert alert-<%= flash_message(key) %> fade show" role="alert">
-        <%= message %>
+        <%= messages %>
       </div>
     <% end %>
-  <% else %>
-    <div class="alert alert-<%= flash_message(key) %> fade show" role="alert">
-      <%= messages %>
-    </div>
   <% end %>
-<% end %>
+</div>
+
 
 
 <%# all code for the calibration feature (inside modal made here) %>
@@ -156,7 +163,9 @@
   </div>
   
 </div>
+
     <main role="main" class="container main-content">
+    
       <%= yield %>
     </main>
   <!--  Web page scripts-->

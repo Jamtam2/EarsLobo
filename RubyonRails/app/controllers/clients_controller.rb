@@ -49,8 +49,8 @@ class ClientsController < ApplicationController
       @client = Client.new(client_params)
   
       if @client.save
-        flash[:success] = "client successfully added!"
-        redirect_to clients_path, notice: "client created successfully."
+        flash[:success] = "Client successfully created!"
+        redirect_to clients_path
       else
         flash.now[:error] = "client creation failed"
         render :new

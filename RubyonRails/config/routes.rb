@@ -31,12 +31,20 @@ Rails.application.routes.draw do
   get "/clinicians/new", to: "clinicians#new", as: 'new_clinician'
   get 'clinicians/:id/edit', to: 'clinicians#edit', as: 'edit_clinician'
 
+  post 'stripe_checkout', to: 'stripe_checkout#create'
+  get 'stripe_checkout', to: 'stripe_checkout#new'
+  post '/stripe_webhooks', to: 'webhooks#stripe'
+  get '/stripe_checkout/success', to: 'stripe_checkout#success', as: 'success_stripe_payment'
+  get '/stripe_checkout/failure', to: 'stripe_checkout#failure', as: 'failure_stripe_payment'
+
+  post '/webhooks/stripe', to: 'webhooks#stripe'
+
   get 'stripe_payment/initialize_payment'
   get 'stripe_payment/process_payment'
   get 'stripe_payment/apply_discount'
-  get 'stripe_payment/webhook'
-  get '/stripe_payment/success', to: 'stripe_payment#success', as: 'success_stripe_payment'
-  get '/stripe_payment/failure', to: 'stripe_payment#failure', as: 'failure_stripe_payment'
+  # get 'stripe_payment/webhook'
+  # get '/stripe_payment/success', to: 'stripe_payment#success', as: 'success_stripe_payment'
+  # get '/stripe_payment/failure', to: 'stripe_payment#failure', as: 'failure_stripe_payment'
 
   post '/stripe_payment/initialize_payment_setup', to: 'stripe_payment#initialize_payment_setup'
 

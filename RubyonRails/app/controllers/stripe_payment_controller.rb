@@ -62,7 +62,7 @@ end
     begin
       sig_header = require.env['HTTP_STRIPE_SIGNATURE']
       payload = request.body.read
-      secret = 'apikey'
+      secret = '[API KEY]'
       event = Stripe::Webhook.construct_event(payload, sig_header, secret)
     rescue JSON::ParseError, Stripe::SignatureVerificationError => e
     #   Invalid payload signature
@@ -74,18 +74,10 @@ end
   end
 
   def success
-    session_id = params[:session_id]
-    session = Stripe::Checkout::Session.retrieve(session_id)
-    setup_intent = Stripe::SetupIntent.retrieve(session.setup_intent)
-  
-    current_user.update(stripe_customer_id: setup_intent.customer)
-    redirect_to billing_dashboard_index_path, notice: "Payment method setup successful."
 
-    # Redirect or render success message
   end
 
   def failure
-    redirect_to billing_dashboard_index_path, alert: "Payment method setup failed."
   end
 
   private
@@ -97,5 +89,5 @@ end
   end
 
   def set_stripe_api_key
-    Stripe.api_key = 'apikey'
+    Stripe.api_key = '[API KEY]'
   end

@@ -8,7 +8,7 @@ class WebhooksController < ApplicationController
   
       begin
         event = Stripe::Webhook.construct_event(
-          payload, sig_header, '[WEBHOOK KEY]'
+          payload, sig_header, 'whsec_e99ecdf451f138850620d27b2c0427bd2272381ba3c32a3087524417ee77ceef'
         )
       rescue JSON::ParserError, Stripe::SignatureVerificationError => e
         head :bad_request
@@ -19,7 +19,11 @@ class WebhooksController < ApplicationController
       when 'checkout.session.completed'
         session = event['data']['object']
         handle_checkout_session(session)
+      when 'invoice.payment_succeeded'
+        invoice = event['data']['object']
+        handle_invoice_payment(invoice)
       end
+            
   
       head :ok
     end
@@ -50,5 +54,20 @@ class WebhooksController < ApplicationController
     def generate_license_key
       SecureRandom.hex(15) # Generates a random hex string
     end
+    
+    def handle_invoice_payment(invoice)
+        # Retrieve the Stripe customer ID from the invoice object
+        stripe_customer_id = invoice.customer
+      
+        # Find the associated license key by Stripe customer ID
+        key = Key.find_by(customer_id: stripe_customer_id)
+      
+        # Check if a key exists and extend its expiration if it does
+        if key && key.expiration
+          key.update(expiration: key.expiration + 1.year)
+        end
+      end
+      
+
   end
   

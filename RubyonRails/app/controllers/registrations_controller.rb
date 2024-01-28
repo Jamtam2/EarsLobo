@@ -74,7 +74,7 @@ class RegistrationsController < Devise::RegistrationsController
           redirect_to root_path, notice: 'Local moderator was successfully created set up 2FA auth.'
         else
           # Handler for save failures
-          flash[:alert] = 'An internal error occurred.'
+          flash[:alert] = 'An internal error occurred. Try a different email, or reinput your license key.'
           Rails.logger.info("DEBUG: Failed to save user: #{user.errors.full_messages}")
           redirect_to new_user_registration_path and return
         end

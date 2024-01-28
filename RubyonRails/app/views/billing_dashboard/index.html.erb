@@ -7,7 +7,6 @@
 <% if @current_month_tests.present? %>
   <h2>Current Month's Tests</h2>
   <%= render 'tests_table', tests: @current_month_tests %>
-  <h3>Total Cost for This Month: <%= @total_cost %></h3>
 
 <% end %>
 
@@ -16,7 +15,7 @@
   <%= render 'tests_table', tests: @previous_tests %>
 <% end %>
 
-<!-- Stripe payment setup section -->
+<%# <!-- Stripe payment setup section -->
 <div>
   <h2>Payment Method</h2>
   <button id="setup-button">Set up payment method</button>
@@ -59,4 +58,4 @@
  });
   }
 });
-</script>
+</script> %>

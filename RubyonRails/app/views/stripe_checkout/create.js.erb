@@ -1,7 +1,7 @@
 // app/views/stripe_checkout/create.js.erb
 
 // Check if session was successfully created
-var stripe = Stripe('pk_test_51OXZ5bEdjXO5pqxuSJlhPKeetS2Mps2Wa9dVb5MNAUSdo4C4HdC1PgtK7g5iHGtPibtQeXqiZdrwEz1PX5XTcvDa00SbAZ4Bh6'); // Replace with your actual publishable key
+var stripe = Stripe('[PUBLIC_KEY]'); // Replace with your actual publishable key
 <% if @session.present? %>
   // Use Stripe.js to redirect to the Checkout page
   stripe.redirectToCheckout({ sessionId: '<%= @session.id %>' }).then(function (result) {

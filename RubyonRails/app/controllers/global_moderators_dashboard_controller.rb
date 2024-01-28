@@ -11,59 +11,108 @@ class GlobalModeratorsDashboardController < ApplicationController
         @discounts = Discount.all.order(created_at: :desc)
 
     end
-  
+
     def create_discount
       discount = Discount.new(discount_params)
     
       if discount.save
-        # Create a Stripe coupon
-        stripe_coupon = Stripe::Coupon.create({
-          id: discount.code, # Use your discount code as the ID for easy reference
-          percent_off: discount.percentage_off,
-          duration: 'once', # or 'repeating' or 'forever', depending on your needs
-          # For 'repeating', you should also specify 'duration_in_months'
-        })
+        begin
+          # Check if the Stripe coupon exists
+          stripe_coupon = begin
+                            Stripe::Coupon.retrieve(discount.code)
+                          rescue Stripe::InvalidRequestError
+                            # Coupon does not exist, create a new one
+                            Stripe::Coupon.create({
+                              id: discount.code,
+                              percent_off: discount.percentage_off,
+                              duration: 'once',  # Adjust as needed
+                            })
+                          end
     
-        promotion_code = Stripe::PromotionCode.create({
-          coupon: stripe_coupon.id,
-          code: discount.code,  # This is the code users will enter at checkout
-        })
-        redirect_to global_moderators_dashboard_index_path, notice: 'Discount created successfully.'
+          # Handle promotion codes
+          promotion_codes = Stripe::PromotionCode.list({coupon: discount.code})
+          if promotion_codes.data.empty?
+            # No existing promotion codes, create a new one
+            Stripe::PromotionCode.create({
+              coupon: stripe_coupon.id,
+              code: discount.code,
+            })
+          else
+            # Reactivate existing promotion codes if any are inactive
+            promotion_codes.data.each do |promo_code|
+              Stripe::PromotionCode.update(promo_code.id, {active: true}) unless promo_code.active
+            end
+          end
+    
+          redirect_to global_moderators_dashboard_index_path, notice: 'Discount created/updated successfully.'
+        rescue Stripe::StripeError => e
+          # Rollback discount creation in your system if Stripe operation fails
+          discount.destroy
+          redirect_to global_moderators_dashboard_index_path, alert: "Stripe error: #{e.message}"
+        end
       else
         redirect_to global_moderators_dashboard_index_path, alert: discount.errors.full_messages.to_sentence
       end
-    rescue Stripe::StripeError => e
-      # Handle Stripe errors (e.g., invalid parameters or API errors)
-      redirect_to global_moderators_dashboard_index_path, alert: "Stripe error: #{e.message}"
     end
+    
+      
+    # def create_discount
+    #   discount = Discount.new(discount_params)
+    
+    #   if discount.save
+    #     # Create a Stripe coupon
+    #     stripe_coupon = Stripe::Coupon.create({
+    #       id: discount.code, # Use your discount code as the ID for easy reference
+    #       percent_off: discount.percentage_off,
+    #       duration: 'once', # or 'repeating' or 'forever', depending on your needs
+    #       # For 'repeating', you should also specify 'duration_in_months'
+    #     })
+    
+    #     promotion_code = Stripe::PromotionCode.create({
+    #       coupon: stripe_coupon.id,
+    #       code: discount.code,  # This is the code users will enter at checkout
+    #     })
+    #     redirect_to global_moderators_dashboard_index_path, notice: 'Discount created successfully.'
+    #   else
+    #     redirect_to global_moderators_dashboard_index_path, alert: discount.errors.full_messages.to_sentence
+    #   end
+    # rescue Stripe::StripeError => e
+    #   # Handle Stripe errors (e.g., invalid parameters or API errors)
+    #   redirect_to global_moderators_dashboard_index_path, alert: "Stripe error: #{e.message}"
+    # end
     
     
     def destroy_discount
       discount = Discount.find(params[:id])
     
       begin
-        # Find and deactivate the Stripe promotion code associated with the discount
+        # Attempt to find and deactivate the Stripe promotion code associated with the discount
         promotion_codes = Stripe::PromotionCode.list({coupon: discount.code})
         promotion_codes.data.each do |promo_code|
-          Stripe::PromotionCode.update(
-            promo_code.id,
-            {active: false}
-          )
+          Stripe::PromotionCode.update(promo_code.id, {active: false})
         end
-    
-        # After deactivating the promotion code, delete the discount from your database
-        discount.destroy
-        redirect_to global_moderators_dashboard_index_path, notice: 'Discount and associated Stripe promotion code deactivated successfully.'
+      rescue Stripe::InvalidRequestError => e
+        # If the specific error message indicates "No such coupon", proceed with deletion
+        if e.message.include?("No such coupon")
+          Rails.logger.info "Stripe coupon not found for discount code #{discount.code}, proceeding with deletion."
+        else
+          # If the error is due to another issue, re-raise it to be handled by the next rescue block
+          raise
+        end
       rescue Stripe::StripeError => e
-        # Handle Stripe errors (e.g., promotion code not found or API errors)
+        # Handle other Stripe errors without deleting the discount
         redirect_to global_moderators_dashboard_index_path, alert: "Stripe error: #{e.message}"
-      rescue
-        # Handle other errors, such as the discount not found in your database
-        redirect_to global_moderators_dashboard_index_path, alert: 'Error deleting discount.'
+        return  # Return early to avoid attempting to delete the discount
       end
+    
+      # Delete the discount from your database, regardless of Stripe coupon existence
+      discount.destroy
+      redirect_to global_moderators_dashboard_index_path, notice: 'Discount deleted successfully.'
+    rescue => e
+      # Handle other errors, such as the discount not found in your database
+      redirect_to global_moderators_dashboard_index_path, alert: 'Error deleting discount: #{e.message}'
     end
-    
-    
+        
 
     
       def create_key

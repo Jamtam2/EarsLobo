@@ -4,6 +4,7 @@
 #
 #  id                     :bigint           not null, primary key
 #  email                  :string           default(""), not null
+#  email_2fa_code         :string
 #  encrypted_password     :string           default(""), not null
 #  fname                  :string
 #  google_secret          :string
@@ -43,7 +44,9 @@ class User < ApplicationRecord
   acts_as_google_authenticated google_secret: :google_secret, mfa_secret: :mfa_secret
 
   belongs_to :tenant
-  enum role: { regular_user: 0, local_moderator: 1, global_moderator: 2, owner: 3 }
+
+  enum role: { regular_user: 0, location_moderator: 1, local_moderator: 2, global_moderator: 3, owner: 4 }
+  has_and_belongs_to_many :locations
 
   scope :local_moderators, -> { where(role: roles[:local_moderator]) }
 

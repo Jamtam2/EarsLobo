@@ -22,7 +22,11 @@
       <%= raw qr_code.as_svg(module_size: 5) %>
     </div>
   <% else %>
-    <p>Your Google Authenticator is already set up.</p>
+    <p class="pt-3 d-flex justify-content-center text-align: center", style= ' font-size:30px;'>Enter the code from the Google Authenticator App.</p>
+    <div class="pt-3 bt-4 d-flex justify-content-center">
+    <p class>Having trouble getting your code? Reset your QR code here.<p> <%= link_to 'Reset QR Code', reset_qr_code_user_mfa_sessions_path, method: :post, class: "btn btn-warning" %>
+    </div>
+
   <% end %>
 </div>
   <div class="mfa-container">

@@ -28,7 +28,13 @@ def create
   end
 
   
-
+  def reset_qr_code
+    user = current_user
+    user.reset_google_authenticator!
+    UserMailer.send_2fa_code(user, user.email_2fa_code).deliver_now
+    redirect_to enter_email_code_user_mfa_sessions_path, notice: 'A verification code has been sent to your email. Please enter the code; Your QR code will be reset on next login.'
+  end
+  
   
 
   def setup_google_auth

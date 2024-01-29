@@ -25,7 +25,7 @@
         </div>
         <!-- Buttons and dropdowns to add new tests -->
         <div class="col-sm-4 d-flex justify-content-center">
-          <button id="myBtn" class="btn btn-lg btn-block rounded-pill">Save</button>
+          <button id="myBtn" class=" btn-lg btn-block rounded-pill">Save</button>
         </div>
       </div>
       </div>
@@ -107,9 +107,9 @@
           <div class="col-md-12">
             <!-- Emergency contact information and buttons -->
            
-            <h2 class="display-5" style="padding-bottom:20px"><strong>Emergency Contact Info</strong></h2>
+            <h2 class="display-5 pt-4" style="padding-bottom:20px"><strong>Emergency Contact Info</strong></h2>
             
-            <%= link_to "Add Emergency Contact", new_client_emergency_contact_path(@client), class: "btn btn-primary rounded-pill btn-lg btn-block" %>
+            <%= link_to "Add Emergency Contact", new_client_emergency_contact_path(@client), class: "btn btn-primary rounded-pill btn-lg btn-block" %><br>
             <!-- Table of existing emergency contacts -->
             <div class="tableWrap">
             <table class="table table-striped ">
@@ -170,33 +170,33 @@
         <!-- Buttons and dropdowns to add new tests  -->
         <div class="container">
           <div class="row">
-              <button class="btn btn-primary rounded-pill btn-block btn-lg dropdown-toggle" type="button" data-toggle="dropdown" data-dropup-auto="false">
-                Add Evaluation
+          <div class="col-sm-4">
+              <button class="btn btn-primary rounded-pill btn-block btn-lg dropdown-toggle" type="button" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
+                Add DWT Test
                 </button>
               <div class="dropdown-menu">
-              <h5 class="dropdown-header">Add DWT Test</h5>
                 <a class="dropdown-item" href="<%= dwt_list1_client_dwt_tests_path(@client) %>">List 1</a>
                 <a class="dropdown-item" href="<%= dwt_list2_client_dwt_tests_path(@client) %>">List 2</a>
                 <a class="dropdown-item" href="<%= dwt_list3_client_dwt_tests_path(@client) %>">List 3</a>
                 <a class="dropdown-item" href="<%= dwt_list4_client_dwt_tests_path(@client) %>">List 4</a>
-       
-              <%# </div>
+              
+               </div>
               </div>
               <div class="col-sm-4">
-                <button class="btn btn-primary btn-block btn-lg dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-primary rounded-pill btn-block btn-lg dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Add RDDT Test
-                </button> %>
-                <h5 class="dropdown-header">Add RDDT Test</h5>
+                </button>
+                <div class="dropdown-menu">
                   <a class="dropdown-item" href="<%= rddt_list1_client_rddt_tests_path(@client) %>">List 1</a>
                   <a class="dropdown-item" href="<%= rddt_list2_client_rddt_tests_path(@client) %>">List 2</a>         
-                <%# </div>
+                </div>
               </div>
+
               <div class="col-sm-4">
-                <button class="btn btn-primary btn-block btn-lg dropdown-toggle" type="button" id="dropdownMenuButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-primary rounded-pill btn-block btn-lg dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Add DNW Test
                 </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3"> %>
-                <h5 class="dropdown-header">Add DNW Test</h5>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
                   <a class="dropdown-item" href="<%= dnw_list1_client_dnw_tests_path(@client) %>">List 1</a>
                   <a class="dropdown-item" href="<%= dnw_list2_client_dnw_tests_path(@client) %>">List 2</a>
                   <a class="dropdown-item" href="<%= dnw_list3_client_dnw_tests_path(@client) %>">List 3</a>
@@ -206,6 +206,8 @@
           </div>
         </div>
       </div>
+
+      <br>
     <!-- Table of existing tests -->
 
   <div class="tableWrap">
@@ -227,7 +229,7 @@
         <!-- Iterate over each test and display its details -->
         <% @client.dwt_tests.each do |dwt_test, index| %>
           <tr>
-            <td class="btn btn-link" data-toggle="collapse" href="#collapseExample<%index.to_s%>" role="link" aria-expanded="false" aria-controls="collapseExample">
+            <td class="btn btn-link">
             <%= link_to dwt_test.id, client_dwt_test_path(@client, dwt_test) %></td>
             
             <td><%= dwt_test.user.fname %> <%= dwt_test.user.lname %></td>
@@ -240,7 +242,7 @@
         <% end %>
         <% @client.dnw_tests.each do |dnw_test, index| %>
           <tr>
-            <td class="btn btn-link" data-toggle="collapse" href="#collapseExample<%index.to_s%>" role="link" aria-expanded="false" aria-controls="collapseExample">
+            <td class="btn btn-link">
             <%= link_to dnw_test.id, client_dnw_test_path(@client, dnw_test) %></td>
             
             <td><%= dnw_test.user.fname %> <%= dnw_test.user.lname %></td>
@@ -253,7 +255,7 @@
         <% end %>
         <% @client.rddt_tests.each do |rddt_test, index| %>
           <tr>
-            <td class="btn btn-link" data-toggle="collapse" href="#collapseExample<%index.to_s%>" role="link" aria-expanded="false" aria-controls="collapseExample">
+            <td class="btn btn-link" >
             <%= link_to rddt_test.id, client_rddt_test_path(@client, rddt_test) %></td>
             
             <td><%= rddt_test.user.fname %> <%= rddt_test.user.lname %></td>
@@ -267,23 +269,16 @@
       </tbody>
     </table>
   </div>
-<% @client.dwt_tests.each do |dwt_test, index| %>
-  <div class="collapse" id="collapseExample<%index.to_s%>">
-   <%= dwt_test.user.fname %>
+
+
+
+  <div class="col">
+  <h2 class="display-5 pt-5" style="padding-bottom:20px"><strong>Training</strong></h2>
+    <div class="card border-primary border-1">
+    <%= image_tag 'comingSoon.png', class: ' d-block m-auto' , style: ' max-width: 40rem;'%>
+    </div>
   </div>
-<% end %>
-<% @client.dnw_tests.each do |dnw_test, index| %>
-  <div class="collapse" id="collapseExample<%index.to_s%>">
-   <%= dnw_test.user.fname %>
-  </div>
-<% end %>
-<% @client.rddt_tests.each do |rddt_test, index| %>
-  <div class="collapse" id="collapseExample<%index.to_s%>">
-   <%= rddt_test.user.fname %>
-  </div>
-<% end %>
-    </table>
-  </div>
+
 
   
 </div>

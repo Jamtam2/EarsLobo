@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_19_233118) do
+ActiveRecord::Schema.define(version: 2024_01_29_084628) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,8 @@ ActiveRecord::Schema.define(version: 2024_01_19_233118) do
     t.integer "percentage_off"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "redemption_quantity"
+    t.date "expiration_date"
   end
 
   create_table "dnw_tests", force: :cascade do |t|

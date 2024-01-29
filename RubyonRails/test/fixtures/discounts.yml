@@ -2,11 +2,13 @@
 #
 # Table name: discounts
 #
-#  id             :bigint           not null, primary key
-#  code           :string
-#  percentage_off :integer
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
+#  id                  :bigint           not null, primary key
+#  code                :string
+#  expiration_date     :date
+#  percentage_off      :integer
+#  redemption_quantity :integer
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
 #
 
 one:

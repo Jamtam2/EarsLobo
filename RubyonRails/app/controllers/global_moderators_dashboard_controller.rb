@@ -26,6 +26,8 @@ class GlobalModeratorsDashboardController < ApplicationController
                               id: discount.code,
                               percent_off: discount.percentage_off,
                               duration: 'once',  # Adjust as needed
+                              max_redemptions: discount.redemption_quantity,
+                              redeem_by: discount.expiration_date
                             })
                           end
     

@@ -3,62 +3,129 @@
 <h2>Generated License Keys</h2>
 <table>
   <thead>
-    <tr>
-      <th>Activation Code</th>
-      <th>License Type</th>
-      <th>Expiration</th>
-    </tr>
+  <tr>
+    <th>Activation Code</th>
+    <th>License Type</th>
+    <th>Expiration</th>
+  </tr>
   </thead>
   <tbody>
-    <% @keys.each do |key| %>
-      <tr>
-        <td><%= key.activation_code %></td>
-        <td><%= key.license_type %></td>
-        <td><%= key.expiration %></td>
-      </tr>
-    <% end %>
+  <% @keys.each do |key| %>
+    <tr>
+      <td><%= key.activation_code %></td>
+      <td><%= key.license_type %></td>
+      <td><%= key.expiration %></td>
+    </tr>
+  <% end %>
   </tbody>
 </table>
+
 
 <h2>Generated Discount Codes</h2>
 <table>
   <thead>
-    <tr>
-      <th>Code</th>
-      <th>Percentage Off</th>
-      <th>Delete</th>
-    </tr>
+  <tr>
+    <th>Code</th>
+    <th>Percentage Off</th>
+    <th>Quantity</th>
+    <th>Expires In (Days)</th>
+    <th>Delete</th>
+  </tr>
   </thead>
   <tbody>
-    <% @discounts.each do |discount| %>
-      <tr>
-        <td><%= discount.code %></td>
-        <td><%= discount.percentage_off %></td>
-        <td>
+  <% @discounts.each do |discount| %>
+    <tr>
+      <td><%= discount.code %></td>
+      <td><%= discount.percentage_off %>%</td>
+      <td><%= discount.redemption_quantity %></td>
+      <td><%= (discount.expiration_date - Date.today).to_i %> days</td>
+      <td>
         <%= link_to 'Delete', destroy_discount_global_moderators_dashboard_path(id: discount.id), method: :delete, data: { confirm: 'Are you sure you want to delete this discount?' } %>
-        </td>
-
-      </tr>
-    <% end %>
+      </td>
+    </tr>
+  <% end %>
   </tbody>
 </table>
 
 
 
-<%= form_with url: create_discount_global_moderators_dashboard_index_path, method: :post do |form| %>
-  <%= form.label :code %>
-  <%= form.text_field :code, name: 'discount[code]' %>
 
-  <%= form.label :percentage_off %>
-  <%= form.number_field :percentage_off, name: 'discount[percentage_off]' %>
+<div class="form-container">
+  <!-- Form for Creating Discount -->
+  <%= form_with url: create_discount_global_moderators_dashboard_index_path, method: :post do |form| %>
+    <div class="form-row">
+      <div class="form-cell">
+        <%= form.label :code, 'Code' %>
+        <%= form.text_field :code, name: 'discount[code]' %>
+      </div>
+      <div class="form-cell">
+        <%= form.label :percentage_off, 'Percentage Off' %>
+        <%= form.number_field :percentage_off, name: 'discount[percentage_off]' %>
+      </div>
+      <div class="form-cell">
+        <%= form.label :redemption_quantity, 'Quantity' %>
+        <%= form.number_field :redemption_quantity, name: 'discount[redemption_quantity]' %>
+      </div>
+      <div class="form-cell">
+        <%= form.label :days_until_expiration, 'Expires In (Days)' %>
+        <%= form.number_field :days_until_expiration, name: 'discount[days_until_expiration]' %>
+      </div>
+    </div>
+    <div class="form-submit">
+      <%= form.submit "Create Discount" %>
+    </div>
+  <% end %>
 
-  <%= form.submit "Create Discount" %>
-<% end %>
 
+  <!-- Form for Creating License Key -->
+  <%= form_with url: create_key_global_moderators_dashboard_index_path, method: :post do |form| %>
+    <div class="form-row">
+      <div class="form-cell">
+        <%= form.label :license_type, 'License Type' %>
+        <%= form.select :license_type, [1, 2], {}, { name: 'key[license_type]' } %>
+      </div>
+    </div>
+    <div class="form-submit">
+      <%= form.submit "Create License Key" %>
+    </div>
+  <% end %>
+</div>
 
-<%= form_with url: create_key_global_moderators_dashboard_index_path, method: :post do |form| %>
-  <%= form.label :license_type %>
-  <%= form.select :license_type, [1,2], {}, { name: 'key[license_type]' } %>
+<!-- CSS Styles -->
+<style>
+    .form-container {
+        width: 100%;
+        margin-top: 20px;
+    }
 
-  <%= form.submit "Create License Key" %>
-<% end %>
+    .form-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .form-cell {
+        width: 20%; /* Adjust this percentage to match the width of the table columns */
+        padding-right: 10px;
+    }
+
+    .form-cell label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-submit {
+        text-align: right;
+    }
+
+    @media (max-width: 600px) {
+        .form-row {
+            flex-direction: column;
+        }
+
+        .form-cell {
+            width: 100%;
+            padding-right: 0;
+        }
+    }
+</style>

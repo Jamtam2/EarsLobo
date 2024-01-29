@@ -6,9 +6,9 @@
 <script src="https://js.stripe.com/v3/"></script>
 
 <script>
-  var stripe = Stripe('[PUBLIC_KEY]'); // Replace with your Stripe public key
+  let stripe = Stripe('[PUBLIC_KEY]'); // Replace with your Stripe public key
 
-  var checkoutButton = document.getElementById('checkout-button');
+  let checkoutButton = document.getElementById('checkout-button');
   checkoutButton.addEventListener('click', function () {
     fetch('/stripe_checkout', {
       method: 'POST',

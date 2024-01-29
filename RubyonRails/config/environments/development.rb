@@ -79,9 +79,8 @@ Rails.application.configure do
     address: 'smtp.gmail.com',
     port: 587,
     domain: 'gmail.com',
-    user_name: ENV['USERNAME'],
-    password: ENV['PASSWORD_TWO'],
-
+    user_name: 'dichoticdataresearch@gmail.com',
+    password: 'sqcngtxqyrjdbncm', # It's recommended to use credentials from environment variables or encrypted secrets
     authentication: 'plain',
     enable_starttls_auto: true
   }

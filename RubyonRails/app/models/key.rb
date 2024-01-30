@@ -18,7 +18,7 @@
 class Key < ApplicationRecord
     before_create :set_default_used
 
-    # belongs_to :user
+    has_many :locations
   
     private
   

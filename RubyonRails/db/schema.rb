@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_06_222813) do
+ActiveRecord::Schema.define(version: 2024_01_29_054646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -197,6 +197,22 @@ ActiveRecord::Schema.define(version: 2024_01_06_222813) do
     t.string "email"
   end
 
+  create_table "locations", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.bigint "key_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["key_id"], name: "index_locations_on_key_id"
+  end
+
+  create_table "locations_users", id: false, force: :cascade do |t|
+    t.bigint "location_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["location_id"], name: "index_locations_users_on_location_id"
+    t.index ["user_id"], name: "index_locations_users_on_user_id"
+  end
+
   create_table "rddt_tests", force: :cascade do |t|
     t.string "label"
     t.string "test_type"
@@ -299,6 +315,7 @@ ActiveRecord::Schema.define(version: 2024_01_06_222813) do
   add_foreign_key "dwt_tests", "users"
   add_foreign_key "emergency_contacts", "clients"
   add_foreign_key "emergency_contacts", "tenants"
+  add_foreign_key "locations", "keys"
   add_foreign_key "rddt_tests", "clients"
   add_foreign_key "rddt_tests", "tenants"
   add_foreign_key "rddt_tests", "users"

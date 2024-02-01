@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="csrf-token" content="<%= form_authenticity_token %>">
+
     <title>Dichotics Inc</title>
     <%= stylesheet_link_tag 'tabs', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'tabs', 'data-turbolinks-track': 'reload' %>

@@ -57,31 +57,7 @@ class GlobalModeratorsDashboardController < ApplicationController
       end
     end
     
-      
-    # def create_discount
-    #   discount = Discount.new(discount_params)
-    
-    #   if discount.save
-    #     # Create a Stripe coupon
-    #     stripe_coupon = Stripe::Coupon.create({
-    #       id: discount.code, # Use your discount code as the ID for easy reference
-    #       percent_off: discount.percentage_off,
-    #       duration: 'once', # or 'repeating' or 'forever', depending on your needs
-    #       # For 'repeating', you should also specify 'duration_in_months'
-    #     })
-    
-    #     promotion_code = Stripe::PromotionCode.create({
-    #       coupon: stripe_coupon.id,
-    #       code: discount.code,  # This is the code users will enter at checkout
-    #     })
-    #     redirect_to global_moderators_dashboard_index_path, notice: 'Discount created successfully.'
-    #   else
-    #     redirect_to global_moderators_dashboard_index_path, alert: discount.errors.full_messages.to_sentence
-    #   end
-    # rescue Stripe::StripeError => e
-    #   # Handle Stripe errors (e.g., invalid parameters or API errors)
-    #   redirect_to global_moderators_dashboard_index_path, alert: "Stripe error: #{e.message}"
-    # end
+
     
     
     def destroy_discount
@@ -160,6 +136,6 @@ class GlobalModeratorsDashboardController < ApplicationController
       # Logic to verify if the current user is a global moderator
     end
     def set_stripe_api_key
-      Stripe.api_key = '[API_KEY]'
+      Stripe.api_key = 'sk_test_51OXZ5bEdjXO5pqxuePO6DT10pZtW1Lr23vxeUFw1Kxwc6cucGy5RO9cBe7g7eGnNJSuf7Rwrbrg7eTNibZMWsmOR00ll5PAxeH'
   end
 end

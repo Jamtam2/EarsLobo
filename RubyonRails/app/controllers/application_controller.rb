@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   
   def root_directory
     if !user_signed_in?
-      allowed_paths = ["/users/sign_in", "/users/sign_up", "/users", "/stripe_checkout","/webhooks/stripe"] + mfa_setup_paths
+      allowed_paths = ["/users/sign_in", "/users/sign_up", "/users", "/stripe_checkout","/webhooks/stripe", "/users/password/new"] + mfa_setup_paths
       return if allowed_paths.include?(request.path)
 
       redirect_to new_user_session_path 

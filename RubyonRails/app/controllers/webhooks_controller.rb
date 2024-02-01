@@ -2,6 +2,8 @@ class WebhooksController < ApplicationController
     skip_before_action :verify_authenticity_token, only: [:stripe]
   
     def stripe
+      Rails.logger.info("DEBUG: GOT INSIDE WEBHOOK")
+
       payload = request.body.read
       sig_header = request.env['HTTP_STRIPE_SIGNATURE']
       event = nil
@@ -18,6 +20,8 @@ class WebhooksController < ApplicationController
       case event['type']
       when 'checkout.session.completed'
         session = event['data']['object']
+        Rails.logger.info("DEBUG: HERE'S THE SESSION: #{session}")
+
         handle_checkout_session(session)
       when 'invoice.payment_succeeded'
         invoice = event['data']['object']
@@ -34,7 +38,9 @@ class WebhooksController < ApplicationController
       # Retrieve customer email and other necessary information
       customer_email = session.customer_details.email
       stripe_customer_id = session.customer
-  
+      Rails.logger.info("DEBUG: IS THIS HOW WE CALL IT INSTEAD????: #{session['customer']}")
+      Rails.logger.info("DEBUG: OR IS THIS????: #{session.customer}")
+      
       # Generate a license key
       license_key = generate_license_key
   
@@ -42,10 +48,12 @@ class WebhooksController < ApplicationController
       Key.create!(
         activation_code: license_key,
         email: customer_email,
-        customer_id: stripe_customer_id,
+        customer_id: session.customer,
         expiration: 1.year.from_now,
         used: false
       )
+      # Rails.logger.info("DEBUG: stripe_customer_id before Stripe API call: #{key.customer_id}")
+
   
       # Send the license key to the user's email
       UserMailer.license_key_purchase(customer_email, license_key).deliver_now

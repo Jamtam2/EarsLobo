@@ -33,20 +33,11 @@ Rails.application.routes.draw do
 
   post 'stripe_checkout', to: 'stripe_checkout#create'
   get 'stripe_checkout', to: 'stripe_checkout#new'
-  post '/stripe_webhooks', to: 'webhooks#stripe'
   get '/stripe_checkout/success', to: 'stripe_checkout#success', as: 'success_stripe_payment'
   get '/stripe_checkout/failure', to: 'stripe_checkout#failure', as: 'failure_stripe_payment'
 
   post '/webhooks/stripe', to: 'webhooks#stripe'
 
-  get 'stripe_payment/initialize_payment'
-  get 'stripe_payment/process_payment'
-  get 'stripe_payment/apply_discount'
-  # get 'stripe_payment/webhook'
-  # get '/stripe_payment/success', to: 'stripe_payment#success', as: 'success_stripe_payment'
-  # get '/stripe_payment/failure', to: 'stripe_payment#failure', as: 'failure_stripe_payment'
-
-  post '/stripe_payment/initialize_payment_setup', to: 'stripe_payment#initialize_payment_setup'
 
   resources :global_moderators_dashboard, only: [:index] do
     post :create_discount, on: :collection
@@ -63,6 +54,9 @@ Rails.application.routes.draw do
   resources :inquiries, only: [:new, :create]
 
   resources :billing_dashboard, only: [:index]
+  # post '/change_payment_method', to: 'billing_dashboard#change_payment_method'
+  post 'customer_portal', to: 'billing_dashboard#customer_portal'
+
   # config/routes.rb
   resources :user_mfa_sessions do
     get 'setup_google_auth', on: :collection

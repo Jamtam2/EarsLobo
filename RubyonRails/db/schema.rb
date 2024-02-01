@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_29_084628) do
+ActiveRecord::Schema.define(version: 2024_02_01_023838) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -203,7 +203,7 @@ ActiveRecord::Schema.define(version: 2024_01_29_084628) do
     t.integer "license_type"
     t.datetime "expiration"
     t.integer "product_id"
-    t.integer "customer_id"
+    t.string "customer_id"
     t.integer "subscription_id"
     t.string "email"
     t.integer "created_by_id"

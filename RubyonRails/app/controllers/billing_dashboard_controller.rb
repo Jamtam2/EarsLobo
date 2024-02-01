@@ -2,6 +2,8 @@
 
 class BillingDashboardController < ApplicationController
     before_action :set_local_moderator
+    before_action :set_stripe_api_key, only: [:customer_portal]
+    
   
     def index
 
@@ -9,6 +11,23 @@ class BillingDashboardController < ApplicationController
       @previous_tests = previous_tests
 
     end
+
+    def customer_portal
+      # Ensure you have set the Stripe.api_key correctly
+      portal_session = Stripe::BillingPortal::Session.create({
+        customer: @user.stripe_customer_id,
+        # url: "https://billing.stripe.com/p/login/test_14k00d2Drdoic246oo",
+        return_url: billing_dashboard_index_url # You can set this to the URL you want users to return to after they're done in the portal
+      })
+  
+      redirect_to portal_session.url, allow_other_host: true
+    end
+  
+    
+    def set_stripe_api_key
+      Stripe.api_key = '[API_KEY]'
+  end
+
   
     private
   

@@ -33,7 +33,9 @@ class StripeCheckoutController < ApplicationController
         Stripe.api_key = 'sk_test_51OXZ5bEdjXO5pqxuePO6DT10pZtW1Lr23vxeUFw1Kxwc6cucGy5RO9cBe7g7eGnNJSuf7Rwrbrg7eTNibZMWsmOR00ll5PAxeH'
     end
     def success
-        # Redirect or render success message
+      flash[:notice] = 'Please check your email for your verification key.'
+
+      # Redirect or render success message
       end  
     def failure
         redirect_to sign_in, flash[:failure] = "Failed to complete transaction."

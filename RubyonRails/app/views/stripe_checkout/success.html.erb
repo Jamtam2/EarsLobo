@@ -1,5 +1,10 @@
-<%# <h1>StripePayment#success</h1>
-<p>Find me in app/views/stripe_payment/success.html.erb</p> %>
+<!-- app/views/stripe_checkout/success.html.erb -->
 
-<h1>Payment Successful</h1>
-<p>Your payment was processed successfully. Please check your email.</p>
+<h1>Success!</h1>
+<p>Your action was successful. You will be redirected shortly.</p>
+
+<script type="text/javascript">
+  setTimeout(function() {
+    window.location = '/users/sign_up';
+  }, 3000); // 3000 milliseconds = 3 seconds
+</script>

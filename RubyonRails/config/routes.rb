@@ -37,7 +37,7 @@ Rails.application.routes.draw do
   # You might also need to define the create route if not already done
   post 'user_mfa_sessions', to: 'user_mfa_sessions#create', as: :user_mfa_session
 
-  resources :users, only: [:index, :new, :create]
+  resources :users
   resources :inquiries, only: [:new, :create]
 
 

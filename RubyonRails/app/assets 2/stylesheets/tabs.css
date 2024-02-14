@@ -1,0 +1,29 @@
+.tab {
+    display: inline-block;
+    padding: 10px 15px;
+    cursor: pointer;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    margin-right: -1px;
+  }
+  
+  .tab:hover {
+    background-color: #ddd;
+  }
+  
+  .tab.active {
+    background-color: #fff;
+    border-bottom: none;
+  }
+  
+  .tab-content {
+    display: none;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-top: none;
+  }
+  
+  .tab-content.active {
+    display: block;
+  }
+  

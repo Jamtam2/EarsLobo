@@ -29,7 +29,8 @@ class RegistrationsController < Devise::RegistrationsController
     user.role = :regular_user
     local_moderator = User.find_by(role: User.roles[:local_moderator], moderator_code: params[:user][:moderator_code])
     # Validate the registration key for security purposes.
-    key = Key.find_by(activation_code: user.registration_key)
+    key = Key.find_by(activation_code: user.verification_key)
+    Rails.logger.debug "Params: #{params.inspect}"
 
     if local_moderator.present? && valid_registration_key?(key)
       # The user is associated with the tenant of the local moderator whose code was entered.
@@ -50,6 +51,10 @@ class RegistrationsController < Devise::RegistrationsController
       flash[:alert] = 'Invalid moderator code or registration key.'
       redirect_to new_user_registration_path and return
     end
+  end
+
+  def create_location_moderator
+
   end
 
   # create_local_moderator: Creates a local moderator account. Requires a
@@ -89,6 +94,7 @@ class RegistrationsController < Devise::RegistrationsController
   private
 
   def valid_registration_key?(key)
+    # puts "Key validity check: #{key.inspect}"
     key.present? && !key.used && (key.expiration.nil? || key.expiration > Time.current)
   end
 
@@ -97,7 +103,9 @@ class RegistrationsController < Devise::RegistrationsController
   def sign_up_params
     allowed_params = [:fname, :lname, :email, :password, :password_confirmation, :verification_key]
     allowed_params << :moderator_code if params[:account_type] == 'regular_user'
+    Rails.logger.debug "Account Type: #{params[:account_type]}"
     params.require(:user).permit(allowed_params)
   end
+
 
 end

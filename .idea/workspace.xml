@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="85f016a5-798f-4510-a7b1-3073eef6eab6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/assets/javascripts/accountSignupButtons.js" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/assets/javascripts/accountSignupButtons.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RubyonRails/app/controllers/registrations_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/controllers/registrations_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/views/devise/registrations/new.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/views/devise/registrations/new.html.erb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,7 +175,7 @@
       <workItem from="1706484005263" duration="9891000" />
       <workItem from="1707091316149" duration="1328000" />
       <workItem from="1707682184550" duration="17335000" />
-      <workItem from="1708058415048" duration="2473000" />
+      <workItem from="1708058415048" duration="4942000" />
     </task>
     <servers />
   </component>

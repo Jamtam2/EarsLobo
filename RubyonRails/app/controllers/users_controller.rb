@@ -93,4 +93,26 @@ class UsersController < ApplicationController
   #     flash[:alert] = "Only location moderators can be assigned."
   #   end
   # end
-end
+  #rewrite by L
+  def assign_location_moderator
+    @user = User.find(params[:id])
+    #stores/finds location id for ref
+    @location = Location.find(params[:location_id])
+  
+    # checks to see if the current user is allowed to assign location moderators
+    unless current_user.local_moderator? || current_user.global_moderator?
+      flash[:alert] = "You do not have the required permissions to assign a local moderator."
+      #can be changed to a more specific redirect after error here
+      redirect_to(root_path) and return
+    end
+  
+    if @user.role == "location_moderator"
+      # adds the user to the list of location moderators for that location unless they are already on the list 
+      @location.users << @user unless @location.users.include?(@user)
+      flash[:notice] = "Location moderator assigned successfully."
+    else
+      flash[:alert] = "Only users with the role of location moderator can be assigned."
+    end
+  end
+  
+end>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

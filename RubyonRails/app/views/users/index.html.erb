@@ -12,6 +12,13 @@
         <% end %>
       </div>
 
+      <!-- Add Location button for local moderators only -->
+      <% if current_user.local_moderator? %>
+        <div class="col-md-6 text-right"> 
+          <%= link_to "Add New Location", new_location_path, class: "btn btn-primary rounded-pill ml-auto" %>
+        </div>
+      <% end %>
+
       <!-- Display local moderator unique generated code. -->
       <% if current_user.local_moderator? %>
         <div class="col-md-6 text-right">

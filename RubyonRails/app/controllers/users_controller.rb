@@ -93,4 +93,5 @@ class UsersController < ApplicationController
   #     flash[:alert] = "Only location moderators can be assigned."
   #   end
   # end
+
 end

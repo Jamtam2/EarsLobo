@@ -80,4 +80,10 @@ Rails.application.routes.draw do
     end
   end
 
+  #route to create new location
+  #get '/users/new_location', to: 'users#new_location', as: 'new_location'
+  #post '/users/create_location', to: 'users#create_location', as: 'create_location'
+
+  resources :locations, only: [:new, :create]
+
 end

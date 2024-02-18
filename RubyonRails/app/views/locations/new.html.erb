@@ -1,0 +1,17 @@
+<h1>New Location</h1>
+
+<%= form_with(model: @location, url: locations_path, method: :post) do |form| %>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address %>
+    <%= form.text_field :address %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Create Location', class: 'btn btn-primary' %>
+  </div>
+<% end %>

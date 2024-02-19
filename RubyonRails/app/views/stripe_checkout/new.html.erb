@@ -1,0 +1,31 @@
+<!-- Add a button to initiate checkout -->
+<%# <button id="checkout-button">Pay $4500</button> %>
+<%= button_to 'Pay $4500', stripe_checkout_path, method: :post, id: 'checkout-button', class: 'btn btn-primary', remote: true %>
+
+<!-- Include Stripe.js -->
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+  var stripe = Stripe('[PUBLIC_KEY]'); // Replace with your Stripe public key
+  const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  let checkoutButton = document.getElementById('checkout-button');
+  checkoutButton.addEventListener('click', function () {
+    fetch('/stripe_checkout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken // Include the CSRF token in the request header
+      },
+      credentials: 'same-origin' // Ensure cookies (including CSRF token) are sent with the request
+    })
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (session) {
+      return stripe.redirectToCheckout({ sessionId: session.id });
+    })
+    .catch(function (error) {
+      console.error('Error:', error);
+    });
+  });
+</script>

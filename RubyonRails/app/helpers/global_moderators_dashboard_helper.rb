@@ -1,0 +1,2 @@
+module GlobalModeratorsDashboardHelper
+end

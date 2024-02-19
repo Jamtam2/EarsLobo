@@ -1,0 +1,19 @@
+<!-- app/views/billing_dashboard/_tests_table.html.erb -->
+
+<table>
+  <thead>
+    <tr>
+      <th>Test Type</th>
+      <th>Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% tests.each do |test_type, test_records| %>
+      <tr>
+        <td><%=test_type.to_s.humanize %></td>
+        <td><%= test_records.count %></td>
+    </tr>
+    <% end %>
+ </tbody>
+</table>
+

@@ -14,6 +14,7 @@
 #  left_percentile          :string
 #  left_score               :float
 #  notes                    :text
+#  price                    :decimal(10, 2)
 #  right_percentile         :string
 #  right_score              :float
 #  test_type                :string

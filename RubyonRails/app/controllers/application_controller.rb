@@ -17,17 +17,19 @@ class ApplicationController < ActionController::Base
   
   def root_directory
     if !user_signed_in?
-      if request.path == "/users/sign_in" || request.path == "/users/sign_up" || request.path == "/users" || mfa_setup_paths.include?(request.path)
-        return
-      else
-        redirect_to new_user_session_path 
-      end
+      allowed_paths = ["/users/sign_in", "/users/sign_up", "/users", "/stripe_checkout","/webhooks/stripe", "/users/password/new"] + mfa_setup_paths
+      return if allowed_paths.include?(request.path)
+
+      redirect_to new_user_session_path 
     end
   end
   private
 
   def check_mfa
     # Bypass MFA check in development
+    if Rails.env.development?
+      return
+    end
     
     # TODO: Remove this when moving to production
     # if Rails.env.development?
@@ -107,7 +109,9 @@ class ApplicationController < ActionController::Base
       setup_google_auth_user_mfa_sessions_path,
       setup_email_auth_user_mfa_sessions_path,
       enter_email_code_user_mfa_sessions_path,
-      verify_email_2fa_user_mfa_sessions_path
+      verify_email_2fa_user_mfa_sessions_path,
+      "/stripe_checkout",
+      "/stripe_checkout/success",
     ]
   end
 

@@ -10,4 +10,10 @@ class UserMailer < ApplicationMailer
     @code = code
     mail(to: @user.email, subject: 'Your 2FA Code')
   end
+
+  def license_key_purchase(user_email, license_key)
+    @license_key = license_key
+    mail(to: user_email, subject: 'Your License Key')
+  end
+
 end

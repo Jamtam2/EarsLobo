@@ -6,7 +6,7 @@
 <script src="https://js.stripe.com/v3/"></script>
 
 <script>
-  var stripe = Stripe('pk_test_51OXZ5bEdjXO5pqxuSJlhPKeetS2Mps2Wa9dVb5MNAUSdo4C4HdC1PgtK7g5iHGtPibtQeXqiZdrwEz1PX5XTcvDa00SbAZ4Bh6'); // Replace with your Stripe public key
+  var stripe = Stripe('[PUBLIC_KEY]'); // Replace with your Stripe public key
   const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
   let checkoutButton = document.getElementById('checkout-button');
   checkoutButton.addEventListener('click', function () {

@@ -136,6 +136,6 @@ class GlobalModeratorsDashboardController < ApplicationController
       # Logic to verify if the current user is a global moderator
     end
     def set_stripe_api_key
-      Stripe.api_key = 'sk_test_51OXZ5bEdjXO5pqxuePO6DT10pZtW1Lr23vxeUFw1Kxwc6cucGy5RO9cBe7g7eGnNJSuf7Rwrbrg7eTNibZMWsmOR00ll5PAxeH'
+      Stripe.api_key = '[API_KEY]'
   end
 end

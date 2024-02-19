@@ -25,7 +25,7 @@ class BillingDashboardController < ApplicationController
   
     
     def set_stripe_api_key
-      Stripe.api_key = '[API_KEY]'
+      Stripe.api_key = ENV['API_KEY_TEST']
   end
 
   

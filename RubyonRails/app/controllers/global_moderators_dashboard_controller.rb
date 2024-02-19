@@ -13,8 +13,15 @@ class GlobalModeratorsDashboardController < ApplicationController
     end
 
     def create_discount
-      discount = Discount.new(discount_params)
-    
+
+      days_until_expiration = params[:discount][:days_until_expiration].to_i
+      expiration_date = Date.today + days_until_expiration.days
+      # Merge calculated expiration_date into discount_params
+      discount_params_with_date = discount_params.merge(expiration_date: expiration_date)
+
+      # Create a new Discount object with the merged parameters
+      discount = Discount.new(discount_params_with_date)
+      
       if discount.save
         begin
           # Check if the Stripe coupon exists
@@ -27,7 +34,7 @@ class GlobalModeratorsDashboardController < ApplicationController
                               percent_off: discount.percentage_off,
                               duration: 'once',  # Adjust as needed
                               max_redemptions: discount.redemption_quantity,
-                              redeem_by: discount.expiration_date
+                              redeem_by: discount.expiration_date.to_time.to_i
                             })
                           end
     
@@ -112,8 +119,10 @@ class GlobalModeratorsDashboardController < ApplicationController
     private
 
     def discount_params
-    params.require(:discount).permit(:code, :percentage_off)
+      params.require(:discount).permit(:code, :percentage_off, :redemption_quantity, :days_until_expiration)
     end
+    
+    
 
     def key_params
     params.require(:key).permit(:license_type)
@@ -136,6 +145,6 @@ class GlobalModeratorsDashboardController < ApplicationController
       # Logic to verify if the current user is a global moderator
     end
     def set_stripe_api_key
-      Stripe.api_key = '[API_KEY]'
+      Stripe.api_key = ENV['API_KEY_TEST']
   end
 end

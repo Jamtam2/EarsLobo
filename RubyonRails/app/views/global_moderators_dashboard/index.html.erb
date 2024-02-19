@@ -69,11 +69,13 @@
       <div class="form-cell">
         <%= form.label :days_until_expiration, 'Expires In (Days)' %>
         <%= form.number_field :days_until_expiration, name: 'discount[days_until_expiration]' %>
+
       </div>
     </div>
     <div class="form-submit">
       <%= form.submit "Create Discount" %>
     </div>
+
   <% end %>
 
 

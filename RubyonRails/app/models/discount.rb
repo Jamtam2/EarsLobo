@@ -18,6 +18,7 @@ class Discount < ApplicationRecord
     validates :redemption_quantity, numericality: { only_integer: true, greater_than: 0 }
     validates :days_until_expiration, numericality: { only_integer: true, greater_than: 0 }, on: :create
     before_save :set_expiration_date, if: -> { days_until_expiration.present? }
+    validates :expiration_date, presence: true
 
     private
 

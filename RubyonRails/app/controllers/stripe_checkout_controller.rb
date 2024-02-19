@@ -11,7 +11,7 @@ class StripeCheckoutController < ApplicationController
       @session = Stripe::Checkout::Session.create({
         payment_method_types: ['card'],
         line_items: [{
-          price: '[PRICE_KEY]', # Replace with the actual price ID from Stripe
+          price: ENV['PRICE_ID'], # Replace with the actual price ID from Stripe
           quantity: 1,
         }],
         mode: 'subscription',
@@ -30,7 +30,7 @@ class StripeCheckoutController < ApplicationController
     
 
     def set_stripe_api_key
-        Stripe.api_key = '[API_KEY]'
+        Stripe.api_key = ENV['API_KEY_TEST']
     end
     def success
       flash[:notice] = 'Please check your email for your verification key.'

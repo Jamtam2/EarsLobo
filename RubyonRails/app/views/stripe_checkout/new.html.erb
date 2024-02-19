@@ -1,14 +1,21 @@
 <!-- Add a button to initiate checkout -->
 <%# <button id="checkout-button">Pay $4500</button> %>
-<%= button_to 'Pay $4500', stripe_checkout_path, method: :post, id: 'checkout-button', class: 'btn btn-primary', remote: true %>
-
+<%= button_to 'Pay $4500', stripe_checkout_path, method: :post, id: 'checkout-button', class: 'btn btn-primary', remote: true, data: { stripe_public_key: ENV['PUBLIC_KEY_TEST'] } %>
 <!-- Include Stripe.js -->
 <script src="https://js.stripe.com/v3/"></script>
 
 <script>
-  var stripe = Stripe('[PUBLIC_KEY]'); // Replace with your Stripe public key
-  const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  // First, find the button by its ID
   let checkoutButton = document.getElementById('checkout-button');
+
+  // Then, retrieve the public key from the data attribute of the button
+  var publicKeyTest = checkoutButton.getAttribute('data-stripe-public-key');
+
+  // Initialize Stripe with the public key
+  var stripe = Stripe(publicKeyTest);
+
+  const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  
   checkoutButton.addEventListener('click', function () {
     fetch('/stripe_checkout', {
       method: 'POST',

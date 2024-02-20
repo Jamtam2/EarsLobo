@@ -12,18 +12,28 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: 'main'  # Optionally, you can remove this line to checkout the default branch
+          fetch-depth: 0  # Ensure the entire history is fetched
+
+      - name: Prepare for moving contents
+        run: |
+          # Backup non-empty directories that might cause issues
+          mkdir -p backup/log backup/tmp
+          mv log/* backup/log/ || true  # Ignore errors if directories are empty
+          mv tmp/* backup/tmp/ || true
 
       - name: Move RubyonRails contents
         run: |
-          mkdir temp_ruby_on_rails
-          mv RubyonRails/* temp_ruby_on_rails/
-          git rm -r RubyonRails/
-          mv temp_ruby_on_rails/* .
-          rmdir temp_ruby_on_rails
+          # Remove the directories to allow moving new ones in place
+          rm -rf log tmp
+          # Move contents from RubyonRails to root
+          mv RubyonRails/* .
+          # Clean up
+          rm -rf RubyonRails
 
       - name: Commit and push changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add .
+          # Only proceed if there are changes
           git diff --quiet && git diff --staged --quiet || (git commit -m "Move RubyonRails contents to root of master branch" && git push origin HEAD:master)

@@ -1,0 +1,30 @@
+name: Move RubyonRails Contents to Master
+
+on:
+  workflow_dispatch:
+
+jobs:
+  move_contents:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          ref: 'main'  # Optionally, you can remove this line to checkout the default branch
+
+      - name: Move RubyonRails contents
+        run: |
+          mkdir temp_ruby_on_rails
+          mv RubyonRails/* temp_ruby_on_rails/
+          git rm -r RubyonRails/
+          mv temp_ruby_on_rails/* .
+          rmdir temp_ruby_on_rails
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Move RubyonRails contents to root of master branch" || echo "No changes to commit"
+          git push origin HEAD:master

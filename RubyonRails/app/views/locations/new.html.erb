@@ -1,17 +1,28 @@
 <h1>New Location</h1>
 
-<%= form_with(model: @location, url: locations_path, method: :post) do |form| %>
+<%= form_with(model: @location, url: locations_path, method: :post, local: true) do |form| %>
   <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= label_tag :name, 'Name' %>
+    <%= text_field_tag 'location[name]' %>
   </div>
 
   <div class="field">
-    <%= form.label :address %>
-    <%= form.text_field :address %>
+    <%= label_tag :address, 'Address' %>
+    <%= text_field_tag 'location[address]' %>
+  </div>
+
+  <div class="field">
+    <%= label_tag 'location[user_ids][]', 'Select Users' %>
+    <% @users.each do |user| %>
+      <div class="checkbox">
+        <%= check_box_tag 'location[user_ids][]', user.id %>
+        <%= label_tag "location[user_ids][]", "#{user.fname} #{user.lname}" %>
+      </div>
+    <% end %>
   </div>
 
   <div class="actions">
-    <%= form.submit 'Create Location', class: 'btn btn-primary' %>
+    <%= form.submit 'Create Location', class: 'btn btn-primary btn-block' %>
   </div>
+
 <% end %>

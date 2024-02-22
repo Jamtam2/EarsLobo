@@ -50,17 +50,23 @@
           <th>Email</th>
           <th>First Name</th>
           <th>Last Name</th>
+          <th>Location</th>
         </tr>
         </thead>
         <tbody>
         <% @users.each do |user| %>
           <% if user.tenant_id == current_user.tenant_id %>
             <tr>
-<!--              Change the displayed role, location can be found here helpers/sign_up_helper.rb -->
+<!--  Change the displayed role, location can be found here helpers/sign_up_helper.rb -->
               <td><%= display_role(user.role) %></td>
               <td><%= user.email %></td>
               <td><%= user.fname %></td>
               <td><%= user.lname %></td>
+              <td>
+                <% user.locations.each do |location| %>
+                  <%= location.name %><br>
+                <% end %>
+              </td>
             </tr>
           <% end %>
         <% end %>

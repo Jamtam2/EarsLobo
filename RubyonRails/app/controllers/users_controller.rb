@@ -52,12 +52,15 @@ class UsersController < ApplicationController
       render :new
     end
   end
+  def show
+    @user = User.find(params[:id])
+    render :show
+  end
   def destroy
-    debugger
     @user = User.find(params[:id])
     @user.destroy
-
-    redirect_to clients_url, notice: "client was successfully deleted."
+  
+    redirect_to users_path, notice: "User was successfully deleted."
   end
 
   private

@@ -79,6 +79,7 @@ class ClientsController < ApplicationController
             redirect_to edit_client_path(@client), notice: "client was not updated."
         end
     end
+   
     
     def destroy
       @client = Client.find(params[:id])

@@ -56,7 +56,7 @@
               <td><%= user.fname %></td>
               <td><%= user.lname %></td>
               <td>
-                  <%= link_to users_path(user), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                  <%= button_to user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-secondary btn-sm', form: { class: 'd-inline' } do %>
                     <%= image_tag 'delete_icon.png' , alt: 'Delete' , width: 20 %>
                       <% end %>
                 </td>
@@ -65,7 +65,6 @@
         <% end %>
         </tbody>
       </table>
-      <%= link_to 'Add New Location Mod', new_user_path %>
     <% end %>
   </div>
 </body>

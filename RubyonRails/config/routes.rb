@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
 
   
-  get 'users', to:'users#index'
+ # get 'users', to:'users#index'
   get 'combined', to: 'clients#combined'
 
   get 'clinicians', to:'clinicians#index'

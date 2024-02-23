@@ -1,0 +1,19 @@
+<h1>Clients for Location Moderator: <%= @location_moderator.name %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      # ... other client details ...
+    </tr>
+  </thead>
+  <tbody>
+    <% @clients.each do |client| %>
+      <tr>
+        <td><%= client.name %></td>
+        <td><%= client.email %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

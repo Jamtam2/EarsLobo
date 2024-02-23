@@ -39,6 +39,9 @@ Rails.application.routes.draw do
 
   resources :users
   resources :inquiries, only: [:new, :create]
+  resources :location_moderators do
+    resources :clients, only: [:index]
+  end
 
 
   # config/routes.rb

@@ -56,6 +56,12 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     render :show
   end
+  def location_moderator_clients
+    @location_moderator = LocationModerator.find(params[:id])
+    # Retrieve clients for the location moderator and current user's tenant
+    @clients = @location_moderator.clients.where(tenant_id: client.tenant_id)
+    render :location_moderator_clients
+  end
   def destroy
     @user = User.find(params[:id])
     @user.destroy
@@ -72,7 +78,7 @@ class UsersController < ApplicationController
   private
 
   def check_permission
-    unless current_user.local_moderator? || current_user.global_moderator?
+    unless current_user.local_moderator? || current_user.global_moderator? || action_name == 'location_moderator_clients'
       redirect_to users_path, alert: "You don't have permission to perform this action."
     end
   end

@@ -1,0 +1,31 @@
+Access to git repository
+Can we clone it?
+More details about the app.
+More details about what we will implement. 
+Features
+Functionalities
+Goals
+User stories
+Clarify communication method.
+Future plans that might impact development
+Contract
+
+LJ - frontend
+Sunny - backend
+
+Check with them before design implemented
+
+Work will normally be with local
+
+Speech recognition automatically selects one of the two word options
+
+Find pre-trained model and test it
+Make sure runs on ruby 3.1.1
+
+Results are saved
+
+Ask for words and recordings
+
+After buttons are automatically clicked they are handled already, no storing needed
+
+Speech recognition should be trained for the child then used

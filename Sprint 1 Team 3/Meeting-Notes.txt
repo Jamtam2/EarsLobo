@@ -1,0 +1,14 @@
+
+# Meeting Agenda
+
+1. Access to git repository
+2. Can we clone it? 
+3. More details about the app. 
+4. More details about what we will implement. 
+    1. Features
+    2. Functionalities
+    3. Goals
+5. User stories
+6. Clarify communication method.
+7. Future plans that might impact development
+8. Contract

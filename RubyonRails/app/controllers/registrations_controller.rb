@@ -31,16 +31,16 @@ class RegistrationsController < Devise::RegistrationsController
     user.role = :regular_user
     local_moderator = User.find_by(role: User.roles[:local_moderator], moderator_code: params[:user][:moderator_code])
     # Validate the registration key for security purposes.
-    key = Key.find_by(activation_code: user.verification_key)
+    # key = Key.find_by(activation_code: user.verification_key)
     # Rails.logger.debug "Params: #{params.inspect}"
 
-    if local_moderator.present? && valid_registration_key?(key)
+    if local_moderator.present?
       # The user is associated with the tenant of the local moderator whose code was entered.
       user.tenant_id = local_moderator.tenant_id
 
       # Check if user record was saved before proceeding.
       if user.save
-        key.update(used: true)
+        # key.update(used: true)
         flash[:notice] = 'Regular user was successfully created.'
         sign_in(:user, user)
         redirect_to root_path, notice: 'User was successfully created set up 2FA auth.'

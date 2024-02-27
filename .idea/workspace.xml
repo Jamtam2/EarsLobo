@@ -8,6 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RubyonRails/app/assets/javascripts/accountSignupButtons.js" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/assets/javascripts/accountSignupButtons.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RubyonRails/app/controllers/registrations_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/controllers/registrations_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/helpers/sign_up_helper.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/helpers/sign_up_helper.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RubyonRails/app/views/devise/registrations/new.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/views/devise/registrations/new.html.erb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,23 +30,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;impl__enterprise&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/hunterjackson/Documents/Dead Project UofM/EarsLobo&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;ruby.rails.projectView.checked&quot;: &quot;true&quot;,
-    &quot;ruby.structure.view.model.defaults.configured&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "impl__enterprise",
+    "last_opened_file_path": "/Users/hunterjackson/Documents/Dead Project UofM/EarsLobo",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "ruby.rails.projectView.checked": "true",
+    "ruby.structure.view.model.defaults.configured": "true",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RubyModuleManagerSettings">
     <option name="blackListedRootsPaths">
       <list>
@@ -175,7 +176,11 @@
       <workItem from="1706484005263" duration="9891000" />
       <workItem from="1707091316149" duration="1328000" />
       <workItem from="1707682184550" duration="17335000" />
-      <workItem from="1708058415048" duration="4942000" />
+      <workItem from="1708058415048" duration="5558000" />
+      <workItem from="1708098787220" duration="1038000" />
+      <workItem from="1708131839555" duration="2713000" />
+      <workItem from="1708733181694" duration="3937000" />
+      <workItem from="1708990491104" duration="3840000" />
     </task>
     <servers />
   </component>

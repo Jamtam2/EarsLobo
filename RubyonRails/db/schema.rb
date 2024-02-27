@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_06_222813) do
+ActiveRecord::Schema.define(version: 2024_02_01_023838) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,15 @@ ActiveRecord::Schema.define(version: 2024_01_06_222813) do
     t.index ["tenant_id"], name: "index_clients_on_tenant_id"
   end
 
+  create_table "discounts", force: :cascade do |t|
+    t.string "code"
+    t.integer "percentage_off"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "redemption_quantity"
+    t.date "expiration_date"
+  end
+
   create_table "dnw_tests", force: :cascade do |t|
     t.string "label"
     t.string "test_type"
@@ -93,6 +102,7 @@ ActiveRecord::Schema.define(version: 2024_01_06_222813) do
     t.bigint "user_id", null: false
     t.string "encrypted_client_name"
     t.string "encrypted_client_name_iv"
+    t.decimal "price", precision: 10, scale: 2
     t.index ["client_id"], name: "index_dnw_tests_on_client_id"
     t.index ["tenant_id"], name: "index_dnw_tests_on_tenant_id"
     t.index ["user_id"], name: "index_dnw_tests_on_user_id"
@@ -118,6 +128,7 @@ ActiveRecord::Schema.define(version: 2024_01_06_222813) do
     t.string "interpretation"
     t.string "encrypted_client_name"
     t.string "encrypted_client_name_iv"
+    t.decimal "price", precision: 10, scale: 2
     t.index ["client_id"], name: "index_dwt_tests_on_client_id"
     t.index ["tenant_id"], name: "index_dwt_tests_on_tenant_id"
     t.index ["user_id"], name: "index_dwt_tests_on_user_id"
@@ -189,9 +200,23 @@ ActiveRecord::Schema.define(version: 2024_01_06_222813) do
     t.integer "license_type"
     t.datetime "expiration"
     t.integer "product_id"
-    t.integer "customer_id"
+    t.string "customer_id"
     t.integer "subscription_id"
     t.string "email"
+    t.integer "created_by_id"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.decimal "amount", precision: 10, scale: 2
+    t.string "stripe_transaction_id"
+    t.bigint "user_id", null: false
+    t.bigint "tenant_id", null: false
+    t.string "currency"
+    t.string "status"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
   create_table "rddt_tests", force: :cascade do |t|
@@ -220,6 +245,7 @@ ActiveRecord::Schema.define(version: 2024_01_06_222813) do
     t.bigint "user_id", null: false
     t.string "encrypted_client_name"
     t.string "encrypted_client_name_iv"
+    t.decimal "price", precision: 10, scale: 2
     t.index ["client_id"], name: "index_rddt_tests_on_client_id"
     t.index ["tenant_id"], name: "index_rddt_tests_on_tenant_id"
     t.index ["user_id"], name: "index_rddt_tests_on_user_id"
@@ -278,6 +304,8 @@ ActiveRecord::Schema.define(version: 2024_01_06_222813) do
     t.integer "mfa_secret"
     t.string "moderator_code"
     t.string "email_2fa_code"
+    t.string "stripe_customer_id"
+    t.boolean "outstanding_balance"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["moderator_code"], name: "index_users_on_moderator_code"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -295,6 +323,8 @@ ActiveRecord::Schema.define(version: 2024_01_06_222813) do
   add_foreign_key "dwt_tests", "users"
   add_foreign_key "emergency_contacts", "clients"
   add_foreign_key "emergency_contacts", "tenants"
+  add_foreign_key "payments", "tenants"
+  add_foreign_key "payments", "users"
   add_foreign_key "rddt_tests", "clients"
   add_foreign_key "rddt_tests", "tenants"
   add_foreign_key "rddt_tests", "users"

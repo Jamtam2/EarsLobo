@@ -6,6 +6,9 @@ class UserMfaSessionsController < ApplicationController
 
   
 def create
+  if Rails.env.development?
+    redirect_to root_path, "MFA bypassed in development" and return
+  end
     user = current_user
   
     if params[:mfa_code].present?

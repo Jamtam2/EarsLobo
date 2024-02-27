@@ -14,4 +14,6 @@ class Tenant < ApplicationRecord
     has_many :rddt_tests,dependent: :destroy
     has_many :clients,dependent: :destroy
 
+    # Associate payments with tenant
+    has_many :payments, dependent: :destroy
 end

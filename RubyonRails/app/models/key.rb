@@ -10,7 +10,8 @@
 #  used            :boolean
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  customer_id     :integer
+#  created_by_id   :integer
+#  customer_id     :string
 #  license_id      :integer
 #  product_id      :integer
 #  subscription_id :integer

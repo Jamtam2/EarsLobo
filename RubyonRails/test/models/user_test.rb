@@ -11,6 +11,7 @@
 #  lname                  :string
 #  mfa_secret             :integer
 #  moderator_code         :string
+#  outstanding_balance    :boolean
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
@@ -18,6 +19,7 @@
 #  verification_key       :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  stripe_customer_id     :string
 #  tenant_id              :bigint
 #
 # Indexes

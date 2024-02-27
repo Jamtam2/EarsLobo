@@ -90,3 +90,6 @@ production:
 
   # Cache manifest.json for performance
   cache_manifest: true
+
+module.exports = {
+  entry: './app/javascript/packs/application.js',

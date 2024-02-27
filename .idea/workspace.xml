@@ -5,19 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85f016a5-798f-4510-a7b1-3073eef6eab6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/RubyonRails/app/models/location.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RubyonRails/db/migrate/20240115024758_add_location_to_keys.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RubyonRails/db/migrate/20240128021426_create_locations.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RubyonRails/db/migrate/20240129053031_remove_attr_from_key.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RubyonRails/db/migrate/20240129053243_remove_attr_from_location.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RubyonRails/app/controllers/users_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/controllers/users_controller.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RubyonRails/app/models/key.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/models/key.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RubyonRails/app/models/user.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/models/user.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RubyonRails/app/models/user_mfa_session.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/models/user_mfa_session.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RubyonRails/db/schema.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/db/schema.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RubyonRails/db/seeds.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/db/seeds.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RubyonRails/test/fixtures/user_mfa_sessions.yml" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/test/fixtures/user_mfa_sessions.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RubyonRails/test/models/user_mfa_session_test.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/test/models/user_mfa_session_test.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RubyonRails/public.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/assets/javascripts/accountSignupButtons.js" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/assets/javascripts/accountSignupButtons.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/controllers/locations_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/controllers/locations_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/controllers/registrations_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/controllers/registrations_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/helpers/sign_up_helper.rb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/helpers/sign_up_helper.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RubyonRails/app/views/devise/registrations/new.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/RubyonRails/app/views/devise/registrations/new.html.erb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +37,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "impl__enterprise",
+    "git-widget-placeholder": "Merging add__location",
     "last_opened_file_path": "/Users/hunterjackson/Documents/Dead Project UofM/EarsLobo",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -182,6 +176,13 @@
       <workItem from="1706402607972" duration="2781000" />
       <workItem from="1706408155586" duration="2044000" />
       <workItem from="1706484005263" duration="9891000" />
+      <workItem from="1707091316149" duration="1328000" />
+      <workItem from="1707682184550" duration="17335000" />
+      <workItem from="1708058415048" duration="5558000" />
+      <workItem from="1708098787220" duration="1038000" />
+      <workItem from="1708131839555" duration="2713000" />
+      <workItem from="1708733181694" duration="3937000" />
+      <workItem from="1708990491104" duration="6791000" />
     </task>
     <servers />
   </component>

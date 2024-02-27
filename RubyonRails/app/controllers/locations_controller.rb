@@ -1,9 +1,12 @@
 class LocationsController < ApplicationController
-  #before_action :set_location, only: [:show, :edit, :update, :destroy]
+
+
+  before_action :authorize_local_moderator, only: [:create]
 
   def new
     @location = Location.new
-    @users = User.all
+    # Ensure @users only includes location moderators if the current user is a local moderator
+    @users = local_moderator? ? User.where(role: :location_moderator) : User.all
   end
 
   def create
@@ -15,17 +18,20 @@ class LocationsController < ApplicationController
       assign_moderators_to_location(params[:location][:user_ids])
       flash[:notice] = 'Location was successfully created.'
       puts "Before redirect"
-      redirect_to users_path 
+      redirect_to users_path
     else
       @users = User.all
       render :new
     end
   end
- 
+
   private
 
-  def set_location
-    @location = Location.find(params[:id])
+  def authorize_local_moderator
+    unless current_user.local_moderator?
+      flash[:alert] = 'You are not authorized to perform this action.'
+      redirect_to root_path # Or another appropriate path
+    end
   end
 
   def location_params
@@ -33,9 +39,11 @@ class LocationsController < ApplicationController
   end
 
   def assign_moderators_to_location(user_ids)
-    #return unless user_ids.present?
+    users = User.where(id: user_ids, role: :location_moderator)
+    @location.users << users
+  end
 
-    users = User.where(id: user_ids)
-    @location.users << users  # Assign users to the location directly
+  def local_moderator?
+    current_user.role == 'local_moderator'
   end
 end

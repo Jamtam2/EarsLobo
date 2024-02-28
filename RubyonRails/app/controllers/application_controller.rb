@@ -27,12 +27,12 @@ class ApplicationController < ActionController::Base
   private
 
   def check_mfa
-    # Bypass MFA check in development
+     #Bypass MFA check in development
     
-    # TODO: Remove this when moving to production
-    # if Rails.env.development?
-    #   return
-    # end
+     #TODO: Remove this when moving to production
+     if Rails.env.development?
+       return
+     end
 
     return unless user_signed_in? && "/users/sign_out" != request.path
 

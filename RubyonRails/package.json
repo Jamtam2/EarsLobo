@@ -16,6 +16,10 @@
   },
   "version": "0.1.0",
   "devDependencies": {
+    "@babel/plugin-proposal-private-methods": "^7.18.6",
     "webpack-dev-server": "^3.11.2"
+  },
+  "scripts": {
+    "build": "webpack --mode production"
   }
 }

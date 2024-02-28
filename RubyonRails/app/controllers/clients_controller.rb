@@ -49,8 +49,8 @@ class ClientsController < ApplicationController
       @client = Client.new(client_params)
   
       if @client.save
-        flash[:success] = "client successfully added!"
-        redirect_to clients_path, notice: "client created successfully."
+        flash[:success] = "Client successfully created!"
+        redirect_to clients_path
       else
         flash.now[:error] = "client creation failed"
         render :new
@@ -94,7 +94,7 @@ class ClientsController < ApplicationController
       
       else
         # Else, shows only local clients of the same tenant
-        client_scope = current_user.clients.where(tenant_id: current_user.tenant_id)
+        client_scope = Client.where(tenant_id: current_user.tenant_id)
       end
 
       # Initialize instance variable to be used in clients > index.html.erb

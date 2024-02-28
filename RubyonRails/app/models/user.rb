@@ -11,6 +11,7 @@
 #  lname                  :string
 #  mfa_secret             :integer
 #  moderator_code         :string
+#  outstanding_balance    :boolean
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
@@ -18,6 +19,7 @@
 #  verification_key       :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  stripe_customer_id     :string
 #  tenant_id              :bigint
 #
 # Indexes
@@ -62,6 +64,7 @@ class User < ApplicationRecord
   has_many :rddt_tests, foreign_key: 'tenant_id', primary_key: 'tenant_id', dependent: :destroy
   has_many :clients, foreign_key: :tenant_id, primary_key: :tenant_id
   has_many :user_mfa_sessions, dependent: :destroy
+  has_many :payments, dependent: :destroy
 
   # has_one :key
 

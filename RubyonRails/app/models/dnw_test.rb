@@ -12,6 +12,11 @@
 #  label                    :string
 #  left_score               :float
 #  notes                    :text
+<<<<<<< HEAD
+=======
+#  price                    :decimal(10, 2)
+#  right_percentile         :string
+>>>>>>> c55242cc54b0ec72d2058c47264aaf579b1cb4da
 #  right_score              :float
 #  test_type                :string
 #  created_at               :datetime         not null
@@ -37,6 +42,21 @@ class DnwTest < ApplicationRecord
   
     belongs_to :client
     belongs_to :user
+    before_save :set_default_price
     attr_encrypted :client_name, key: ENV['ENCRYPTION_KEY']
 
-end
+
+    def set_default_price
+      self.price ||= 2.00 # set default price if not present
+    end
+
+    def apply_discount(discount_code)
+      discount = Discount.find_by(code: discount_code)
+      return unless discount
+  
+      self.price *= (1 - discount.percentage_off / 100.0)
+    end
+  end
+  
+  
+

@@ -24,4 +24,8 @@ every 1.day, at: '12:00 am' do
   runner "LicenseKeyCheckJob.perform_later"
 end
 
+every :month, at: 'end of the month at: 23:59' do
+  runner "GenerateInvoicesJob.perform_later"
+end
+
   

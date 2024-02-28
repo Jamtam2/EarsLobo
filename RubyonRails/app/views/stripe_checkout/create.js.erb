@@ -1,0 +1,19 @@
+// app/views/stripe_checkout/create.js.erb
+
+// Initialize Stripe with your actual publishable key
+var stripe = Stripe('<%= ENV["PUBLIC_KEY_TEST"] %>');
+
+<% if @session.present? %>
+  // Use Stripe.js to redirect to the Checkout page
+  stripe.redirectToCheckout({ sessionId: '<%= j @session.id %>' }).then(function (result) {
+    // If `redirectToCheckout` fails due to a browser or network
+    // error, you should display the localized error message to your
+    // customer using `result.error.message`.
+    if (result.error) {
+      alert(result.error.message);
+    }
+  });
+<% else %>
+  // Handle error or inform the user if session wasn't created
+  alert('There was an issue initiating the Stripe Checkout. Please try again.');
+<% end %>

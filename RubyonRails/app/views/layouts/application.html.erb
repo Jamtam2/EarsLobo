@@ -118,53 +118,75 @@
   <% end %>
 </div>
 
-
-
-<%# all code for the calibration feature (inside modal made here) %>
 <div class="modal fade content-justify-center" id="myModal">
-
- 
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
-      
         <!-- Modal Header -->
         <div class="modal-header text-center">
           <h1 class="modal-title"><strong>Calibrate Your Device</strong></h1>
-          <button type="button" class="close" data-dismiss="modal" >&times;
-          
-          </button>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         
-        <!-- Modal body -->
-          <%# references audio file for the calibraion %>
-        <div class="modal-body text-center d-block">
-          <audio controls id="audio" class="center", style= 'w-100'>
-            <source src="assets/Track 02 Dichotic Words Test Track 1.mp3" type="audio/mpeg">
+        <!-- Modal Body -->
+        <div class="modal-body text-center">
+          <p>Please adjust your volume so you can barely hear the tone. Make sure your environment is quiet.</p>
+          <div id="audioControls">
+              <button id="playButton">Play</button>
+          </div>
+          <audio id="audio" style="display: none;">
+              <source src="assets/mtx_testtones_1kHz.mp3" type="audio/mpeg">
+              Your browser does not support the audio element.
           </audio>
-        </div>
-        
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger rounded-pill" data-dismiss="modal">Close</button>
-        </div>
-        
+          <button id="adjustVolumeButton" class="btn btn-primary mt-3">I've adjusted the volume</button>
+          <div class="modal-footer">
+                <button type="button" class="btn btn-danger rounded-pill" data-dismiss="modal">Close</button>
+              </div>
+
+      <script>
+          document.addEventListener("DOMContentLoaded", function() {
+              var audio = document.getElementById("audio");
+              var playButton = document.getElementById("playButton");
+              var adjustVolumeButton = document.getElementById("adjustVolumeButton");
+
+              playButton.addEventListener("click", function() {
+                  if (audio.paused) {
+                      audio.play();
+                      playButton.textContent = "Pause";
+                  } else {
+                      audio.pause();
+                      playButton.textContent = "Play";
+                  }
+              });
+
+              adjustVolumeButton.addEventListener("click", function() {
+                  // Close the modal
+                  $('#myModal').modal('hide');
+              });
+          });
+      </script>
+
+          </audio>
+          <br>
+
+        </div>        
       </div>
     </div>
-
-
-    <%# This script resets the calibraion audio in the modal after it is closed
-    this makes the audio to stop playing whenever you've closed the modal %>
-    <script>
-         $('#myModal').on('hide.bs.modal', function () { 
-          $('audio').each(function(){
-           this.pause(); // Stop playing
-            this.currentTime = 0; // Reset time
-           }); 
-          })
-    </script>
-  </div>
-  
 </div>
+
+<script>
+  $('#myModal').on('hide.bs.modal', function () {
+    $('audio').each(function(){
+      this.pause(); // Stop playing
+      this.currentTime = 0; // Reset time
+    }); 
+  });
+
+  $('#confirmVolume').click(function() {
+    alert('Calibration complete. Continue with the test.');
+    // Optionally close the modal or direct the user to the next step
+    // $('#myModal').modal('hide');
+  });
+</script>
 
     <main role="main" class="container main-content">
     
@@ -173,5 +195,6 @@
   <!--  Web page scripts-->
   <%= javascript_include_tag 'clipboard', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'accountSignupButtons', 'data-turbolinks-track': 'reload' %>
+  
   </body>
 </html>

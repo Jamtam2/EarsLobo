@@ -3,7 +3,6 @@
 # Table name: dnw_tests
 #
 #  id                       :bigint           not null, primary key
-#  advantage_percentile     :string
 #  client_name              :string
 #  ear_advantage            :string
 #  ear_advantage_score      :float
@@ -11,11 +10,37 @@
 #  encrypted_client_name_iv :string
 #  interpretation           :string
 #  label                    :string
-#  left_percentile          :string
 #  left_score               :float
 #  notes                    :text
 #  price                    :decimal(10, 2)
+#  right_score              :float
+#  test_type                :string
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  client_id                :bigint           not null
+#  tenant_id                :bigint
+#  user_id                  :bigint           not null
+#
+# Indexes
+#
+#  index_dnw_tests_on_client_id  (client_id)
+#  index_dnw_tests_on_tenant_id  (tenant_id)
+#  index_dnw_tests_on_user_id    (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (client_id => clients.id)
+#  fk_rails_...  (tenant_id => tenants.id)
+#  fk_rails_...  (user_id => users.id)
+#
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+#  price                    :decimal(10, 2)
 #  right_percentile         :string
+>>>>>>> 61ffe4fb889bd7e10683eacfc227941382917a38
+>>>>>>> c55242cc54b0ec72d2058c47264aaf579b1cb4da
 #  right_score              :float
 #  test_type                :string
 #  created_at               :datetime         not null

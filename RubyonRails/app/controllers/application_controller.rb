@@ -26,14 +26,10 @@ class ApplicationController < ActionController::Base
   private
 
   def check_mfa
-<<<<<<< HEAD
-     #Bypass MFA check in development
-=======
     # Bypass MFA check in development
     if Rails.env.development?
       return
     end
->>>>>>> c55242cc54b0ec72d2058c47264aaf579b1cb4da
     
      #TODO: Remove this when moving to production
      if Rails.env.development?

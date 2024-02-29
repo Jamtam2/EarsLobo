@@ -130,18 +130,45 @@
         <!-- Modal Body -->
         <div class="modal-body text-center">
           <p>Please adjust your volume so you can barely hear the tone. Make sure your environment is quiet.</p>
-          <audio controls id="audio" class="center" style="width: 100%;">
-            <source src="assets/mtx_testtones_1kHz.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
+          <div id="audioControls">
+              <button id="playButton">Play</button>
+          </div>
+          <audio id="audio" style="display: none;">
+              <source src="assets/mtx_testtones_1kHz.mp3" type="audio/mpeg">
+              Your browser does not support the audio element.
+          </audio>
+          <button id="adjustVolumeButton" class="btn btn-primary mt-3">I've adjusted the volume</button>
+          <div class="modal-footer">
+                <button type="button" class="btn btn-danger rounded-pill" data-dismiss="modal">Close</button>
+              </div>
+
+      <script>
+          document.addEventListener("DOMContentLoaded", function() {
+              var audio = document.getElementById("audio");
+              var playButton = document.getElementById("playButton");
+              var adjustVolumeButton = document.getElementById("adjustVolumeButton");
+
+              playButton.addEventListener("click", function() {
+                  if (audio.paused) {
+                      audio.play();
+                      playButton.textContent = "Pause";
+                  } else {
+                      audio.pause();
+                      playButton.textContent = "Play";
+                  }
+              });
+
+              adjustVolumeButton.addEventListener("click", function() {
+                  // Close the modal
+                  $('#myModal').modal('hide');
+              });
+          });
+      </script>
+
           </audio>
           <br>
-          <button id="confirmVolume" class="btn btn-primary mt-3">I've adjusted the volume</button>
-        </div>
-        
-        <!-- Modal Footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger rounded-pill" data-dismiss="modal">Close</button>
-        </div>
+
+        </div>        
       </div>
     </div>
 </div>
@@ -168,5 +195,6 @@
   <!--  Web page scripts-->
   <%= javascript_include_tag 'clipboard', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'accountSignupButtons', 'data-turbolinks-track': 'reload' %>
+  
   </body>
 </html>

@@ -12,11 +12,7 @@
 #  label                    :string
 #  left_score               :float
 #  notes                    :text
-<<<<<<< HEAD
-=======
 #  price                    :decimal(10, 2)
-#  right_percentile         :string
->>>>>>> c55242cc54b0ec72d2058c47264aaf579b1cb4da
 #  right_score              :float
 #  test_type                :string
 #  created_at               :datetime         not null

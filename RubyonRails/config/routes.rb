@@ -3,11 +3,19 @@ Rails.application.routes.draw do
   get 'inquiries/new'
   get 'inquiries/create'
   get 'users/index'
-  devise_for :users, controllers: { registrations: 'registrations', sessions: 'users/sessions' }
+
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
+  
+  devise_for :users, controllers: { registrations: 'registrations', sessions: 'users/sessions', passwords: 'users/passwords' }
+
   get 'pages/home'
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
- end
+    get 'users/password/verify_2fa_code', to: 'users/passwords#new_verify_2fa_code', as: :new_verify_2fa_code
+    post 'users/password/verify_2fa_code', to: 'users/passwords#verify_2fa_code', as: :verify_2fa_code
+
+  end
 
   root to: redirect('/home')
   get 'home', to: 'pages#home', as: 'home'

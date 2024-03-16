@@ -1,0 +1,13 @@
+<!-- app/views/devise/passwords/new_verify_2fa_code.html.erb -->
+<h2>Enter 2FA Code</h2>
+
+<%= form_with(url: verify_2fa_code_path, method: :post) do |f| %>
+  <div class="field">
+    <%= f.label :email_2fa_code, "2FA Code" %><br />
+    <%= f.text_field :email_2fa_code, autofocus: true %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Verify Code" %>
+  </div>
+<% end %>

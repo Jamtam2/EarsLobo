@@ -33,6 +33,25 @@ class StripeCheckoutController < ApplicationController
         Stripe.api_key = ENV['API_KEY_TEST']
     end
     def success
+      session_id = params[:session_id]
+      session = Stripe::Checkout::Session.retrieve(session_id)
+
+      # Assuming you have a method `generate_license_key` implemented
+      license_key = generate_license_key
+
+      # Assuming `Key` is your model for storing license keys info
+      Key.create!(
+        activation_code: license_key,
+        email: session.customer_details.email,
+        customer_id: session.customer,
+        expiration: 1.year.from_now,
+        used: false
+      )
+
+      # Send the license key to the user's email
+      UserMailer.license_key_purchase(session.customer_details.email, license_key).deliver_now
+
+      
       flash[:notice] = 'Please check your email for your verification key.'
 
       # Redirect or render success message

@@ -27,8 +27,11 @@
 <% end %>
 
 <%= render "devise/shared/links" %>
+<br>
+<label class="pt-2">Don't have a liscense? Start your plan today</label><br />
+<%= link_to 'Find Your Plan', stripe_checkout_path, class: 'btn btn-success btn-lg btn-block mt-3' %>
 </div>
 
-<%= link_to 'Proceed to Payment', stripe_checkout_path, class: 'btn btn-success btn-lg btn-block mt-3' %>
+
 
 </body>

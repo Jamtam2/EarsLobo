@@ -37,7 +37,8 @@ class StripeCheckoutController < ApplicationController
       session = Stripe::Checkout::Session.retrieve(session_id)
 
       # Assuming you have a method `generate_license_key` implemented
-      license_key = generate_license_key
+      # license_key = generate_license_key
+      license_key = SecureRandom.hex(15)
 
       # Assuming `Key` is your model for storing license keys info
       Key.create!(

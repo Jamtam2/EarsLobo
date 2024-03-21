@@ -1,5 +1,6 @@
 <body id="defBG" class="bg-white center">
   <div class="container p-5 my-3 w-100 bg-white border-0">
+   <%= link_to 'Download CSV', clients_path(format: "csv"), class: 'btn btn-secondary mb-3', style:"float: right;" %>
     <!-- Heading for clients page -->
     <h1 class="display-2" style='padding-bottom:20px'><strong>Clients</strong></h1>
 
@@ -378,7 +379,7 @@
           <%= link_to 'Add New Client' , new_client_path, class: 'btn btn-primary rounded-pill btn-lg' %>
         </div>
     </div>
-    <%= link_to 'Download CSV', clients_path(format: "csv"), class: 'btn btn-secondary mb-3' %>
+   
    
     <!--Designs the table for the following columns from Client model where data will be displayed-->
     <div class="justify-content-center">

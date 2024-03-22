@@ -1,540 +1,561 @@
-<body>
-<h1>Global Moderator View</h1>
-<%= link_to 'Download CSV', global_moderator_index_path(format: "csv"), class: 'btn btn-secondary mb-3' %>
-
-<!--Filter options-->
-    <div class="row mb-3">
-      <div class="col-md-6">
-        <%= form_tag global_moderator_index_path, method: :get, class: 'form-inline' do %>
-          <%#= text_field_tag :all_data_search_term, params[:all_data_search_term], class: 'form-control mr-sm-2 rounded-pill', placeholder: 'Filter Results' %>
-          <%#= text_field_tag :address_search, params[:address_search], class: 'form-control mr-sm-2 rounded-pill', placeholder: 'Filter by location' %>
-          <%#= submit_tag "Search", class: "btn rounded-pill btn-outline-info my-2 my-sm-0" %>
-        <% end %>
-        <button type="button" id="filterButton" class="btn btn-secondary rounded-pill mr-sm-2">Filter Options</button>
-      </div>
-
-      <!-- The filter modal -->
-      <div class="modal" id="filterModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Filter Options</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <p>Additional Filters Below</p>
-
-              <%= search_form_for @q, url: global_moderator_index_path, method: :get, local: true, class: 'form-inline' do |f| %>
-                <!--Filter button for date-->
-                <div class="row mb-2">
-                  <div class="col-md-4">
-                    <label for="from_date">From Date:</label>
-                  </div>
-                  <div class="col-md-8">
-                    <%= f.date_field :created_at_gteq, { class: 'form-control sort-select'} %>
-                  </div>
-                </div>
-                <!--Filter button for age-->
-                <div class="row mb-2">
-                  <div class="col-md-4">
-                    <label for="from_name">Age:</label>
-                  </div>
-                  <div class="col-md-8">
-                    <%= text_field_tag :age_search_term, params[:age_search_term], class: 'form-control sort-select', placeholder: 'Filter by Age: e.g: 8' %>
-                  </div>
-                </div>
-                <!--Filter button for gender-->
-                <div class="row mb-2">
-                  <div class="col-md-4">
-                    <label for="from_client">Gender:</label>
-                  </div>
-                  <div class="col-md-8">
-                    <%= select_tag :gender_search_term,
-                                   options_for_select([['None', nil], ['Male', 'Male'], ['Female', 'Female']], params[:gender_search_term]),
-                                   include_blank: true,
-                                   class: 'form-control sort-select',
-                                   data: { button_id: 'filterButtonClient' } %>
-
-                  </div>
-                </div>
-                <!--Filter button for name-->
-                <div class="row mb-2">
-                  <div class="col-md-4">
-                    <label for="from_name">Name:</label>
-                  </div>
-                  <div class="col-md-8">
-                    <%= text_field_tag :name_search_term, params[:name_search_term],
-                                       include_blank: true,
-                                       class: 'form-control sort-select', placeholder: 'Filter by Name: e.g: Ella',
-                                       data: { button_id: 'filterButtonClient' } %>
-                  </div>
-                </div>
-                <!--Filter button for date of birth-->
-                <div class="row mb-2">
-                  <div class="col-md-4">
-                    <label for="from_date_birth">Date of Birth:</label>
-                  </div>
-                  <div class="col-md-8">
-                    <%= text_field_tag :date_of_birth_search_term, params[:date_of_birth_search_term],
-                                       include_blank: true,
-                                       class: 'form-control sort-select', placeholder: 'Filter by DoB: e.g: 2015-08-28',
-                                       data: { button_id: 'filterButtonClient' } %>
-                  </div>
-                </div>
-                <!--Filter button for country-->
-                <div class="row mb-2">
-                  <div class="col-md-4">
-                    <label for="from_client">Country:</label>
-                  </div>
-                  <div class="col-md-8">
-                    <%= select_tag :country_search_term, options_for_select([['None', nil],
-                                                                             ['United States of America', 'US'],
-                                                                             ['Afghanistan', 'AF'],
-                                                                             ['Albania', 'AL'],
-                                                                             ['Algeria', 'DZ'],
-                                                                             ['Andorra', 'AD'],
-                                                                             ['Angola', 'AO'],
-                                                                             ['Antigua and Barbuda', 'AG'],
-                                                                             ['Argentina', 'AR'],
-                                                                             ['Armenia', 'AM'],
-                                                                             ['Australia', 'AU'],
-                                                                             ['Austria', 'AT'],
-                                                                             ['Azerbaijan', 'AZ'],
-                                                                             ['Bahamas', 'BS'],
-                                                                             ['Bahrain', 'BH'],
-                                                                             ['Bangladesh', 'BD'],
-                                                                             ['Barbados', 'BB'],
-                                                                             ['Belarus', 'BY'],
-                                                                             ['Belgium', 'BE'],
-                                                                             ['Belize', 'BZ'],
-                                                                             ['Benin', 'BJ'],
-                                                                             ['Bhutan', 'BT'],
-                                                                             ['Bolivia', 'BO'],
-                                                                             ['Bosnia and Herzegovina', 'BA'],
-                                                                             ['Botswana', 'BW'],
-                                                                             ['Brazil', 'BR'],
-                                                                             ['Brunei', 'BN'],
-                                                                             ['Bulgaria', 'BG'],
-                                                                             ['Burkina Faso', 'BF'],
-                                                                             ['Burundi', 'BI'],
-                                                                             ['Cabo Verde', 'CV'],
-                                                                             ['Cambodia', 'KH'],
-                                                                             ['Cameroon', 'CM'],
-                                                                             ['Canada', 'CA'],
-                                                                             ['Central African Republic', 'CF'],
-                                                                             ['Chad', 'TD'],
-                                                                             ['Chile', 'CL'],
-                                                                             ['China', 'CN'],
-                                                                             ['Colombia', 'CO'],
-                                                                             ['Comoros', 'KM'],
-                                                                             ['Congo (Congo-Brazzaville)', 'CG'],
-                                                                             ['Costa Rica', 'CR'],
-                                                                             ['Croatia', 'HR'],
-                                                                             ['Cuba', 'CU'],
-                                                                             ['Cyprus', 'CY'],
-                                                                             ['Czechia (Czech Republic)', 'CZ'],
-                                                                             ['Democratic Republic of the Congo', 'CD'],
-                                                                             ['Denmark', 'DK'],
-                                                                             ['Djibouti', 'DJ'],
-                                                                             ['Dominica', 'DM'],
-                                                                             ['Dominican Republic', 'DO'],
-                                                                             ['Ecuador', 'EC'],
-                                                                             ['Egypt', 'EG'],
-                                                                             ['El Salvador', 'SV'],
-                                                                             ['Equatorial Guinea', 'GQ'],
-                                                                             ['Eritrea', 'ER'],
-                                                                             ['Estonia', 'EE'],
-                                                                             ['Eswatini (fmr. "Swaziland")', 'SZ'],
-                                                                             ['Ethiopia', 'ET'],
-                                                                             ['Fiji', 'FJ'],
-                                                                             ['Finland', 'FI'],
-                                                                             ['France', 'FR'],
-                                                                             ['Gabon', 'GA'],
-                                                                             ['Gambia', 'GM'],
-                                                                             ['Georgia', 'GE'],
-                                                                             ['Germany', 'DE'],
-                                                                             ['Ghana', 'GH'],
-                                                                             ['Greece', 'GR'],
-                                                                             ['Grenada', 'GD'],
-                                                                             ['Guatemala', 'GT'],
-                                                                             ['Guinea', 'GN'],
-                                                                             ['Guinea-Bissau', 'GW'],
-                                                                             ['Guyana', 'GY'],
-                                                                             ['Haiti', 'HT'],
-                                                                             ['Holy See', 'VA'],
-                                                                             ['Honduras', 'HN'],
-                                                                             ['Hungary', 'HU'],
-                                                                             ['Iceland', 'IS'],
-                                                                             ['India', 'IN'],
-                                                                             ['Indonesia', 'ID'],
-                                                                             ['Iran', 'IR'],
-                                                                             ['Iraq', 'IQ'],
-                                                                             ['Ireland', 'IE'],
-                                                                             ['Israel', 'IL'],
-                                                                             ['Italy', 'IT'],
-                                                                             ['Ivory Coast', 'CI'],
-                                                                             ['Jamaica', 'JM'],
-                                                                             ['Japan', 'JP'],
-                                                                             ['Jordan', 'JO'],
-                                                                             ['Kazakhstan', 'KZ'],
-                                                                             ['Kenya', 'KE'],
-                                                                             ['Kiribati', 'KI'],
-                                                                             ['Kuwait', 'KW'],
-                                                                             ['Kyrgyzstan', 'KG'],
-                                                                             ['Laos', 'LA'],
-                                                                             ['Latvia', 'LV'],
-                                                                             ['Lebanon', 'LB'],
-                                                                             ['Lesotho', 'LS'],
-                                                                             ['Liberia', 'LR'],
-                                                                             ['Libya', 'LY'],
-                                                                             ['Liechtenstein', 'LI'],
-                                                                             ['Lithuania', 'LT'],
-                                                                             ['Luxembourg', 'LU'],
-                                                                             ['Madagascar', 'MG'],
-                                                                             ['Malawi', 'MW'],
-                                                                             ['Malaysia', 'MY'],
-                                                                             ['Maldives', 'MV'],
-                                                                             ['Mali', 'ML'],
-                                                                             ['Malta', 'MT'],
-                                                                             ['Marshall Islands', 'MH'],
-                                                                             ['Mauritania', 'MR'],
-                                                                             ['Mauritius', 'MU'],
-                                                                             ['Mexico', 'MX'],
-                                                                             ['Micronesia', 'FM'],
-                                                                             ['Moldova', 'MD'],
-                                                                             ['Monaco', 'MC'],
-                                                                             ['Mongolia', 'MN'],
-                                                                             ['Montenegro', 'ME'],
-                                                                             ['Morocco', 'MA'],
-                                                                             ['Mozambique', 'MZ'],
-                                                                             ['Myanmar (formerly Burma)', 'MM'],
-                                                                             ['Namibia', 'NA'],
-                                                                             ['Nauru', 'NR'],
-                                                                             ['Nepal', 'NP'],
-                                                                             ['Netherlands', 'NL'],
-                                                                             ['New Zealand', 'NZ'],
-                                                                             ['Nicaragua', 'NI'],
-                                                                             ['Niger', 'NE'],
-                                                                             ['Nigeria', 'NG'],
-                                                                             ['North Korea', 'KP'],
-                                                                             ['North Macedonia', 'MK'],
-                                                                             ['Norway', 'NO'],
-                                                                             ['Oman', 'OM'],
-                                                                             ['Pakistan', 'PK'],
-                                                                             ['Palau', 'PW'],
-                                                                             ['Palestine State', 'PS'],
-                                                                             ['Panama', 'PA'],
-                                                                             ['Papua New Guinea', 'PG'],
-                                                                             ['Paraguay', 'PY'],
-                                                                             ['Peru', 'PE'],
-                                                                             ['Philippines', 'PH'],
-                                                                             ['Poland', 'PL'],
-                                                                             ['Portugal', 'PT'],
-                                                                             ['Qatar', 'QA'],
-                                                                             ['Romania', 'RO'],
-                                                                             ['Russia', 'RU'],
-                                                                             ['Rwanda', 'RW'],
-                                                                             ['Saint Kitts and Nevis', 'KN'],
-                                                                             ['Saint Lucia', 'LC'],
-                                                                             ['Saint Vincent and the Grenadines', 'VC'],
-                                                                             ['Samoa', 'WS'],
-                                                                             ['San Marino', 'SM'],
-                                                                             ['Sao Tome and Principe', 'ST'],
-                                                                             ['Saudi Arabia', 'SA'],
-                                                                             ['Senegal', 'SN'],
-                                                                             ['Serbia', 'RS'],
-                                                                             ['Seychelles', 'SC'],
-                                                                             ['Sierra Leone', 'SL'],
-                                                                             ['Singapore', 'SG'],
-                                                                             ['Slovakia', 'SK'],
-                                                                             ['Slovenia', 'SI'],
-                                                                             ['Solomon Islands', 'SB'],
-                                                                             ['Somalia', 'SO'],
-                                                                             ['South Africa', 'ZA'],
-                                                                             ['South Korea', 'KR'],
-                                                                             ['South Sudan', 'SS'],
-                                                                             ['Spain', 'ES'],
-                                                                             ['Sri Lanka', 'LK'],
-                                                                             ['Sudan', 'SD'],
-                                                                             ['Suriname', 'SR'],
-                                                                             ['Sweden', 'SE'],
-                                                                             ['Switzerland', 'CH'],
-                                                                             ['Syria', 'SY'],
-                                                                             ['Taiwan', 'TW'],
-                                                                             ['Tajikistan', 'TJ'],
-                                                                             ['Tanzania', 'TZ'],
-                                                                             ['Thailand', 'TH'],
-                                                                             ['Timor-Leste', 'TL'],
-                                                                             ['Togo', 'TG'],
-                                                                             ['Tonga', 'TO'],
-                                                                             ['Trinidad and Tobago', 'TT'],
-                                                                             ['Tunisia', 'TN'],
-                                                                             ['Turkey', 'TR'],
-                                                                             ['Turkmenistan', 'TM'],
-                                                                             ['Tuvalu', 'TV'],
-                                                                             ['Uganda', 'UG'],
-                                                                             ['Ukraine', 'UA'],
-                                                                             ['United Arab Emirates', 'AE'],
-                                                                             ['United Kingdom', 'GB'],
-                                                                             ['Uruguay', 'UY'],
-                                                                             ['Uzbekistan', 'UZ'],
-                                                                             ['Vanuatu', 'VU'],
-                                                                             ['Venezuela', 'VE'],
-                                                                             ['Vietnam', 'VN'],
-                                                                             ['Yemen', 'YE'],
-                                                                             ['Zambia', 'ZM'],
-                                                                             ['Zimbabwe', 'ZW']],
-                                                                            params[:country_search_term]),
-                                   include_blank: true,
-                                   class: 'form-control sort-select',
-                                   placeholder: 'Filter by DoB: e.g: SA',
-                                   data: { button_id: 'filterButtonClient' } %>
-                  </div>
-                </div>
-                <!--Filter button for state-->
-                <div class="row mb-2">
-                  <div class="col-md-4">
-                    <label for="from_client">State:</label>
-                  </div>
-                  <div class="col-md-8">
-                    <%= select_tag :state_search_term, options_for_select([['None', nil],
-                                                                           ['Alabama', 'AL'],
-                                                                           ['Alaska', 'AK'],
-                                                                           ['Arizona', 'AZ'],
-                                                                           ['Arkansas', 'AR'],
-                                                                           ['California', 'CA'],
-                                                                           ['Colorado', 'CO'],
-                                                                           ['Connecticut', 'CT'],
-                                                                           ['Delaware', 'DE'],
-                                                                           ['Florida', 'FL'],
-                                                                           ['Georgia', 'GA'],
-                                                                           ['Hawaii', 'HI'],
-                                                                           ['Idaho', 'ID'],
-                                                                           ['Illinois', 'IL'],
-                                                                           ['Indiana', 'IN'],
-                                                                           ['Iowa', 'IA'],
-                                                                           ['Kansas', 'KS'],
-                                                                           ['Kentucky', 'KY'],
-                                                                           ['Louisiana', 'LA'],
-                                                                           ['Maine', 'ME'],
-                                                                           ['Maryland', 'MD'],
-                                                                           ['Massachusetts', 'MA'],
-                                                                           ['Michigan', 'MI'],
-                                                                           ['Minnesota', 'MN'],
-                                                                           ['Mississippi', 'MS'],
-                                                                           ['Missouri', 'MO'],
-                                                                           ['Montana', 'MT'],
-                                                                           ['Nebraska', 'NE'],
-                                                                           ['Nevada', 'NV'],
-                                                                           ['New Hampshire', 'NH'],
-                                                                           ['New Jersey', 'NJ'],
-                                                                           ['New Mexico', 'NM'],
-                                                                           ['New York', 'NY'],
-                                                                           ['North Carolina', 'NC'],
-                                                                           ['North Dakota', 'ND'],
-                                                                           ['Ohio', 'OH'],
-                                                                           ['Oklahoma', 'OK'],
-                                                                           ['Oregon', 'OR'],
-                                                                           ['Pennsylvania', 'PA'],
-                                                                           ['Rhode Island', 'RI'],
-                                                                           ['South Carolina', 'SC'],
-                                                                           ['South Dakota', 'SD'],
-                                                                           ['Tennessee', 'TN'],
-                                                                           ['Texas', 'TX'],
-                                                                           ['Utah', 'UT'],
-                                                                           ['Vermont', 'VT'],
-                                                                           ['Virginia', 'VA'],
-                                                                           ['Washington', 'WA'],
-                                                                           ['West Virginia', 'WV'],
-                                                                           ['Wisconsin', 'WI'],
-                                                                           ['Wyoming', 'WY']], params[:state_search_term]),
-                                   include_blank: true,
-                                   class: 'form-control sort-select',
-                                   placeholder: 'Filter by DoB: e.g: TN',
-                                   data: { button_id: 'filterButtonClient' } %>
-                  </div>
-                </div>
-                </div>
-            <div class="modal-footer">
-              <button type="button" class="btn rounded-pill btn-outline-info my-2 my-sm-0" id="resetFiltersButton">Reset
-                Filters</button>
-              <%= f.submit "Apply Filter" , class: "btn rounded-pill btn-outline-info my-2 my-sm-0" %>
-                <button type="button" class="btn rounded-pill btn-outline-info my-2 my-sm-0"
-                  data-dismiss="modal">Close</button>
-                <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- JS functionality for the modal-->
-      <%= javascript_include_tag 'modalControlGlobalModeratorIndex.js' %>
-
-<table>
-  <thead>
-    <tr>
-      <th>Test Type</th>
-      <th>Gender</th>
-      <th>Age</th>
-      <th>City</th>
-      <th>Country</th>
-      <th>State</th>
-      <th>Race</th>
-      <th>Ear Advantage</th>
-      <th>Ear Advantage Score</th>
-      <th>Left Score</th>
-      <th>Right Score</th>
-      <th>Edit</th> <!-- Add a new column for the Edit button -->
-<!--      <th>Testing Issue</th>-->
-    </tr>
-  </thead>
-  <tbody>
-    <% @clients.each do |client| %>
-      <% client.dwt_tests.each do |dwt_test| %>
-        <tr>
-          <td>DWT</td>
-          <td><%= client.gender %></td>
-          <td><%= client.age_in_years %></td>
-          <td><%= client.city %></td>
-          <td><%= client.country %></td>
-          <td><%= client.state %></td>
-          <td><%= client.race %></td>
-          <td><%= dwt_test.ear_advantage %></td>
-          <td><%= dwt_test.ear_advantage_score %></td>
-          <td><%= dwt_test.left_score %></td>
-          <td><%= dwt_test.right_score %></td>
-          <td><%= link_to "Edit", edit_client_path(client) %></td> <!-- Add the Edit button link -->
-          <!--<td><%= dwt_test.test_type %></td>--> <!--FIX ME - the types of test are not being stored in attribute-->
-        </tr>
-      <% end %>
-      <% client.dnw_tests.each do |dnw_test| %>
-        <tr>
-          <td>DNW</td>
-          <td><%= client.gender %></td>
-          <td><%= client.age_in_years %></td>
-          <td><%= client.city %></td>
-          <td><%= client.country %></td>
-          <td><%= client.state %></td>
-          <td><%= client.race %></td>
-          <td><%= dnw_test.ear_advantage %></td>
-          <td><%= dnw_test.ear_advantage_score %></td>
-          <td><%= dnw_test.left_score %></td>
-          <td><%= dnw_test.right_score %></td>
-          <td><%= link_to "Edit", edit_client_path(client) %></td> <!-- Add the Edit button link -->
-        </tr>
-      <% end %>
-      <% client.rddt_tests.each do |rddt_test| %>
-        <tr>
-          <td>RDDT</td>
-          <td><%= client.gender %></td>
-          <td><%= client.age_in_years %></td>
-          <td><%= client.city %></td>
-          <td><%= client.country %></td>
-          <td><%= client.state %></td>
-          <td><%= client.race %></td>
-          <td><%= rddt_test.ear_advantage %></td>
-          <td><%= rddt_test.ear_advantage_score %></td>
-          <td><%= [rddt_test.left_score1,rddt_test.left_score2,rddt_test.left_score3] %></td>
-          <td><%= [rddt_test.right_score1,rddt_test.right_score2,rddt_test.right_score3] %></td>
-          <td><%= link_to "Edit", edit_client_path(client) %></td> <!-- Add the Edit button link -->
-        </tr>
-      <% end %>
-    <% end %>
-  </tbody>
-</table>
-    </div>
-</body>
-<!--Left this here for testing purposes. Can delete when data from up above is showing.-->
- <!--Designs the table for the following columns from Client model where data will be displayed
-    <div class="justify-content-center">
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>Edit</th>
-              <th>Email</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Gender</th>
-              <th>Age</th>
-              <th>Date of Birth</th>
-              <th>Phone</th>
-              <th>Address</th>
-              <th>Country</th>
-              <th>State</th>
-              <th>City</th>
-              <th>Zip</th>
-              <th>Client ID</th>
-              <th>Tenant_ID</th>
-              <th>Client Created</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
+<body id="defBG" class="bg-white center">
+  <div class="container p-5 my-3 w-100 bg-white border-0">
+  <%= link_to 'Download CSV', global_moderator_index_path(format: "csv"), class: 'btn btn-secondary mb-3', style:"float: right;" %>
+          <h1 class="display-3" style='padding-bottom:20px'><strong>Global Moderator View</strong></h1> 
           
-          Take data from the Client model database and show it in the table
-          <tbody>
-            <% @clients.each do |client| %>
+        <div>
+          <!--Filter options-->
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <%= form_tag global_moderator_index_path, method: :get, class: 'form-inline' do %>
+                    <%#= text_field_tag :all_data_search_term, params[:all_data_search_term], class: 'form-control mr-sm-2 rounded-pill', placeholder: 'Filter Results' %>
+                    <%#= text_field_tag :address_search, params[:address_search], class: 'form-control mr-sm-2 rounded-pill', placeholder: 'Filter by location' %>
+                    <%#= submit_tag "Search", class: "btn rounded-pill btn-outline-info my-2 my-sm-0" %>
+                  <% end %>
+                  <button type="button" id="filterButton" class="btn btn-secondary rounded-pill mr-sm-2">Filter Options</button>
+                </div>
+
+                <!-- The filter modal -->
+                <div class="modal" id="filterModal" tabindex="-1" role="dialog">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Filter Options</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <p>Additional Filters Below</p>
+
+                        <%= search_form_for @q, url: global_moderator_index_path, method: :get, local: true, class: 'form-inline' do |f| %>
+                          <!--Filter button for date-->
+                          <div class="row mb-2">
+                            <div class="col-md-4">
+                              <label for="from_date">From Date:</label>
+                            </div>
+                            <div class="col-md-8">
+                              <%= f.date_field :created_at_gteq, { class: 'form-control sort-select'} %>
+                            </div>
+                          </div>
+                          <!--Filter button for age-->
+                          <div class="row mb-2">
+                            <div class="col-md-4">
+                              <label for="from_name">Age:</label>
+                            </div>
+                            <div class="col-md-8">
+                              <%= text_field_tag :age_search_term, params[:age_search_term], class: 'form-control sort-select', placeholder: 'Filter by Age: e.g: 8' %>
+                            </div>
+                          </div>
+                          <!--Filter button for gender-->
+                          <div class="row mb-2">
+                            <div class="col-md-4">
+                              <label for="from_client">Gender:</label>
+                            </div>
+                            <div class="col-md-8">
+                              <%= select_tag :gender_search_term,
+                                            options_for_select([['None', nil], ['Male', 'Male'], ['Female', 'Female']], params[:gender_search_term]),
+                                            include_blank: true,
+                                            class: 'form-control sort-select',
+                                            data: { button_id: 'filterButtonClient' } %>
+
+                            </div>
+                          </div>
+                          <!--Filter button for name-->
+                          <div class="row mb-2">
+                            <div class="col-md-4">
+                              <label for="from_name">Name:</label>
+                            </div>
+                            <div class="col-md-8">
+                              <%= text_field_tag :name_search_term, params[:name_search_term],
+                                                include_blank: true,
+                                                class: 'form-control sort-select', placeholder: 'Filter by Name: e.g: Ella',
+                                                data: { button_id: 'filterButtonClient' } %>
+                            </div>
+                          </div>
+                          <!--Filter button for date of birth-->
+                          <div class="row mb-2">
+                            <div class="col-md-4">
+                              <label for="from_date_birth">Date of Birth:</label>
+                            </div>
+                            <div class="col-md-8">
+                              <%= text_field_tag :date_of_birth_search_term, params[:date_of_birth_search_term],
+                                                include_blank: true,
+                                                class: 'form-control sort-select', placeholder: 'Filter by DoB: e.g: 2015-08-28',
+                                                data: { button_id: 'filterButtonClient' } %>
+                            </div>
+                          </div>
+                          <!--Filter button for country-->
+                          <div class="row mb-2">
+                            <div class="col-md-4">
+                              <label for="from_client">Country:</label>
+                            </div>
+                            <div class="col-md-8">
+                              <%= select_tag :country_search_term, options_for_select([['None', nil],
+                                                                                      ['United States of America', 'US'],
+                                                                                      ['Afghanistan', 'AF'],
+                                                                                      ['Albania', 'AL'],
+                                                                                      ['Algeria', 'DZ'],
+                                                                                      ['Andorra', 'AD'],
+                                                                                      ['Angola', 'AO'],
+                                                                                      ['Antigua and Barbuda', 'AG'],
+                                                                                      ['Argentina', 'AR'],
+                                                                                      ['Armenia', 'AM'],
+                                                                                      ['Australia', 'AU'],
+                                                                                      ['Austria', 'AT'],
+                                                                                      ['Azerbaijan', 'AZ'],
+                                                                                      ['Bahamas', 'BS'],
+                                                                                      ['Bahrain', 'BH'],
+                                                                                      ['Bangladesh', 'BD'],
+                                                                                      ['Barbados', 'BB'],
+                                                                                      ['Belarus', 'BY'],
+                                                                                      ['Belgium', 'BE'],
+                                                                                      ['Belize', 'BZ'],
+                                                                                      ['Benin', 'BJ'],
+                                                                                      ['Bhutan', 'BT'],
+                                                                                      ['Bolivia', 'BO'],
+                                                                                      ['Bosnia and Herzegovina', 'BA'],
+                                                                                      ['Botswana', 'BW'],
+                                                                                      ['Brazil', 'BR'],
+                                                                                      ['Brunei', 'BN'],
+                                                                                      ['Bulgaria', 'BG'],
+                                                                                      ['Burkina Faso', 'BF'],
+                                                                                      ['Burundi', 'BI'],
+                                                                                      ['Cabo Verde', 'CV'],
+                                                                                      ['Cambodia', 'KH'],
+                                                                                      ['Cameroon', 'CM'],
+                                                                                      ['Canada', 'CA'],
+                                                                                      ['Central African Republic', 'CF'],
+                                                                                      ['Chad', 'TD'],
+                                                                                      ['Chile', 'CL'],
+                                                                                      ['China', 'CN'],
+                                                                                      ['Colombia', 'CO'],
+                                                                                      ['Comoros', 'KM'],
+                                                                                      ['Congo (Congo-Brazzaville)', 'CG'],
+                                                                                      ['Costa Rica', 'CR'],
+                                                                                      ['Croatia', 'HR'],
+                                                                                      ['Cuba', 'CU'],
+                                                                                      ['Cyprus', 'CY'],
+                                                                                      ['Czechia (Czech Republic)', 'CZ'],
+                                                                                      ['Democratic Republic of the Congo', 'CD'],
+                                                                                      ['Denmark', 'DK'],
+                                                                                      ['Djibouti', 'DJ'],
+                                                                                      ['Dominica', 'DM'],
+                                                                                      ['Dominican Republic', 'DO'],
+                                                                                      ['Ecuador', 'EC'],
+                                                                                      ['Egypt', 'EG'],
+                                                                                      ['El Salvador', 'SV'],
+                                                                                      ['Equatorial Guinea', 'GQ'],
+                                                                                      ['Eritrea', 'ER'],
+                                                                                      ['Estonia', 'EE'],
+                                                                                      ['Eswatini (fmr. "Swaziland")', 'SZ'],
+                                                                                      ['Ethiopia', 'ET'],
+                                                                                      ['Fiji', 'FJ'],
+                                                                                      ['Finland', 'FI'],
+                                                                                      ['France', 'FR'],
+                                                                                      ['Gabon', 'GA'],
+                                                                                      ['Gambia', 'GM'],
+                                                                                      ['Georgia', 'GE'],
+                                                                                      ['Germany', 'DE'],
+                                                                                      ['Ghana', 'GH'],
+                                                                                      ['Greece', 'GR'],
+                                                                                      ['Grenada', 'GD'],
+                                                                                      ['Guatemala', 'GT'],
+                                                                                      ['Guinea', 'GN'],
+                                                                                      ['Guinea-Bissau', 'GW'],
+                                                                                      ['Guyana', 'GY'],
+                                                                                      ['Haiti', 'HT'],
+                                                                                      ['Holy See', 'VA'],
+                                                                                      ['Honduras', 'HN'],
+                                                                                      ['Hungary', 'HU'],
+                                                                                      ['Iceland', 'IS'],
+                                                                                      ['India', 'IN'],
+                                                                                      ['Indonesia', 'ID'],
+                                                                                      ['Iran', 'IR'],
+                                                                                      ['Iraq', 'IQ'],
+                                                                                      ['Ireland', 'IE'],
+                                                                                      ['Israel', 'IL'],
+                                                                                      ['Italy', 'IT'],
+                                                                                      ['Ivory Coast', 'CI'],
+                                                                                      ['Jamaica', 'JM'],
+                                                                                      ['Japan', 'JP'],
+                                                                                      ['Jordan', 'JO'],
+                                                                                      ['Kazakhstan', 'KZ'],
+                                                                                      ['Kenya', 'KE'],
+                                                                                      ['Kiribati', 'KI'],
+                                                                                      ['Kuwait', 'KW'],
+                                                                                      ['Kyrgyzstan', 'KG'],
+                                                                                      ['Laos', 'LA'],
+                                                                                      ['Latvia', 'LV'],
+                                                                                      ['Lebanon', 'LB'],
+                                                                                      ['Lesotho', 'LS'],
+                                                                                      ['Liberia', 'LR'],
+                                                                                      ['Libya', 'LY'],
+                                                                                      ['Liechtenstein', 'LI'],
+                                                                                      ['Lithuania', 'LT'],
+                                                                                      ['Luxembourg', 'LU'],
+                                                                                      ['Madagascar', 'MG'],
+                                                                                      ['Malawi', 'MW'],
+                                                                                      ['Malaysia', 'MY'],
+                                                                                      ['Maldives', 'MV'],
+                                                                                      ['Mali', 'ML'],
+                                                                                      ['Malta', 'MT'],
+                                                                                      ['Marshall Islands', 'MH'],
+                                                                                      ['Mauritania', 'MR'],
+                                                                                      ['Mauritius', 'MU'],
+                                                                                      ['Mexico', 'MX'],
+                                                                                      ['Micronesia', 'FM'],
+                                                                                      ['Moldova', 'MD'],
+                                                                                      ['Monaco', 'MC'],
+                                                                                      ['Mongolia', 'MN'],
+                                                                                      ['Montenegro', 'ME'],
+                                                                                      ['Morocco', 'MA'],
+                                                                                      ['Mozambique', 'MZ'],
+                                                                                      ['Myanmar (formerly Burma)', 'MM'],
+                                                                                      ['Namibia', 'NA'],
+                                                                                      ['Nauru', 'NR'],
+                                                                                      ['Nepal', 'NP'],
+                                                                                      ['Netherlands', 'NL'],
+                                                                                      ['New Zealand', 'NZ'],
+                                                                                      ['Nicaragua', 'NI'],
+                                                                                      ['Niger', 'NE'],
+                                                                                      ['Nigeria', 'NG'],
+                                                                                      ['North Korea', 'KP'],
+                                                                                      ['North Macedonia', 'MK'],
+                                                                                      ['Norway', 'NO'],
+                                                                                      ['Oman', 'OM'],
+                                                                                      ['Pakistan', 'PK'],
+                                                                                      ['Palau', 'PW'],
+                                                                                      ['Palestine State', 'PS'],
+                                                                                      ['Panama', 'PA'],
+                                                                                      ['Papua New Guinea', 'PG'],
+                                                                                      ['Paraguay', 'PY'],
+                                                                                      ['Peru', 'PE'],
+                                                                                      ['Philippines', 'PH'],
+                                                                                      ['Poland', 'PL'],
+                                                                                      ['Portugal', 'PT'],
+                                                                                      ['Qatar', 'QA'],
+                                                                                      ['Romania', 'RO'],
+                                                                                      ['Russia', 'RU'],
+                                                                                      ['Rwanda', 'RW'],
+                                                                                      ['Saint Kitts and Nevis', 'KN'],
+                                                                                      ['Saint Lucia', 'LC'],
+                                                                                      ['Saint Vincent and the Grenadines', 'VC'],
+                                                                                      ['Samoa', 'WS'],
+                                                                                      ['San Marino', 'SM'],
+                                                                                      ['Sao Tome and Principe', 'ST'],
+                                                                                      ['Saudi Arabia', 'SA'],
+                                                                                      ['Senegal', 'SN'],
+                                                                                      ['Serbia', 'RS'],
+                                                                                      ['Seychelles', 'SC'],
+                                                                                      ['Sierra Leone', 'SL'],
+                                                                                      ['Singapore', 'SG'],
+                                                                                      ['Slovakia', 'SK'],
+                                                                                      ['Slovenia', 'SI'],
+                                                                                      ['Solomon Islands', 'SB'],
+                                                                                      ['Somalia', 'SO'],
+                                                                                      ['South Africa', 'ZA'],
+                                                                                      ['South Korea', 'KR'],
+                                                                                      ['South Sudan', 'SS'],
+                                                                                      ['Spain', 'ES'],
+                                                                                      ['Sri Lanka', 'LK'],
+                                                                                      ['Sudan', 'SD'],
+                                                                                      ['Suriname', 'SR'],
+                                                                                      ['Sweden', 'SE'],
+                                                                                      ['Switzerland', 'CH'],
+                                                                                      ['Syria', 'SY'],
+                                                                                      ['Taiwan', 'TW'],
+                                                                                      ['Tajikistan', 'TJ'],
+                                                                                      ['Tanzania', 'TZ'],
+                                                                                      ['Thailand', 'TH'],
+                                                                                      ['Timor-Leste', 'TL'],
+                                                                                      ['Togo', 'TG'],
+                                                                                      ['Tonga', 'TO'],
+                                                                                      ['Trinidad and Tobago', 'TT'],
+                                                                                      ['Tunisia', 'TN'],
+                                                                                      ['Turkey', 'TR'],
+                                                                                      ['Turkmenistan', 'TM'],
+                                                                                      ['Tuvalu', 'TV'],
+                                                                                      ['Uganda', 'UG'],
+                                                                                      ['Ukraine', 'UA'],
+                                                                                      ['United Arab Emirates', 'AE'],
+                                                                                      ['United Kingdom', 'GB'],
+                                                                                      ['Uruguay', 'UY'],
+                                                                                      ['Uzbekistan', 'UZ'],
+                                                                                      ['Vanuatu', 'VU'],
+                                                                                      ['Venezuela', 'VE'],
+                                                                                      ['Vietnam', 'VN'],
+                                                                                      ['Yemen', 'YE'],
+                                                                                      ['Zambia', 'ZM'],
+                                                                                      ['Zimbabwe', 'ZW']],
+                                                                                      params[:country_search_term]),
+                                            include_blank: true,
+                                            class: 'form-control sort-select',
+                                            placeholder: 'Filter by DoB: e.g: SA',
+                                            data: { button_id: 'filterButtonClient' } %>
+                            </div>
+                          </div>
+                          <!--Filter button for state-->
+                          <div class="row mb-2">
+                            <div class="col-md-4">
+                              <label for="from_client">State:</label>
+                            </div>
+                            <div class="col-md-8">
+                              <%= select_tag :state_search_term, options_for_select([['None', nil],
+                                                                                    ['Alabama', 'AL'],
+                                                                                    ['Alaska', 'AK'],
+                                                                                    ['Arizona', 'AZ'],
+                                                                                    ['Arkansas', 'AR'],
+                                                                                    ['California', 'CA'],
+                                                                                    ['Colorado', 'CO'],
+                                                                                    ['Connecticut', 'CT'],
+                                                                                    ['Delaware', 'DE'],
+                                                                                    ['Florida', 'FL'],
+                                                                                    ['Georgia', 'GA'],
+                                                                                    ['Hawaii', 'HI'],
+                                                                                    ['Idaho', 'ID'],
+                                                                                    ['Illinois', 'IL'],
+                                                                                    ['Indiana', 'IN'],
+                                                                                    ['Iowa', 'IA'],
+                                                                                    ['Kansas', 'KS'],
+                                                                                    ['Kentucky', 'KY'],
+                                                                                    ['Louisiana', 'LA'],
+                                                                                    ['Maine', 'ME'],
+                                                                                    ['Maryland', 'MD'],
+                                                                                    ['Massachusetts', 'MA'],
+                                                                                    ['Michigan', 'MI'],
+                                                                                    ['Minnesota', 'MN'],
+                                                                                    ['Mississippi', 'MS'],
+                                                                                    ['Missouri', 'MO'],
+                                                                                    ['Montana', 'MT'],
+                                                                                    ['Nebraska', 'NE'],
+                                                                                    ['Nevada', 'NV'],
+                                                                                    ['New Hampshire', 'NH'],
+                                                                                    ['New Jersey', 'NJ'],
+                                                                                    ['New Mexico', 'NM'],
+                                                                                    ['New York', 'NY'],
+                                                                                    ['North Carolina', 'NC'],
+                                                                                    ['North Dakota', 'ND'],
+                                                                                    ['Ohio', 'OH'],
+                                                                                    ['Oklahoma', 'OK'],
+                                                                                    ['Oregon', 'OR'],
+                                                                                    ['Pennsylvania', 'PA'],
+                                                                                    ['Rhode Island', 'RI'],
+                                                                                    ['South Carolina', 'SC'],
+                                                                                    ['South Dakota', 'SD'],
+                                                                                    ['Tennessee', 'TN'],
+                                                                                    ['Texas', 'TX'],
+                                                                                    ['Utah', 'UT'],
+                                                                                    ['Vermont', 'VT'],
+                                                                                    ['Virginia', 'VA'],
+                                                                                    ['Washington', 'WA'],
+                                                                                    ['West Virginia', 'WV'],
+                                                                                    ['Wisconsin', 'WI'],
+                                                                                    ['Wyoming', 'WY']], params[:state_search_term]),
+                                            include_blank: true,
+                                            class: 'form-control sort-select',
+                                            placeholder: 'Filter by DoB: e.g: TN',
+                                            data: { button_id: 'filterButtonClient' } %>
+                            </div>
+                          </div>
+                          </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn rounded-pill btn-outline-info my-2 my-sm-0" id="resetFiltersButton">Reset
+                          Filters</button>
+                        <%= f.submit "Apply Filter" , class: "btn rounded-pill btn-outline-info my-2 my-sm-0" %>
+                          <button type="button" class="btn rounded-pill btn-outline-info my-2 my-sm-0"
+                            data-dismiss="modal">Close</button>
+                          <% end %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+                <!-- JS functionality for the modal-->
+                <%= javascript_include_tag 'modalControlGlobalModeratorIndex.js' %>
+                </div>
+
+                
+          <div class="tableWrapW">
+          <table>
+            <thead>
               <tr>
-                <td>
-                  <%= link_to edit_client_path(client) do %>
-                    <%= image_tag 'edit_icon.png' , alt: 'Edit' ,width: 20 %>
-                      <% end %>
-                </td>
-                <td>
-                  <%= client.email %>
-                </td>
-                <td>
-                  <%= client.first_name %>
-                </td>
-                <td>
-                  <%= client.last_name %>
-                </td>
-                <td>
-                  <%= client.gender %>
-                </td>
-                <td>
-                  <%= client.age_in_years %>
-                </td>
-                <td>
-                  <%= client.date_of_birth %>
-                </td>
-                <td>
-                  <%= client.phone1 %>
-                </td>
-                <td>
-                  <%= client.address1 %>
-                </td>
-                <td>
-                  <%= client.country %>
-                </td>
-                <td>
-                  <%= client.state %>
-                </td>
-                <td>
-                  <%= client.city %>
-                </td>
-                <td>
-                  <%= client.zip %>
-                </td>
-                <td>
-                  <%= client.id %>
-                </td>
-                <td>
-                  <%= client.tenant_id %>
-                </td>
-                <td>
-                  <%= client.created_at %>
-                </td>
-                <td>
-                  <%= link_to client_path(client), method: :delete, data: { confirm: 'Are you sure?' } do %>
-                    <%= image_tag 'delete_icon.png' , alt: 'Delete' , width: 20 %>
-                      <% end %>
-                </td>
+                <th>Test Type</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>State</th>
+                <th>Race</th>
+                <th>Ear Advantage</th>
+                <th>Ear Advantage Score</th>
+                <th>Left Score</th>
+                <th>Right Score</th>
+                <th>Edit</th> <!-- Add a new column for the Edit button -->
+          <!--      <th>Testing Issue</th>-->
               </tr>
+            </thead>
+            <tbody>
+              <% @clients.each do |client| %>
+                <% client.dwt_tests.each do |dwt_test| %>
+                  <tr>
+                    <td>DWT</td>
+                    <td><%= client.gender %></td>
+                    <td><%= client.age_in_years %></td>
+                    <td><%= client.city %></td>
+                    <td><%= client.country %></td>
+                    <td><%= client.state %></td>
+                    <td><%= client.race %></td>
+                    <td><%= dwt_test.ear_advantage %></td>
+                    <td><%= dwt_test.ear_advantage_score %></td>
+                    <td><%= dwt_test.left_score %></td>
+                    <td><%= dwt_test.right_score %></td>
+                    <td><%= link_to "Edit", edit_client_path(client) %></td> <!-- Add the Edit button link -->
+                    <!--<td><%= dwt_test.test_type %></td>--> <!--FIX ME - the types of test are not being stored in attribute-->
+                  </tr>
+                <% end %>
+                <% client.dnw_tests.each do |dnw_test| %>
+                  <tr>
+                    <td>DNW</td>
+                    <td><%= client.gender %></td>
+                    <td><%= client.age_in_years %></td>
+                    <td><%= client.city %></td>
+                    <td><%= client.country %></td>
+                    <td><%= client.state %></td>
+                    <td><%= client.race %></td>
+                    <td><%= dnw_test.ear_advantage %></td>
+                    <td><%= dnw_test.ear_advantage_score %></td>
+                    <td><%= dnw_test.left_score %></td>
+                    <td><%= dnw_test.right_score %></td>
+                    <td><%= link_to "Edit", edit_client_path(client) %></td> <!-- Add the Edit button link -->
+                  </tr>
+                <% end %>
+                <% client.rddt_tests.each do |rddt_test| %>
+                  <tr>
+                    <td>RDDT</td>
+                    <td><%= client.gender %></td>
+                    <td><%= client.age_in_years %></td>
+                    <td><%= client.city %></td>
+                    <td><%= client.country %></td>
+                    <td><%= client.state %></td>
+                    <td><%= client.race %></td>
+                    <td><%= rddt_test.ear_advantage %></td>
+                    <td><%= rddt_test.ear_advantage_score %></td>
+                    <td><%= [rddt_test.left_score1,rddt_test.left_score2,rddt_test.left_score3] %></td>
+                    <td><%= [rddt_test.right_score1,rddt_test.right_score2,rddt_test.right_score3] %></td>
+                    <td><%= link_to "Edit", edit_client_path(client) %></td> <!-- Add the Edit button link -->
+                  </tr>
+                <% end %>
               <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div> -->
+            </tbody>
+          </table>
+              </div>
+          </body>
+          <!--Left this here for testing purposes. Can delete when data from up above is showing.-->
+          <!--Designs the table for the following columns from Client model where data will be displayed
+              <div class="justify-content-center">
+                <div class="table-responsive">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Edit</th>
+                        <th>Email</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Gender</th>
+                        <th>Age</th>
+                        <th>Date of Birth</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Country</th>
+                        <th>State</th>
+                        <th>City</th>
+                        <th>Zip</th>
+                        <th>Client ID</th>
+                        <th>Tenant_ID</th>
+                        <th>Client Created</th>
+                        <th>Delete</th>
+                      </tr>
+                    </thead>
+                    
+                    Take data from the Client model database and show it in the table
+                    <tbody>
+                      <% @clients.each do |client| %>
+                        <tr>
+                          <td>
+                            <%= link_to edit_client_path(client) do %>
+                              <%= image_tag 'edit_icon.png' , alt: 'Edit' ,width: 20 %>
+                                <% end %>
+                          </td>
+                          <td>
+                            <%= client.email %>
+                          </td>
+                          <td>
+                            <%= client.first_name %>
+                          </td>
+                          <td>
+                            <%= client.last_name %>
+                          </td>
+                          <td>
+                            <%= client.gender %>
+                          </td>
+                          <td>
+                            <%= client.age_in_years %>
+                          </td>
+                          <td>
+                            <%= client.date_of_birth %>
+                          </td>
+                          <td>
+                            <%= client.phone1 %>
+                          </td>
+                          <td>
+                            <%= client.address1 %>
+                          </td>
+                          <td>
+                            <%= client.country %>
+                          </td>
+                          <td>
+                            <%= client.state %>
+                          </td>
+                          <td>
+                            <%= client.city %>
+                          </td>
+                          <td>
+                            <%= client.zip %>
+                          </td>
+                          <td>
+                            <%= client.id %>
+                          </td>
+                          <td>
+                            <%= client.tenant_id %>
+                          </td>
+                          <td>
+                            <%= client.created_at %>
+                          </td>
+                          <td>
+                            <%= link_to client_path(client), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                              <%= image_tag 'delete_icon.png' , alt: 'Delete' , width: 20 %>
+                                <% end %>
+                          </td>
+                        </tr>
+                        <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              </div> -->
+    </div>
+    </div>
+  </div>
+</body>
+
+
+
+<style>
+  .tableWrapW {
+              width: 1015px;
+              height: 600px;
+              border: 2px solid rgba(223,30,54,255);
+              overflow: auto;
+            }
+
+</style>

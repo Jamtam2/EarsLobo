@@ -1,21 +1,27 @@
 <!-- app/views/billing_dashboard/index.html.erb -->
 
-<head>
-  <!-- Other head elements -->
-  <script src="https://js.stripe.com/v3/"></script>
-</head>
+<body id= "defBG">
+    <div class="card mb-3 border-0", style="padding-top:25px">
+      <div class="container p-5 my-3 w-100 bg-white border-0">
+        <head>
+          <!-- Other head elements -->
+          <script src="https://js.stripe.com/v3/"></script>
+        </head>
+        <%= button_to 'Manage Billing', customer_portal_path, method: :post , class: "btn-lg btn-primary mfa-submit rounded-pill", style:"float: right;"%>
+        <% if @current_month_tests.present? %>
+          <h2 class="display-3">Current Month's Tests</h2>
+          <%= render 'tests_table', tests: @current_month_tests %>
 
-<% if @current_month_tests.present? %>
-  <h2>Current Month's Tests</h2>
-  <%= render 'tests_table', tests: @current_month_tests %>
+        <% end %>
 
-<% end %>
-
-<% if @previous_tests.present? %>
-  <h2>Previous Month's Tests</h2>
-  <%= render 'tests_table', tests: @previous_tests %>
-<% end %>
+        <% if @previous_tests.present? %>
+          <h2 class="display-3 pt-5">Previous Month's Tests</h2>
+          <%= render 'tests_table', tests: @previous_tests %>
+        <% end %>
 
 
 
-<%= button_to 'Manage Billing', customer_portal_path, method: :post %>
+        
+      </div>
+    </div>
+  </body>

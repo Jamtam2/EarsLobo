@@ -1,10 +1,15 @@
 <!-- app/views/stripe_checkout/success.html.erb -->
+<body id= "defBG">
+    <div class="card mb-3 border-0", style="padding-top:25px">
+      <div class="container p-5 my-3 w-100 bg-white border-0">
+        <h1 class="display-2">Success!</h1>
+        <p>Your action was successful. You will be redirected shortly.</p>
 
-<h1>Success!</h1>
-<p>Your action was successful. You will be redirected shortly.</p>
-
-<script type="text/javascript">
-  setTimeout(function() {
-    window.location = '/users/sign_up';
-  }, 3000); // 3000 milliseconds = 3 seconds
-</script>
+        <script type="text/javascript">
+          setTimeout(function() {
+            window.location = '/users/sign_up';
+          }, 3000); // 3000 milliseconds = 3 seconds
+        </script>
+    </div>
+  </div>
+</body>

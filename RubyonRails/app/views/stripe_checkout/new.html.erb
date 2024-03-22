@@ -1,38 +1,89 @@
-<!-- Add a button to initiate checkout -->
-<%# <button id="checkout-button">Pay $4500</button> %>
-<%= button_to 'Pay $4500', stripe_checkout_path, method: :post, id: 'checkout-button', class: 'btn btn-primary', remote: true, data: { stripe_public_key: ENV['PUBLIC_KEY_TEST'] } %>
-<!-- Include Stripe.js -->
-<script src="https://js.stripe.com/v3/"></script>
 
-<script>
-  // First, find the button by its ID
-  let checkoutButton = document.getElementById('checkout-button');
+<body id= "defBG">
+  <div class="card mb-3 border-0", style="padding-top:25px">
+  <h1 class="display-3 pl-4", style= 'padding-top:30px'><strong>Start Your Plan</strong></h1>
+        <hr>
+        <div class="card-deck pl-5 pr-5 pb-5">
+            <div class="card border-0">
+                <div class="plan-card-container">
+                    <div class="plan-card">
+                    <div class="front-content">
+                     <%= image_tag 'standardPlan.png', class: ' d-block m-auto pt-2' , style: ' max-width: 20rem;'%>
+                      <p class="inline-block ">Standard Plan</p>
 
-  // Then, retrieve the public key from the data attribute of the button
-  var publicKeyTest = checkoutButton.getAttribute('data-stripe-public-key');
+                    </div>
+                    <div class="content">
+                      <p class="heading">Standard Plan (1 year) - $4500 </p>
+                      <p>
+                        - Unlimited audia training (DWT, DNW, RDDT)<br>
+                        - Unlimited new users <br>
+                        - Unlimited clients<br>
+                        - Access to analytical test data
+                      </p>
+                    </div>
+                  </div>
+                  </div>
+                  <br>
+                                    <!-- Add a button to initiate checkout -->
+                  <%# <button id="checkout-button">Pay $4500</button> %>
+                  <%= button_to 'Start Your Standard Plan', stripe_checkout_path, method: :post, id: 'checkout-button', class: "btn-lg btn-block btn-primary mfa-submit rounded-pill", remote: true, data: { stripe_public_key: ENV['PUBLIC_KEY_TEST'] } %>
+                  <!-- Include Stripe.js -->
+                  <script src="https://js.stripe.com/v3/"></script>
 
-  // Initialize Stripe with the public key
-  var stripe = Stripe(publicKeyTest);
+                  <script>
+                    // First, find the button by its ID
+                    let checkoutButton = document.getElementById('checkout-button');
 
-  const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-  
-  checkoutButton.addEventListener('click', function () {
-    fetch('/stripe_checkout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': csrfToken // Include the CSRF token in the request header
-      },
-      credentials: 'same-origin' // Ensure cookies (including CSRF token) are sent with the request
-    })
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (session) {
-      return stripe.redirectToCheckout({ sessionId: session.id });
-    })
-    .catch(function (error) {
-      console.error('Error:', error);
-    });
-  });
-</script>
+                    // Then, retrieve the public key from the data attribute of the button
+                    var publicKeyTest = checkoutButton.getAttribute('data-stripe-public-key');
+
+                    // Initialize Stripe with the public key
+                    var stripe = Stripe(publicKeyTest);
+
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                    
+                    checkoutButton.addEventListener('click', function () {
+                      fetch('/stripe_checkout', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                          'X-CSRF-Token': csrfToken // Include the CSRF token in the request header
+                        },
+                        credentials: 'same-origin' // Ensure cookies (including CSRF token) are sent with the request
+                      })
+                      .then(function (response) {
+                        return response.json();
+                      })
+                      .then(function (session) {
+                        return stripe.redirectToCheckout({ sessionId: session.id });
+                      })
+                      .catch(function (error) {
+                        console.error('Error:', error);
+                      });
+                    });
+                  </script>
+            </div>
+
+            <div class="card bg-secondary border-0">
+            <%= image_tag 'discount.png', class: ' d-block m-auto pt-2' , style: ' max-width: 12rem;'%>
+                <%= form_with(model: Inquiry.new, url: inquiries_path, local: true) do |form| %>
+                    <div class="form-group pl-2 pr-2 ">
+                    <h1 class="card-title display-4 pt-2 text-center"><strong>Have a Discount?</strong></h1>
+                    <div class="pt-1 pl-4 pr-4">
+                      Submit your email below to see about your discount eligibility.
+                    </div>
+                    </div>
+
+                    
+                    <div class="form-group pl-3 pr-3 ">
+                        <%= form.label :email, 'Email', class:"pt-1 pl-3" , style:"font-size:17px" %><br />
+                        <%= form.email_field :email, required: true, class:"pt-1", style:"width:100%;"  %>
+                    
+                    </div>
+                    <div class="pl-3 pr-3 pb-2 btn-lg btn-block rounded-pill">
+                        <%= form.submit 'Get Discount', class: "btn-lg btn-block btn-primary mfa-submit rounded-pill" %>
+                        <% end %>
+                    <div class="pl-3 pr-3 pb-2">
+
+  </div>
+</body>

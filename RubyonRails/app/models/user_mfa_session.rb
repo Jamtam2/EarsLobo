@@ -1,6 +1,5 @@
 # == Schema Information
 # Table name: user_mfa_sessions
-#
 #  id             :bigint           not null, primary key
 #  activated      :boolean
 #  email_2fa_code :string

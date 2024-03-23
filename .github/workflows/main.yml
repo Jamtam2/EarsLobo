@@ -1,4 +1,4 @@
-name: Move RubyonRails Contents to Master
+name: Move RubyonRails Test
 
 on:
   workflow_dispatch:

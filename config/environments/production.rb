@@ -84,14 +84,14 @@ Rails.application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
-  config.redis = { url: ENV["REDIS_URL"] }
+  config.redis = { url: ENV["STACKHERO_REDIS_URL_TLS"] }
 
   Sidekiq.configure_server do |config|
-  config.redis = { url: ENV['REDIS_URL'] }
+  config.redis = { url: ENV['STACKHERO_REDIS_URL_TLS'] }
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = { url: ENV['REDIS_URL'] }
+  config.redis = { url: ENV['STACKHERO_REDIS_URL_TLS'] }
 end
 
 

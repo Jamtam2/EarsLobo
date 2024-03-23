@@ -23,7 +23,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Payment < ApplicationRecord
-  acts_as_tenant[:tenant]
+  acts_as_tenant :tenant
 
   belongs_to :user
   belongs_to :tenant

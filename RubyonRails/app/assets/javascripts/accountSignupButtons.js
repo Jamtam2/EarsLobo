@@ -15,6 +15,7 @@ function toggleFields() {
     let registrationKeyField = document.getElementById('registrationKeyField');
     let signUpCodeField = document.getElementById('signUpCodeField');
 
-    registrationKeyField.style.display = localModerator || regularUser ? 'block' : 'none';
+    // registrationKeyField.style.display = localModerator || regularUser ? 'block' : 'none';
+    registrationKeyField.style.display = localModerator ? 'block' : 'none';
     signUpCodeField.style.display = regularUser ? 'block' : 'none';
 }

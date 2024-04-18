@@ -1,4 +1,4 @@
-name: Move RubyonRails Test
+name: Deploy RubyonRails 
 
 on:
   workflow_dispatch:
@@ -32,5 +32,5 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add .
-          git commit -m "Move RubyonRails contents to root of test branch" || echo "No changes to commit."
-          git push --force origin HEAD:test  # Force push to overwrite the test branch
+          git commit -m "Move RubyonRails contents to root of master branch" || echo "No changes to commit."
+          git push --force origin HEAD:master  # Force push to overwrite the master branch

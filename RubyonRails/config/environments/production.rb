@@ -60,8 +60,18 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
-  # config.active_job.queue_adapter     = :resque
-  # config.active_job.queue_name_prefix = "rails_demos_n_deets_2021_app_production"
+  config.active_job.queue_adapter = :sidekiq
+  config.active_job.queue_name_prefix = "rails_demos_n_deets_2021_app_production"
+
+  # Sidekiq server configuration
+  Sidekiq.configure_server do |config|
+    config.redis = { url: ENV['STACKHERO_REDIS_URL_TLS'], network_timeout: 5 }
+  end
+
+  # Sidekiq client configuration
+  Sidekiq.configure_client do |config|
+    config.redis = { url: ENV['STACKHERO_REDIS_URL_TLS'], network_timeout: 5 }
+  end
 
   config.action_mailer.perform_caching = false
 
@@ -124,7 +134,7 @@ Rails.application.configure do
     port: 587,
     domain: 'gmail.com',
     user_name: 'dichoticdataresearch@gmail.com',
-    password: 'sqcngtxqyrjdbncm', # It's recommended to use credentials from environment variables or encrypted secrets
+    password: ENV["PASSWORD_TWO"], # It's recommended to use credentials from environment variables or encrypted secrets
     authentication: 'plain',
     enable_starttls_auto: true
   }

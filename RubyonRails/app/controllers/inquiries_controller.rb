@@ -1,11 +1,14 @@
 class InquiriesController < ApplicationController
   def create
     @inquiry = Inquiry.new(inquiry_params)
+    puts 'GOT INTO CONTROLLER'
 
     if @inquiry.save
       InquiryMailer.inquiry_email(@inquiry).deliver_later
       InquiryMailer.confirmation_email(@inquiry).deliver_later
       flash[:notice] = 'Inquiry sent! We will respond within 24-48 hours.'
+      puts 'shouldve sent...'
+      
       redirect_to home_path 
     else
       flash.now[:alert] = 'Failed to send inquiry: ' + @inquiry.errors.full_messages.to_sentence

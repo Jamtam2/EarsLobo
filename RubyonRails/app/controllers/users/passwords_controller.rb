@@ -31,7 +31,7 @@ class Users::PasswordsController < Devise::PasswordsController
   
       # Save the user after setting the 2FA code and timestamp
       if resource.save
-        UserMailer.send_2fa_code(resource, resource.email_2fa_code).deliver_later
+        UserMailer.send_2fa_code(resource, resource.email_2fa_code).deliver_now
         redirect_to new_verify_2fa_code_path, notice: '2FA code sent to your email. Please enter the code to continue resetting your password.'
       else
         # Handle save error

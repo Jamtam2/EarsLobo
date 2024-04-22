@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
       
       requested_path = request.fullpath
 
-      allowed_paths = ["/users/sign_in", "/users/sign_up", "/users", "/stripe_checkout","/webhooks/stripe", "/users/password/new", "/users/password", "/users/password/edit"] + mfa_setup_paths
+      allowed_paths = ["/users/sign_in", "/users/sign_up", "/users", "/stripe_checkout","/webhooks/stripe", "/users/password/new", "/users/password", "/users/password/edit", "/inquiries"] + mfa_setup_paths
       is_allowed_path = allowed_paths.any? { |path| requested_path.start_with?(path) }
 
       return if is_allowed_path

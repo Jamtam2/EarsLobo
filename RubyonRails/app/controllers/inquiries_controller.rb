@@ -4,8 +4,8 @@ class InquiriesController < ApplicationController
     puts 'GOT INTO CONTROLLER'
 
     if @inquiry.save
-      InquiryMailer.inquiry_email(@inquiry).deliver_later
-      InquiryMailer.confirmation_email(@inquiry).deliver_later
+      InquiryMailer.inquiry_email(@inquiry).deliver_now
+      InquiryMailer.confirmation_email(@inquiry).deliver_now
       flash[:notice] = 'Inquiry sent! We will respond within 24-48 hours.'
       puts 'shouldve sent...'
       

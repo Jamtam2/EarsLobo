@@ -89,10 +89,11 @@ class ClientsController < ApplicationController
   
     def index
       #Shows all clients for global mods; global dataset
-      if current_user.global_moderator?
-        client_scope = Client.unscoped.all
+      # if current_user.global_moderator?
+      #   client_scope = Client.unscoped.all
+    
       
-      else
+      # else
         # Else, shows only local clients of the same tenant
         client_scope = Client.where(tenant_id: current_user.tenant_id)
       end
@@ -120,11 +121,11 @@ class ClientsController < ApplicationController
     # Controller for global_moderator_index page functionality
     def global_moderator_index
       if current_user.global_moderator?
+        global_client_scope = Client.unscoped { Client.all }
+        Rails.logger.info("Got the lient scope")
 
-        # For a global moderator, all clients are accessible
-        client_scope = Client.unscoped.all
-
-        @clients = Client.includes(:dwt_tests, :dnw_tests, :rddt_tests).all
+    # Include associated tests to avoid N+1 query problems
+        @clients = global_client_scope.includes(:dwt_tests, :dnw_tests, :rddt_tests)
 
     else
       # If the user is not a global moderator, redirect them

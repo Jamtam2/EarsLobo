@@ -21,16 +21,20 @@
       <div class="col-md-6">
         <!-- A form group with a text field for the client's first name -->
         <div class="form-group">
+
+          <%= client_fields.label :first_name, "First Name *" %>
           <%= client_fields.text_field :first_name, class: "form-control" %>
         </div>
 
         <!-- A form group with a text field for the client's last name -->
         <div class="form-group">
+          <%= client_fields.label :last_name, "Last Name *" %>
           <%= client_fields.text_field :last_name, class: "form-control" %>
         </div>
 
         <!-- A form group with a date field for the client's date of birth -->
         <div class="form-group">
+          <%= client_fields.label :date_of_birth, "Date Of Birth *" %>
           <%= client_fields.date_field :date_of_birth, class: "form-control" %>
         </div>
 
@@ -46,6 +50,7 @@
 
         <!-- A form group with a select field for the client's gender -->
         <div class="form-group">
+          <%= client_fields.label :gender, "Gender *" %>
           <%= client_fields.select :gender, ['Male', 'Female', 'Other'], {}, class: "form-control" %>
         </div>
         <!-- A form group with a select field for the client's race -->

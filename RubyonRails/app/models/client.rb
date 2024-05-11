@@ -46,6 +46,7 @@ class Client < ApplicationRecord
   
   attr_encrypted :email, :address1, :date_of_birth, :first_name, :last_name, :phone1, :phone2, :gender, :race, :zip, key: ENV['ENCRYPTION_KEY']
   attr_encrypted :dob_string, key: ENV['ENCRYPTION_KEY']
+  belongs_to :tenant
 
   
     has_many :emergency_contacts,dependent: :destroy

@@ -119,22 +119,9 @@ class ClientsController < ApplicationController
     # Controller for global_moderator_index page functionality
     def global_moderator_index
       if current_user.global_moderator?
-        Rails.logger.info('--------------------------------------------')
-        Rails.logger.info('--------------------------------------------')
-        Rails.logger.info('got in here! into global mod index if statement!')
         ActsAsTenant.without_tenant do
           @clients = Client.includes(:dwt_tests, :dnw_tests, :rddt_tests)
-          @clients.each do |client|
-            puts client.first_name
-          end
         end
-        # client_scope = Client.unscoped { Client.all }
-        # Rails.logger.info("Fetched clients count: #{client_scope.count}")
-        # unique_tenant_count = client_scope.select(:tenant_id).distinct.count
-        # Rails.logger.info("Unique tenants count: #{unique_tenant_count}")
-        Rails.logger.info('--------------------------------------------')
-        Rails.logger.info('-------NEWNEWNEW------------------------')
-        Rails.logger.info('--------------------------------------------')
         @q = @clients.ransack(params[:q])
 
     # Include associated tests to avoid N+1 query problems

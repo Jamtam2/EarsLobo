@@ -393,13 +393,7 @@
               <th>Email</th>
               <th>Gender</th>
               <th>Age</th>
-              <th>Date of Birth</th>
-              <th>Phone</th>
-              <th>Address</th>
-              <th>Country</th>
-              <th>State</th>
-              <th>City</th>
-              <th>Tenant_ID</th>
+              <th>Zip</th>
               <th>Delete</th>
             </tr>
           </thead>
@@ -429,27 +423,8 @@
                   <%= client.age_in_years %>
                 </td>
                 <td>
-                  <%= client.date_of_birth %>
+                  <%= client.zip %>
                 </td>
-                <td>
-                  <%= client.phone1 %>
-                </td>
-                <td>
-                  <%= client.address1 %>
-                </td>
-                <td>
-                  <%= client.country %>
-                </td>
-                <td>
-                  <%= client.state %>
-                </td>
-                <td>
-                  <%= client.city %>
-                </td>
-                <td>
-                  <%= client.tenant_id %>
-                </td>
-                
                 <td>
                   <%= link_to client_path(client), method: :delete, data: { confirm: 'Are you sure?' } do %>
                     <%= image_tag 'delete_icon.png' , alt: 'Delete' , width: 20 %>

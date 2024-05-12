@@ -381,14 +381,10 @@
             <thead>
               <tr>
                 <th>Test Type</th>
-                <th>Name</th>
                 <th>Gender</th>
                 <th>Age</th>
-                <th>City</th>
-                <th>Country</th>
-                <th>State</th>
+                <th>Zip</th>
                 <th>Race</th>
-                <th>Tenant_</th>
                 <th>Ear Advantage</th>
                 <th>Ear Advantage Score</th>
                 <th>Left Score</th>
@@ -402,14 +398,10 @@
                 <% client.dwt_tests.each do |dwt_test| %>
                   <tr>
                     <td>DWT</td>
-                    <td><%= client.first_name %></td>
                     <td><%= client.gender %></td>
                     <td><%= client.age_in_years %></td>
-                    <td><%= client.city %></td>
-                    <td><%= client.country %></td>
-                    <td><%= client.state %></td>
+                    <td><%= client.zip %></td>
                     <td><%= client.race %></td>
-                    <td><%= client.tenant_id %></td>
                     <td><%= dwt_test.ear_advantage %></td>
                     <td><%= dwt_test.ear_advantage_score %></td>
                     <td><%= dwt_test.left_score %></td>
@@ -421,14 +413,10 @@
                 <% client.dnw_tests.each do |dnw_test| %>
                   <tr>
                     <td>DNW</td>
-                    <td><%= client.first_name %></td>
                     <td><%= client.gender %></td>
                     <td><%= client.age_in_years %></td>
-                    <td><%= client.city %></td>
-                    <td><%= client.country %></td>
-                    <td><%= client.state %></td>
+                    <td><%= client.zip %></td>
                     <td><%= client.race %></td>
-                    <td><%= client.tenant_id %></td>
                     <td><%= dnw_test.ear_advantage %></td>
                     <td><%= dnw_test.ear_advantage_score %></td>
                     <td><%= dnw_test.left_score %></td>
@@ -439,14 +427,10 @@
                 <% client.rddt_tests.each do |rddt_test| %>
                   <tr>
                     <td>RDDT</td>
-                    <td><%= client.first_name %></td>
                     <td><%= client.gender %></td>
                     <td><%= client.age_in_years %></td>
-                    <td><%= client.city %></td>
-                    <td><%= client.country %></td>
-                    <td><%= client.state %></td>
+                    <td><%= client.zip %></td>
                     <td><%= client.race %></td>
-                    <td><%= client.tenant_id %></td>
                     <td><%= rddt_test.ear_advantage %></td>
                     <td><%= rddt_test.ear_advantage_score %></td>
                     <td><%= [rddt_test.left_score1,rddt_test.left_score2,rddt_test.left_score3] %></td>

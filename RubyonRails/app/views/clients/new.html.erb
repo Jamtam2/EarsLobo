@@ -5,6 +5,13 @@
   <!-- A heading for the form -->
   <h1 class="display-3" style='padding-bottom:20px'><strong>New Client</strong></h1>
 
+  
+  <!-- Notice for required fields -->
+  <p class="required-fields-notice">
+    Fields marked with an <span class="text-danger">*</span> are required.
+  </p>
+
+
   <!-- A form that uses the bootstrap_form_with helper -->
   <%= bootstrap_form_with url: clients_path, local: true do |f| %>
 
@@ -21,21 +28,17 @@
       <div class="col-md-6">
         <!-- A form group with a text field for the client's first name -->
         <div class="form-group">
-
-          <%= client_fields.label :first_name, "First Name *" %>
-          <%= client_fields.text_field :first_name, class: "form-control" %>
+          <%= client_fields.text_field :first_name, class: "control-label required" %>
         </div>
 
         <!-- A form group with a text field for the client's last name -->
         <div class="form-group">
-          <%= client_fields.label :last_name, "Last Name *" %>
-          <%= client_fields.text_field :last_name, class: "form-control" %>
+          <%= client_fields.text_field :last_name, class: "control-label required" %>
         </div>
 
         <!-- A form group with a date field for the client's date of birth -->
         <div class="form-group">
-          <%= client_fields.label :date_of_birth, "Date Of Birth *" %>
-          <%= client_fields.date_field :date_of_birth, class: "form-control" %>
+          <%= client_fields.date_field :date_of_birth, class: "control-label required" %>
         </div>
 
         <!-- A form group with an email field for the client's email address -->
@@ -50,8 +53,7 @@
 
         <!-- A form group with a select field for the client's gender -->
         <div class="form-group">
-          <%= client_fields.label :gender, "Gender *" %>
-          <%= client_fields.select :gender, ['Male', 'Female', 'Other'], {}, class: "form-control" %>
+          <%= client_fields.select :gender, ['Male', 'Female', 'Other'], {}, class: "control-label required" %>
         </div>
         <!-- A form group with a select field for the client's race -->
         <div class="form-group">
@@ -85,7 +87,7 @@
 
         <!-- A form group with a text field for the client's zip code -->
         <div class="form-group">
-          <%= client_fields.text_field :zip, class: "form-control" %>
+          <%= client_fields.text_field :zip, class: "control-label required" %>
         </div>
 
         <!-- A form group with a text field for the client's primary phone number -->
@@ -110,15 +112,15 @@
         <!-- Define the nested form fields for the Emergency Contact Information -->
         <%= client_fields.fields_for :emergency_contacts do |ec| %>
             <div class="form-group">
-                <%= ec.text_field :first_name, class: "form-control" %>
+                <%= ec.text_field :first_name, class: "control-label required" %>
             </div>
 
             <div class="form-group">
-                <%= ec.text_field :last_name, class: "form-control" %>
+                <%= ec.text_field :last_name, class: "control-label required" %>
             </div>
 
             <div class="form-group">
-                <%= ec.text_field :phone_number, class: "form-control" %>
+                <%= ec.text_field :phone_number, class: "control-label required" %>
             </div>
 
             <div class="form-group">
@@ -128,7 +130,7 @@
 
         <div class="col-md-6">
             <div class="form-group">
-                <%= ec.text_field :email, class: "form-control" %>
+                <%= ec.text_field :email, class: "control-label required" %>
             </div>
 
             <div class="form-group">
@@ -150,4 +152,5 @@
 <% end %>
 </div>
 </body>
+
 

@@ -38,6 +38,6 @@ class EmergencyContact < ApplicationRecord
   belongs_to :client
   attr_encrypted :email, :address, :city, :first_name, :last_name, :phone_number, :state, key: ENV['ENCRYPTION_KEY']
   
-  validates :first_name, :last_name, :phone_number, :address, :email, :city, :state, presence: true
+  validates :first_name, :last_name, :phone_number, :email, presence: true
 
 end

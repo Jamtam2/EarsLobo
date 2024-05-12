@@ -47,7 +47,6 @@
         </thead>
         <tbody>
         <% @users.each do |user| %>
-          <% if user.tenant_id == current_user.tenant_id %>
             <tr>
 <!--              Change the displayed role, location can be found here helpers/sign_up_helper.rb -->
               <td><%= display_role(user.role) %></td>
@@ -55,7 +54,6 @@
               <td><%= user.fname %></td>
               <td><%= user.lname %></td>
             </tr>
-          <% end %>
         <% end %>
         </tbody>
       </table>

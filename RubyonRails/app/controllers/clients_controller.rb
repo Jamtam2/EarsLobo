@@ -74,7 +74,7 @@ class ClientsController < ApplicationController
         @client = Client.find(params[:id])
 
         if @client.update(client_params)
-            redirect_to clients_path, notice: "client updated successfully."
+            redirect_to clients_path, notice: "Client updated successfully."
         else
             redirect_to edit_client_path(@client), notice: "client was not updated."
         end
@@ -89,14 +89,13 @@ class ClientsController < ApplicationController
   
     def index
       #Shows all clients for global mods; global dataset
-      if current_user.global_moderator?
-        client_scope = Client.unscoped.all
-      
-      else
-        # Else, shows only local clients of the same tenant
-        client_scope = Client.where(tenant_id: current_user.tenant_id)
-      end
+        Rails.logger.info('uh oh! this triggered')
+        Rails.logger.info('---------------------------------------------')
+        Rails.logger.info('---------------------------------------------')
+        Rails.logger.info('---------------------------------------------')
 
+        
+      client_scope = Client.where(tenant_id: current_user.tenant_id)
       # Initialize instance variable to be used in clients > index.html.erb
       @clients = client_scope
 
@@ -120,31 +119,33 @@ class ClientsController < ApplicationController
     # Controller for global_moderator_index page functionality
     def global_moderator_index
       if current_user.global_moderator?
+        ActsAsTenant.without_tenant do
+          @clients = Client.includes(:dwt_tests, :dnw_tests, :rddt_tests)
+        end
+        @q = @clients.ransack(params[:q])
 
-        # For a global moderator, all clients are accessible
-        client_scope = Client.unscoped.all
-
-        @clients = Client.includes(:dwt_tests, :dnw_tests, :rddt_tests).all
+    # Include associated tests to avoid N+1 query problems
+        # @clients = client_scope
+        # @clients = client_scope.includes(:dwt_tests, :dnw_tests, :rddt_tests)
 
     else
       # If the user is not a global moderator, redirect them
       redirect_to root_path, alert: 'You do not have access to this page.'
-    end
+      end
   
         # Initialize instance variable to be used in clients > index.html.erb
-        @clients = client_scope
+        # @clients = client_scope
 
         # Calling method that enables Ransack functionality
         # sort_and_filter_clients(client_scope)
 
-      process_hashed_search_parameters
+      # process_hashed_search_parameters
 
         respond_to do |format|
           format.html
           format.csv { send_data generate_csv(@clients), filename: "global_moderator_data-#{Date.today}.csv" }
         end
       end
-  end
 
     
 # Method that contains functionality for ransack advanced search
@@ -310,3 +311,4 @@ end
         ]
   )
       end
+    end

@@ -119,20 +119,12 @@
                 <%= ec.text_field :last_name, class: "control-label required" %>
             </div>
 
-            <div class="form-group">
-                <%= ec.text_field :phone_number, class: "control-label required" %>
-            </div>
+
+
 
             <div class="form-group">
                 <%= ec.text_field :address, class: "form-control" %>
             </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="form-group">
-                <%= ec.text_field :email, class: "control-label required" %>
-            </div>
-
             <div class="form-group">
                 <%= ec.text_field :city, class: "form-control" %>
             </div>
@@ -141,6 +133,16 @@
                 <%= ec.text_field :state, class: "form-control" %>
             </div>
         </div>
+
+        <div class="col-md-6">
+
+                  <!-- Phone and Email Group with Custom Label -->
+          <div class="form-group">
+              <label class="control-label">Phone or Email <span class="text-muted">(at least one required)</span></label>
+              <%= ec.text_field :phone_number, class: "form-control", placeholder: "Phone Number (Optional)" %>
+              <%= ec.text_field :email, class: "form-control", placeholder: "Email Address (Optional)" %>
+          </div>
+
     </div>
 
     <%= f.submit "Save", class: "btn btn-primary rounded-pill btn-lg btn-block" %>

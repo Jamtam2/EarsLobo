@@ -120,12 +120,17 @@ class ClientsController < ApplicationController
     def global_moderator_index
       if current_user.global_moderator?
         ActsAsTenant.without_tenant do
-          @clients = Client.includes(:dwt_tests, :dnw_tests, :rddt_tests)
+            client_scope = Client.unscoped.includes(:dwt_tests, :dnw_tests, :rddt_tests)
+            client_scope.each do |client|
+              client.dwt_tests.unscoped.load
+              client.dnw_tests.unscoped.load
+              client.rddt_tests.unscoped.load
+            end
+
         end
         @q = @clients.ransack(params[:q])
-
     # Include associated tests to avoid N+1 query problems
-        # @clients = client_scope
+        @clients = client_scope
         # @clients = client_scope.includes(:dwt_tests, :dnw_tests, :rddt_tests)
 
     else

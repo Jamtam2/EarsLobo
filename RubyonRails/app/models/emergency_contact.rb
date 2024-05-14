@@ -38,6 +38,15 @@ class EmergencyContact < ApplicationRecord
   belongs_to :client
   attr_encrypted :email, :address, :city, :first_name, :last_name, :phone_number, :state, key: ENV['ENCRYPTION_KEY']
   
-  validates :first_name, :last_name, :phone_number, :email, presence: true
+  validates :first_name, :last_name, presence: true
+  validate :phone_or_email_required
 
+
+  private
+
+  def phone_or_email_required
+    if phone_number.blank? && email.blank?
+      errors.add(:base, 'Either phone number or email must be present')
+    end
+  end
 end

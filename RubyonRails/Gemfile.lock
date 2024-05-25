@@ -163,6 +163,7 @@ GEM
     mini_portile2 (2.8.5)
     minitest (5.20.0)
     msgpack (1.7.2)
+    multi_json (1.15.0)
     multi_xml (0.6.0)
     net-imap (0.4.9)
       date
@@ -274,6 +275,8 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
+    streamio-ffmpeg (3.0.2)
+      multi_json (~> 1.8)
     stripe (10.5.0)
     thor (1.3.0)
     tilt (2.3.0)
@@ -347,6 +350,7 @@ DEPENDENCIES
   selenium-webdriver
   sidekiq
   spring
+  streamio-ffmpeg
   stripe
   turbolinks (~> 5)
   tzinfo-data
